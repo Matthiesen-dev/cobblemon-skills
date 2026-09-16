@@ -14,9 +14,9 @@ import java.util.Map;
 public final class ExperienceMaps {
     private ExperienceMaps() {}
 
-    private static final Integer ORE_BLOCK_XP = 1800;
-    private static final Integer DEEPSLATE_ORE_BLOCK_XP = 2600;
-    private static final Integer MISC_ORE_BLOCK_XP = 2200;
+    private static final Integer ORE_BLOCK_XP = 400;
+    private static final Integer MISC_ORE_BLOCK_XP = 400;
+    private static final Integer DEEPSLATE_ORE_BLOCK_XP = 600;
     private static final Integer TUMBLESTONE_CLUSTER_SMALL_XP = 100;
     private static final Integer TUMBLESTONE_CLUSTER_MEDIUM_XP = 120;
     private static final Integer TUMBLESTONE_CLUSTER_LARGE_XP = 140;
@@ -33,9 +33,9 @@ public final class ExperienceMaps {
     private static final Integer COOKING_TIER_2_XP = 400;
     private static final Integer COOKING_TIER_3_XP = 500;
     private static final Integer COOKING_TIER_4_XP = 600;
-    private static final Integer FOSSIL_XP = 1000;
     private static final Integer COMMON_ARCHEOLOGY_ITEM_XP = 200;
     private static final Integer UNCOMMON_ARCHEOLOGY_ITEM_XP = 400;
+    private static final Integer RARE_ARCHEOLOGY_ITEM_XP = 600;
 
     private static final Map<Block, Integer> COBBLEMON_ARCHEOLOGY_BLOCKS = Map.<Block, Integer>ofEntries(
             // Ores
@@ -102,21 +102,6 @@ public final class ExperienceMaps {
     );
 
     private static final Map<Item, Integer> COBBLEMON_ARCHEOLOGY_ITEMS = Map.ofEntries(
-            Map.entry(CobblemonItems.ARMOR_FOSSIL, FOSSIL_XP),
-            Map.entry(CobblemonItems.CLAW_FOSSIL, FOSSIL_XP),
-            Map.entry(CobblemonItems.COVER_FOSSIL, FOSSIL_XP),
-            Map.entry(CobblemonItems.DOME_FOSSIL, FOSSIL_XP),
-            Map.entry(CobblemonItems.HELIX_FOSSIL, FOSSIL_XP),
-            Map.entry(CobblemonItems.JAW_FOSSIL, FOSSIL_XP),
-            Map.entry(CobblemonItems.OLD_AMBER_FOSSIL, FOSSIL_XP),
-            Map.entry(CobblemonItems.PLUME_FOSSIL, FOSSIL_XP),
-            Map.entry(CobblemonItems.ROOT_FOSSIL, FOSSIL_XP),
-            Map.entry(CobblemonItems.SAIL_FOSSIL, FOSSIL_XP),
-            Map.entry(CobblemonItems.SKULL_FOSSIL, FOSSIL_XP),
-            Map.entry(CobblemonItems.FOSSILIZED_BIRD, FOSSIL_XP),
-            Map.entry(CobblemonItems.FOSSILIZED_DINO, FOSSIL_XP),
-            Map.entry(CobblemonItems.FOSSILIZED_FISH, FOSSIL_XP),
-            Map.entry(CobblemonItems.FOSSILIZED_DRAKE, FOSSIL_XP),
             Map.entry(CobblemonItems.LEAF_STONE, COMMON_ARCHEOLOGY_ITEM_XP),
             Map.entry(CobblemonItems.MIRROR_HERB, COMMON_ARCHEOLOGY_ITEM_XP),
             Map.entry(CobblemonItems.BIG_ROOT, COMMON_ARCHEOLOGY_ITEM_XP),
@@ -144,7 +129,22 @@ public final class ExperienceMaps {
             Map.entry(CobblemonItems.DEEP_SEA_TOOTH, UNCOMMON_ARCHEOLOGY_ITEM_XP),
             Map.entry(CobblemonItems.DEEP_SEA_SCALE, UNCOMMON_ARCHEOLOGY_ITEM_XP),
             Map.entry(CobblemonItems.ABSORB_BULB, UNCOMMON_ARCHEOLOGY_ITEM_XP),
-            Map.entry(CobblemonItems.FAIRY_FEATHER, UNCOMMON_ARCHEOLOGY_ITEM_XP)
+            Map.entry(CobblemonItems.FAIRY_FEATHER, UNCOMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.ARMOR_FOSSIL, RARE_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.CLAW_FOSSIL, RARE_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.COVER_FOSSIL, RARE_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.DOME_FOSSIL, RARE_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.HELIX_FOSSIL, RARE_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.JAW_FOSSIL, RARE_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.OLD_AMBER_FOSSIL, RARE_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.PLUME_FOSSIL, RARE_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.ROOT_FOSSIL, RARE_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.SAIL_FOSSIL, RARE_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.SKULL_FOSSIL, RARE_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.FOSSILIZED_BIRD, RARE_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.FOSSILIZED_DINO, RARE_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.FOSSILIZED_FISH, RARE_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.FOSSILIZED_DRAKE, RARE_ARCHEOLOGY_ITEM_XP)
     );
 
     private static final Map<Block, Integer> COBBLEMON_BOTANY_BLOCKS = Map.<Block, Integer>ofEntries(

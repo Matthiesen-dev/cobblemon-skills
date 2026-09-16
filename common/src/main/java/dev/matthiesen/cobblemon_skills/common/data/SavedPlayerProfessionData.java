@@ -6,6 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.saveddata.SavedData;
 import org.jetbrains.annotations.NotNull;
 
@@ -54,6 +55,10 @@ public final class SavedPlayerProfessionData extends SavedData {
         instance.setDirty();
     }
 
+    public static void put(ServerPlayer player, PlayerProfile profile) {
+        put(player.getUUID(), profile);
+    }
+
     public static PlayerProfile get(UUID playerUUID) {
         SavedPlayerProfessionData instance = getInstance();
         PlayerProfile profile = instance.playerProfiles.get(playerUUID);
@@ -63,6 +68,10 @@ public final class SavedPlayerProfessionData extends SavedData {
             instance.setDirty();
         }
         return profile;
+    }
+
+    public static PlayerProfile get(ServerPlayer player) {
+        return get(player.getUUID());
     }
 
     public static final SavedData.Factory<SavedPlayerProfessionData> FACTORY = new SavedData.Factory<>(
