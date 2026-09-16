@@ -10,6 +10,10 @@ public final class ProfessionProgress {
     private int level;
     private double experience;
 
+    private static int getLevelMultiplier() {
+        return 20;
+    }
+
     public int level() {
         return level;
     }
@@ -51,7 +55,7 @@ public final class ProfessionProgress {
         if (level >= MAX_LEVEL) {
             return 0;
         }
-        return BASE_EXPERIENCE_PER_LEVEL + level * 20;
+        return BASE_EXPERIENCE_PER_LEVEL + level * getLevelMultiplier();
     }
 
     public double totalExperience() {
