@@ -8,8 +8,10 @@ import com.cobblemon.mod.common.api.events.fishing.BobberSpawnPokemonEvent;
 import com.cobblemon.mod.common.api.events.item.LeftoversCreatedEvent;
 import com.cobblemon.mod.common.api.events.pokeball.PokemonCatchRateEvent;
 import com.cobblemon.mod.common.api.events.pokemon.*;
+import com.cobblemon.mod.common.api.pokemon.PokemonProperties;
 import com.cobblemon.mod.common.api.pokemon.experience.BattleExperienceSource;
 import com.cobblemon.mod.common.entity.pokeball.EmptyPokeBallEntity;
+import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.util.PlayerExtensionsKt;
 import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
 import dev.matthiesen.cobblemon_skills.common.data.Profession;
@@ -35,6 +37,17 @@ public final class ProfessionManager {
         for (ServerPlayer player : event.server().getPlayerList().getPlayers()) {
             syncFishingStats(player);
         }
+    }
+
+    public static void onShinyCalculation(ShinyChanceCalculationEvent event) {
+        event.addModificationFunction(ProfessionManager::onShinyCalculationModify);
+    }
+
+    private static Float onShinyCalculationModify(Float rate, ServerPlayer player, Pokemon pokemon) {
+        var catchingLevel = SavedPlayerProfessionData.get(player).getProgress(Profession.CATCHING).level();
+        float maxMultiplier = 10.0F; // Maximum multiplier for the catch rate bonus
+        float newCatchMultiplier = Math.min(0.01F * catchingLevel, maxMultiplier); // Ensure the multiplier doesn't exceed the maximum
+        return Math.max(rate / newCatchMultiplier, 1);
     }
 
     private static void syncFishingStats(ServerPlayer player) {
@@ -151,7 +164,24 @@ public final class ProfessionManager {
         var breedingLevel = SavedPlayerProfessionData.get(event.getPlayer()).getProgress(Profession.BREEDING).level();
         int currentFriendShip = event.getEgg().getFriendship() != null ? event.getEgg().getFriendship() : 0;
         var egg = event.getEgg();
+        boolean currentShinyStatus = Boolean.TRUE.equals(egg.getShiny());
+        egg.setShiny(shouldMakeEggShiny(breedingLevel, currentShinyStatus));
         egg.setFriendship(currentFriendShip + ExperienceManager.getBreedingFriendshipBonus(breedingLevel));
+    }
+
+    private static boolean shouldMakeEggShiny(int breedingLevel, boolean currentShinyStatus) {
+        if (currentShinyStatus) {
+            return true; // If the egg is already shiny, keep it shiny.
+        }
+
+        float baseShinyChance = 0.01f; // Base shiny chance (1%)
+        float breedingBonus = breedingLevel * 0.001f; // Each breeding level adds 0.1% to the shiny chance
+        float totalShinyChance = baseShinyChance + breedingBonus;
+
+        // Ensure the shiny chance does not exceed a certain cap (e.g., 10%)
+        totalShinyChance = Math.min(totalShinyChance, 0.10f);
+
+        return Math.random() < totalShinyChance;
     }
 
     public static void onHatchEggPost(HatchEggEvent.Post event) {

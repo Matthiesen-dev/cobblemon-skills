@@ -46,6 +46,7 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
         CobblemonEvents.LEVEL_UP_EVENT.subscribe(Priority.LOWEST, ProfessionManager::onLevelUp);
         CobblemonEvents.LEFTOVERS_CREATED.subscribe(Priority.LOWEST, ProfessionManager::onLeftoversCreated);
         CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.LOWEST, ProfessionManager::onBattleVictory);
+        CobblemonEvents.SHINY_CHANCE_CALCULATION.subscribe(Priority.LOWEST, ProfessionManager::onShinyCalculation);
 
         createInfoLog("Initialized");
     }
