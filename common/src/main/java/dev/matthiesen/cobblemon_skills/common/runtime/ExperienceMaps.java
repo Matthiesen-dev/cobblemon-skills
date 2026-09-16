@@ -424,6 +424,10 @@ public final class ExperienceMaps {
         return criticalCapture ? base + 150.0 : base;
     }
 
+    public static double getBattleExperience() {
+        return 300.0; // Base XP for winning a battle
+    }
+
     public static double getBreedingEggCollected() {
         return 250.0; // Base XP for collecting an egg
     }

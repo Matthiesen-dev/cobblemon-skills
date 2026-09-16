@@ -203,7 +203,7 @@ public final class ProfessionManager {
                 INSTANCE.awardProfessionExperience(
                         player,
                         Profession.TRAINING,
-                        300.0
+                        ExperienceMaps.getBattleExperience()
                 );
             }
         });
