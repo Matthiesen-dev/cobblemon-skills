@@ -104,7 +104,7 @@ public final class ExperienceMaps {
             Map.entry(CobblemonBlocks.CYAN_MINT, COBBLEMON_FARMING_XP),
             Map.entry(CobblemonBlocks.GREEN_MINT, COBBLEMON_FARMING_XP),
             Map.entry(CobblemonBlocks.PINK_MINT, COBBLEMON_FARMING_XP),
-//            Map.entry(CobblemonBlocks.RED_MINT, COBBLEMON_FARMING_XP), // TODO: Red mint currently is "private" by Cobblemon
+//            Map.entry(CobblemonBlocks.RED_MINT, COBBLEMON_FARMING_XP), // TODO: Red mint currently is "private" by Cobblemon (see https://gitlab.com/cable-mc/cobblemon/-/merge_requests/2419)
             Map.entry(CobblemonBlocks.WHITE_MINT, COBBLEMON_FARMING_XP),
             Map.entry(CobblemonBlocks.GALARICA_NUT_BUSH, COBBLEMON_FARMING_XP),
             Map.entry(CobblemonBlocks.BIG_ROOT, COBBLEMON_FARMING_XP),
