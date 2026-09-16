@@ -202,8 +202,9 @@ public final class ProfessionManager {
         });
     }
 
-    public static void onBlockBreak(Level world, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
-        if (!(world instanceof ServerLevel serverWorld) || !(player instanceof ServerPlayer serverPlayer)) {
+    public static void onBlockBreak(Level world, Player player, @SuppressWarnings("unused") BlockPos pos,
+                                    BlockState state, @SuppressWarnings("unused") BlockEntity blockEntity) {
+        if (!(world instanceof ServerLevel) || !(player instanceof ServerPlayer serverPlayer)) {
             return;
         }
 
@@ -222,6 +223,7 @@ public final class ProfessionManager {
         }
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public int awardProfessionExperience(ServerPlayer player, Profession profession, double experience) {
         PlayerProfile profile = getPlayerProfile(player);
         ProfessionProgress progress = profile.getProgress(profession);
@@ -288,7 +290,7 @@ public final class ProfessionManager {
         }
 
         int diff = currentFishCaught - lastFishCaught;
-        int level = INSTANCE.awardProfessionExperience(
+        INSTANCE.awardProfessionExperience(
                 player,
                 Profession.FISHING,
                 ExperienceMaps.getFishingExperience(diff)
