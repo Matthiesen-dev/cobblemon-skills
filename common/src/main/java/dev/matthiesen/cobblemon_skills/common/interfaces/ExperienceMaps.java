@@ -100,6 +100,16 @@ public final class ExperienceMaps {
             Map.entry(CobblemonBlocks.YELLOW_APRICORN, COBBLEMON_FARMING_XP),
             Map.entry(CobblemonBlocks.HEARTY_GRAINS, COBBLEMON_FARMING_XP),
             Map.entry(CobblemonBlocks.MEDICINAL_LEEK, COBBLEMON_FARMING_XP),
+            Map.entry(CobblemonBlocks.BLUE_MINT, COBBLEMON_FARMING_XP),
+            Map.entry(CobblemonBlocks.CYAN_MINT, COBBLEMON_FARMING_XP),
+            Map.entry(CobblemonBlocks.GREEN_MINT, COBBLEMON_FARMING_XP),
+            Map.entry(CobblemonBlocks.PINK_MINT, COBBLEMON_FARMING_XP),
+//            Map.entry(CobblemonBlocks.RED_MINT, COBBLEMON_FARMING_XP), // TODO: Red mint currently is "private" by Cobblemon
+            Map.entry(CobblemonBlocks.WHITE_MINT, COBBLEMON_FARMING_XP),
+            Map.entry(CobblemonBlocks.GALARICA_NUT_BUSH, COBBLEMON_FARMING_XP),
+            Map.entry(CobblemonBlocks.BIG_ROOT, COBBLEMON_FARMING_XP),
+            Map.entry(CobblemonBlocks.REVIVAL_HERB, COBBLEMON_FARMING_XP),
+            Map.entry(CobblemonBlocks.ENERGY_ROOT, COBBLEMON_FARMING_XP),
 
             // Berries
             Map.entry(CobblemonBlocks.AGUAV_BERRY, COBBLEMON_BERRY_FARMING_XP),
