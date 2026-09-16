@@ -27,29 +27,20 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
     public void initialize() {
         super.initialize();
 
+        // Platform Events
         PlatformEvents.SERVER_END_TICK.subscribe(ProfessionManager::onServerTick);
         CSPlatformEvents.BLOCK_BREAK.subscribe(ProfessionManager::onBlockBreak);
 
-        // Archaeology
+        // Cobblemon Events
         CobblemonEvents.FOSSIL_REVIVED.subscribe(Priority.LOWEST, ProfessionManager::onFossilRevived);
-
-        // Fishing
         CobblemonEvents.BOBBER_SPAWN_POKEMON_POST.subscribe(Priority.LOWEST, ProfessionManager::onFishingBobberSpawn);
-
-        // Botany
         CobblemonEvents.APRICORN_HARVESTED.subscribe(Priority.LOWEST, ProfessionManager::onApricornHarvest);
         CobblemonEvents.BERRY_HARVEST.subscribe(Priority.LOWEST, ProfessionManager::onBerryHarvest);
-
-        // Catching
         CobblemonEvents.POKEMON_CATCH_RATE.subscribe(Priority.LOWEST, ProfessionManager::onPokemonCatchRateCalculation);
         CobblemonEvents.POKEMON_CAPTURED.subscribe(Priority.LOWEST, ProfessionManager::onPokemonCaptured);
-
-        // Breeding
         CobblemonEvents.COLLECT_EGG.subscribe(Priority.LOWEST, ProfessionManager::onCollectEgg);
         CobblemonEvents.HATCH_EGG_PRE.subscribe(Priority.LOWEST, ProfessionManager::onHatchEggPre);
         CobblemonEvents.HATCH_EGG_POST.subscribe(Priority.LOWEST, ProfessionManager::onHatchEggPost);
-
-        // Training
         CobblemonEvents.EXPERIENCE_GAINED_EVENT_PRE.subscribe(Priority.LOWEST, ProfessionManager::onExperienceGainedPre);
         CobblemonEvents.EXPERIENCE_GAINED_EVENT_POST.subscribe(Priority.LOWEST, ProfessionManager::onExperienceGainedPost);
         CobblemonEvents.LEVEL_UP_EVENT.subscribe(Priority.LOWEST, ProfessionManager::onLevelUp);
