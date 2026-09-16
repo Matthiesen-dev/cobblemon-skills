@@ -320,6 +320,15 @@ public final class ExperienceMaps {
         return fishingCaught * 250.0;
     }
 
+    public static double getFossilRevivalExperience(Pokemon pokemon) {
+        boolean isShiny = pokemon.getShiny();
+        double baseExperience = 500.0; // Base XP for reviving a fossil Pokémon
+        if (isShiny) {
+            baseExperience += 400.0; // Bonus for shiny Pokémon
+        }
+        return baseExperience;
+    }
+
     public static double getFishingExperienceFromPokemon(PokemonEntity pokemonEntity) {
         Pokemon pokemon = pokemonEntity.getPokemon();
         int level = pokemon.getLevel();

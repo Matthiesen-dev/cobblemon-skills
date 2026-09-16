@@ -60,6 +60,16 @@ public final class ProfessionManager {
         }
     }
 
+    public static void onFossilRevived(FossilRevivedEvent event) {
+        if (event.getPlayer() instanceof ServerPlayer serverPlayer) {
+            INSTANCE.awardProfessionExperience(
+                    serverPlayer,
+                    Profession.ARCHEOLOGY,
+                    ExperienceMaps.getFossilRevivalExperience(event.getPokemon())
+            );
+        }
+    }
+
     public static void onCookingPotTake(Player player, ItemStack itemStack) {
         if (player instanceof ServerPlayer serverPlayer && ExperienceMaps.isCobblemonCookingItem(itemStack.getItem())) {
             INSTANCE.awardProfessionExperience(

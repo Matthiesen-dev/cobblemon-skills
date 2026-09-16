@@ -28,6 +28,9 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
 
         PlatformEvents.SERVER_END_TICK.subscribe(ProfessionManager::onServerTick);
 
+        // Archaeology
+        CobblemonEvents.FOSSIL_REVIVED.subscribe(Priority.LOWEST, ProfessionManager::onFossilRevived);
+
         // Fishing
         CobblemonEvents.BOBBER_SPAWN_POKEMON_POST.subscribe(Priority.LOWEST, ProfessionManager::onFishingBobberSpawn);
 
