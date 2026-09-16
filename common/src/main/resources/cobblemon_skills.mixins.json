@@ -4,9 +4,9 @@
   "package": "dev.matthiesen.cobblemon_skills.common.mixins",
   "compatibilityLevel": "JAVA_21",
   "server": [
-    "BrewingStandMixin",
+    "BrewingStandMenuPotionSlotMixin",
     "BrushableBlockEntityMixin",
-    "CookingPotMixin"
+    "CookingPotResultSlotMixin"
   ],
   "injectors": {
     "defaultRequire": 1
