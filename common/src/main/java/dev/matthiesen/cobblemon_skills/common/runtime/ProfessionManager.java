@@ -37,7 +37,7 @@ public final class ProfessionManager {
         if (event.getThrower() instanceof ServerPlayer player) {
             var captureLevel = INSTANCE.getPlayerProfile(player).getProgress(Profession.CATCHING).level();
             var currentCatchRate = event.getCatchRate();
-            event.setCatchRate(currentCatchRate * INSTANCE.getCaptureRateBonusMultiplier(captureLevel));
+            event.setCatchRate(currentCatchRate * ExperienceMaps.getCaptureRateBonusMultiplier(captureLevel));
         }
     }
 
@@ -46,7 +46,7 @@ public final class ProfessionManager {
         INSTANCE.awardProfessionExperience(
                 event.getPlayer(),
                 Profession.CATCHING,
-                INSTANCE.getCaptureSkillExperience(event.getPokemon().getLevel(), isCriticalCapture)
+                ExperienceMaps.getCaptureSkillExperience(event.getPokemon().getLevel(), isCriticalCapture)
         );
     }
 
@@ -54,7 +54,7 @@ public final class ProfessionManager {
         INSTANCE.awardProfessionExperience(
                 event.getPlayer(),
                 Profession.BREEDING,
-                INSTANCE.getBreedingEggCollected()
+                ExperienceMaps.getBreedingEggCollected()
         );
     }
 
@@ -62,14 +62,14 @@ public final class ProfessionManager {
         var breedingLevel = INSTANCE.getPlayerProfile(event.getPlayer()).getProgress(Profession.BREEDING).level();
         int currentFriendShip = event.getEgg().getFriendship() != null ? event.getEgg().getFriendship() : 0;
         var egg = event.getEgg();
-        egg.setFriendship(currentFriendShip + INSTANCE.getBreedingFriendshipBonus(breedingLevel));
+        egg.setFriendship(currentFriendShip + ExperienceMaps.getBreedingFriendshipBonus(breedingLevel));
     }
 
     public static void onHatchEggPost(HatchEggEvent.Post event) {
         INSTANCE.awardProfessionExperience(
                 event.getPlayer(),
                 Profession.BREEDING,
-                INSTANCE.getBreedingEggHatched(event.getPokemon().getSpecies().getEggCycles())
+                ExperienceMaps.getBreedingEggHatched(event.getPokemon().getSpecies().getEggCycles())
         );
     }
 
@@ -78,7 +78,7 @@ public final class ProfessionManager {
             ServerPlayer owner = event.getPokemon().getOwnerPlayer();
             if (owner != null) {
                 var trainingLevel = INSTANCE.getPlayerProfile(owner).getProgress(Profession.TRAINING).level();
-                var bonus = INSTANCE.trainingSkillBonusExperience(trainingLevel, event.getExperience());
+                var bonus = ExperienceMaps.trainingSkillBonusExperience(trainingLevel, event.getExperience());
                 if (bonus > 0) {
                     event.setExperience(event.getExperience() + bonus);
                 }
@@ -93,7 +93,7 @@ public final class ProfessionManager {
                 INSTANCE.awardProfessionExperience(
                         owner,
                         Profession.TRAINING,
-                        INSTANCE.trainingSkillExperienceFromBattle(event.getExperience())
+                        ExperienceMaps.trainingSkillExperienceFromBattle(event.getExperience())
                 );
             }
         }
@@ -101,7 +101,7 @@ public final class ProfessionManager {
 
     public static void onLevelUp(LevelUpEvent event) {
         ServerPlayer owner = event.getPokemon().getOwnerPlayer();
-        var skillExperience = INSTANCE.getTrainingSkillExperienceFromLevelUp(event.getOldLevel(), event.getNewLevel());
+        var skillExperience = ExperienceMaps.getTrainingSkillExperienceFromLevelUp(event.getOldLevel(), event.getNewLevel());
         if (skillExperience > 0.0) {
             INSTANCE.awardProfessionExperience(
                     owner,
@@ -179,49 +179,5 @@ public final class ProfessionManager {
 
     public void save(ServerPlayer player, PlayerProfile profile) {
         SavedPlayerProfessionData.put(player.getUUID(), profile);
-    }
-
-    public double captureCatchRateBonusPercent(int level) {
-        return Math.min(10.0, level * 0.10);
-    }
-
-    public float getCaptureRateBonusMultiplier(int level) {
-        return (float) (1.0 + (captureCatchRateBonusPercent(level) / 100.0));
-    }
-
-    public double getCaptureSkillExperience(int pokemonLevel, boolean criticalCapture) {
-        double base = 200.0 + Math.max(1, pokemonLevel) * 8.0;
-        return criticalCapture ? base + 150.0 : base;
-    }
-
-    private double getBreedingEggCollected() {
-        return 250.0; // Base XP for collecting an egg
-    }
-
-    private int getBreedingFriendshipBonus(int breedingLevel) {
-        return Math.min(20, breedingLevel / 5); // Base friendship bonus for hatching an egg, increases with breeding level
-    }
-
-    private double getBreedingEggHatched(int eggCycles) {
-        return 200.0 + Math.max(0, eggCycles) * 4.0; // Base XP for hatching an egg plus bonus based on egg cycles
-    }
-
-    private double getTrainingSkillExperienceFromLevelUp(int oldLevel, int newLevel) {
-        return Math.max(0, newLevel - oldLevel) * 300.0;
-    }
-
-    private double trainingSkillExperienceFromBattle(double battleExperience) {
-        if (battleExperience <= 0) {
-            return 0.0;
-        }
-        return Math.max(20.0, battleExperience * 0.20);
-    }
-
-    public double trainingBattleExperienceBonusPercent(int level) {
-        return Math.min(25.0, level * 0.25);
-    }
-
-    private int trainingSkillBonusExperience(int level, int baseExperience) {
-        return (int) Math.floor(baseExperience * (trainingBattleExperienceBonusPercent(level) / 100.0));
     }
 }

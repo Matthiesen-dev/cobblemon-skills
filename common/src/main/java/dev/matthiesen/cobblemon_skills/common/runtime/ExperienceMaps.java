@@ -6,6 +6,8 @@ import net.minecraft.world.level.block.Block;
 import java.util.Map;
 
 public final class ExperienceMaps {
+    private ExperienceMaps() {}
+
     private static final Integer ORE_BLOCK_XP = 1800;
     private static final Integer DEEPSLATE_ORE_BLOCK_XP = 2600;
     private static final Integer MISC_ORE_BLOCK_XP = 2200;
@@ -164,4 +166,48 @@ public final class ExperienceMaps {
             Map.entry(CobblemonBlocks.WIKI_BERRY, COBBLEMON_BERRY_FARMING_XP),
             Map.entry(CobblemonBlocks.YACHE_BERRY, COBBLEMON_BERRY_FARMING_XP)
     );
+
+    public static double captureCatchRateBonusPercent(int level) {
+        return Math.min(10.0, level * 0.10);
+    }
+
+    public static float getCaptureRateBonusMultiplier(int level) {
+        return (float) (1.0 + (captureCatchRateBonusPercent(level) / 100.0));
+    }
+
+    public static double getCaptureSkillExperience(int pokemonLevel, boolean criticalCapture) {
+        double base = 200.0 + Math.max(1, pokemonLevel) * 8.0;
+        return criticalCapture ? base + 150.0 : base;
+    }
+
+    public static double getBreedingEggCollected() {
+        return 250.0; // Base XP for collecting an egg
+    }
+
+    public static int getBreedingFriendshipBonus(int breedingLevel) {
+        return Math.min(20, breedingLevel / 5); // Base friendship bonus for hatching an egg, increases with breeding level
+    }
+
+    public static double getBreedingEggHatched(int eggCycles) {
+        return 200.0 + Math.max(0, eggCycles) * 4.0; // Base XP for hatching an egg plus bonus based on egg cycles
+    }
+
+    public static double getTrainingSkillExperienceFromLevelUp(int oldLevel, int newLevel) {
+        return Math.max(0, newLevel - oldLevel) * 300.0;
+    }
+
+    public static double trainingSkillExperienceFromBattle(double battleExperience) {
+        if (battleExperience <= 0) {
+            return 0.0;
+        }
+        return Math.max(20.0, battleExperience * 0.20);
+    }
+
+    public static double trainingBattleExperienceBonusPercent(int level) {
+        return Math.min(25.0, level * 0.25);
+    }
+
+    public static int trainingSkillBonusExperience(int level, int baseExperience) {
+        return (int) Math.floor(baseExperience * (trainingBattleExperienceBonusPercent(level) / 100.0));
+    }
 }
