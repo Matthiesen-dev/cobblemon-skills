@@ -2,6 +2,11 @@ package dev.matthiesen.cobblemon_skills.common.runtime;
 
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
 import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent;
+import com.cobblemon.mod.common.api.events.berry.BerryHarvestEvent;
+import com.cobblemon.mod.common.api.events.farming.ApricornHarvestEvent;
+import com.cobblemon.mod.common.api.events.fishing.BaitConsumedEvent;
+import com.cobblemon.mod.common.api.events.fishing.BobberSpawnPokemonEvent;
+import com.cobblemon.mod.common.api.events.item.LeftoversCreatedEvent;
 import com.cobblemon.mod.common.api.events.pokeball.PokemonCatchRateEvent;
 import com.cobblemon.mod.common.api.events.pokemon.*;
 import com.cobblemon.mod.common.api.pokemon.experience.BattleExperienceSource;
@@ -62,6 +67,32 @@ public final class ProfessionManager {
                     serverPlayer,
                     Profession.COOKING,
                     ExperienceMaps.getCobblemonCookingItemExperience(itemStack.getItem())
+            );
+        }
+    }
+
+    public static void onApricornHarvest(ApricornHarvestEvent event) {
+        // TODO: Add experience for harvesting apricorns
+    }
+
+    public static void onBerryHarvest(BerryHarvestEvent event) {
+        // TODO: Add experience for harvesting berries
+    }
+
+    public static void onFishingBobberSpawn(BobberSpawnPokemonEvent.Post event) {
+        // TODO: Add experience for fishing
+    }
+
+    public static void onFishingBaitConsumed(BaitConsumedEvent event) {
+        // TODO: Add feature for fishing bait consumed
+    }
+
+    public static void onLeftoversCreated(LeftoversCreatedEvent event) {
+        if (event.getPlayerEntity() instanceof ServerPlayer serverPlayer) {
+            INSTANCE.awardProfessionExperience(
+                    serverPlayer,
+                    Profession.TRAINING,
+                    ExperienceMaps.getLeftoversExperience()
             );
         }
     }

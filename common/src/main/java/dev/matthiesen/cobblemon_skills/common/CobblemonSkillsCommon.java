@@ -28,6 +28,14 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
 
         PlatformEvents.SERVER_END_TICK.subscribe(ProfessionManager::onServerTick);
 
+        // Fishing
+        CobblemonEvents.BOBBER_SPAWN_POKEMON_POST.subscribe(Priority.LOWEST, ProfessionManager::onFishingBobberSpawn);
+        CobblemonEvents.BAIT_CONSUMED.subscribe(Priority.LOWEST, ProfessionManager::onFishingBaitConsumed);
+
+        // Botany
+        CobblemonEvents.APRICORN_HARVESTED.subscribe(Priority.LOWEST, ProfessionManager::onApricornHarvest);
+        CobblemonEvents.BERRY_HARVEST.subscribe(Priority.LOWEST, ProfessionManager::onBerryHarvest);
+
         // Catching
         CobblemonEvents.POKEMON_CATCH_RATE.subscribe(Priority.LOWEST, ProfessionManager::onPokemonCatchRateCalculation);
         CobblemonEvents.POKEMON_CAPTURED.subscribe(Priority.LOWEST, ProfessionManager::onPokemonCaptured);
@@ -41,6 +49,7 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
         CobblemonEvents.EXPERIENCE_GAINED_EVENT_PRE.subscribe(Priority.LOWEST, ProfessionManager::onExperienceGainedPre);
         CobblemonEvents.EXPERIENCE_GAINED_EVENT_POST.subscribe(Priority.LOWEST, ProfessionManager::onExperienceGainedPost);
         CobblemonEvents.LEVEL_UP_EVENT.subscribe(Priority.LOWEST, ProfessionManager::onLevelUp);
+        CobblemonEvents.LEFTOVERS_CREATED.subscribe(Priority.LOWEST, ProfessionManager::onLeftoversCreated);
         CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.LOWEST, ProfessionManager::onBattleVictory);
 
         createInfoLog("Initialized");

@@ -302,6 +302,10 @@ public final class ExperienceMaps {
         return COBBLEMON_BOTANY_BLOCKS.getOrDefault(block, 0);
     }
 
+    public static double getLeftoversExperience() {
+        return 100.0; // Base XP for getting Leftovers
+    }
+
     public static double getFishingExperience(int fishingCaught) {
         return fishingCaught * 250.0;
     }
