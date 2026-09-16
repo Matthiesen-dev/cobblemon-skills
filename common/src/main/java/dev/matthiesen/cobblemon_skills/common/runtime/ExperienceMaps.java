@@ -306,6 +306,14 @@ public final class ExperienceMaps {
         return 100.0; // Base XP for getting Leftovers
     }
 
+    public static double getApricornHarvestExperience() {
+        return 150.0; // Base XP for harvesting an Apricorn
+    }
+
+    public static double getBerryHarvestExperience() {
+        return 200.0; // Base XP for harvesting a Berry
+    }
+
     public static double getFishingExperience(int fishingCaught) {
         return fishingCaught * 250.0;
     }

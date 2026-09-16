@@ -72,11 +72,23 @@ public final class ProfessionManager {
     }
 
     public static void onApricornHarvest(ApricornHarvestEvent event) {
-        // TODO: Add experience for harvesting apricorns
+        if (event.getPlayer() instanceof ServerPlayer serverPlayer) {
+            INSTANCE.awardProfessionExperience(
+                    serverPlayer,
+                    Profession.BOTANY,
+                    ExperienceMaps.getApricornHarvestExperience()
+            );
+        }
     }
 
     public static void onBerryHarvest(BerryHarvestEvent event) {
-        // TODO: Add experience for harvesting berries
+        if (event.getPlayer() instanceof ServerPlayer serverPlayer) {
+            INSTANCE.awardProfessionExperience(
+                    serverPlayer,
+                    Profession.BOTANY,
+                    ExperienceMaps.getBerryHarvestExperience()
+            );
+        }
     }
 
     public static void onFishingBobberSpawn(BobberSpawnPokemonEvent.Post event) {
