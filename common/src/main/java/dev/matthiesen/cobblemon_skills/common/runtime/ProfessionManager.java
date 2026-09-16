@@ -15,10 +15,10 @@ import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
 import dev.matthiesen.cobblemon_skills.common.data.PlayerProfile;
 import dev.matthiesen.cobblemon_skills.common.data.Profession;
 import dev.matthiesen.cobblemon_skills.common.data.ProfessionProgress;
+import dev.matthiesen.cobblemon_skills.common.platform.BlockBreakEvent;
 import dev.matthiesen.matthiesen_core.common.api.events.server.ServerEvent;
 import dev.matthiesen.matthiesen_core.common.utility.SoundsPlayer;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
@@ -29,9 +29,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.HashMap;
 import java.util.List;
@@ -212,23 +209,22 @@ public final class ProfessionManager {
         });
     }
 
-    public static void onBlockBreak(Level world, Player player, @SuppressWarnings("unused") BlockPos pos,
-                                    BlockState state, @SuppressWarnings("unused") BlockEntity blockEntity) {
-        if (!(world instanceof ServerLevel) || !(player instanceof ServerPlayer serverPlayer)) {
+    public static void onBlockBreak(BlockBreakEvent event) {
+        if (!(event.world() instanceof ServerLevel) || !(event.player() instanceof ServerPlayer serverPlayer)) {
             return;
         }
 
-        if (ExperienceMaps.isArcheologyBlock(state.getBlock())) {
+        if (ExperienceMaps.isArcheologyBlock(event.state().getBlock())) {
             INSTANCE.awardProfessionExperience(
                     serverPlayer,
                     Profession.ARCHEOLOGY,
-                    ExperienceMaps.getArcheologyBlockExperience(state.getBlock())
+                    ExperienceMaps.getArcheologyBlockExperience(event.state().getBlock())
             );
-        } else if (ExperienceMaps.isBotanyBlock(state.getBlock())) {
+        } else if (ExperienceMaps.isBotanyBlock(event.state().getBlock())) {
             INSTANCE.awardProfessionExperience(
                     serverPlayer,
                     Profession.BOTANY,
-                    ExperienceMaps.getBotanyBlockExperience(state.getBlock())
+                    ExperienceMaps.getBotanyBlockExperience(event.state().getBlock())
             );
         }
     }

@@ -1,7 +1,8 @@
 package dev.matthiesen.cobblemon_skills.neoforge;
 
 import dev.matthiesen.cobblemon_skills.common.CobblemonSkillsCommon;
-import dev.matthiesen.cobblemon_skills.common.runtime.ProfessionManager;
+import dev.matthiesen.cobblemon_skills.common.platform.BlockBreakEvent;
+import dev.matthiesen.cobblemon_skills.common.platform.CSPlatformEvents;
 import net.minecraft.world.level.Level;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
@@ -23,12 +24,12 @@ public final class CobblemonSkillsNeoForge {
             return;
         }
 
-        ProfessionManager.onBlockBreak(
+        CSPlatformEvents.BLOCK_BREAK.emit(new BlockBreakEvent(
                 level,
                 event.getPlayer(),
                 event.getPos(),
                 event.getState(),
                 event.getLevel().getBlockEntity(event.getPos())
-        );
+        ));
     }
 }

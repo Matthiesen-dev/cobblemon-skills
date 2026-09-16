@@ -2,6 +2,7 @@ package dev.matthiesen.cobblemon_skills.common;
 
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
+import dev.matthiesen.cobblemon_skills.common.platform.CSPlatformEvents;
 import dev.matthiesen.cobblemon_skills.common.runtime.ProfessionManager;
 import dev.matthiesen.libs.faststats.Token;
 import dev.matthiesen.matthiesen_core.common.AbstractCommonMod;
@@ -27,6 +28,7 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
         super.initialize();
 
         PlatformEvents.SERVER_END_TICK.subscribe(ProfessionManager::onServerTick);
+        CSPlatformEvents.BLOCK_BREAK.subscribe(ProfessionManager::onBlockBreak);
 
         // Archaeology
         CobblemonEvents.FOSSIL_REVIVED.subscribe(Priority.LOWEST, ProfessionManager::onFossilRevived);
