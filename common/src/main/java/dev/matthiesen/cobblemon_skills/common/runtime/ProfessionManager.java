@@ -125,7 +125,7 @@ public final class ProfessionManager {
         });
     }
 
-    public int awardProfessionExperience(ServerPlayer player, Profession profession, double experience) {
+    public void awardProfessionExperience(ServerPlayer player, Profession profession, double experience) {
         PlayerProfile profile = getPlayerProfile(player);
         ProfessionProgress progress = profile.getProgress(profession);
         boolean alreadyMaxLevel = progress.level() >= ProfessionProgress.MAX_LEVEL;
@@ -134,7 +134,7 @@ public final class ProfessionManager {
         save(player, profile);
 
         if (alreadyMaxLevel && levelsGained == 0) {
-            return progress.level();
+            return;
         }
 
         sendExperienceProgress(player, profession, experience, progress);
@@ -144,8 +144,6 @@ public final class ProfessionManager {
             sendLevelUpTitle(player, profession, progress.level());
             player.sendSystemMessage(Component.literal("Congratulations! Your " + profession.getLabel() + " profession has leveled up to level " + progress.level() + "!"));
         }
-
-        return progress.level();
     }
 
     private void sendLevelUpTitle(ServerPlayer player, Profession profession, int level) {
