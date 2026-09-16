@@ -2,6 +2,8 @@ package dev.matthiesen.cobblemon_skills.common.runtime;
 
 import com.cobblemon.mod.common.CobblemonBlocks;
 import com.cobblemon.mod.common.CobblemonItems;
+import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
+import com.cobblemon.mod.common.pokemon.Pokemon;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -316,6 +318,30 @@ public final class ExperienceMaps {
 
     public static double getFishingExperience(int fishingCaught) {
         return fishingCaught * 250.0;
+    }
+
+    public static double getFishingExperienceFromPokemon(PokemonEntity pokemonEntity) {
+        Pokemon pokemon = pokemonEntity.getPokemon();
+        int level = pokemon.getLevel();
+        boolean isUltraBeast = pokemon.isUltraBeast();
+        boolean isMythical = pokemon.isMythical();
+        boolean isLegendary = pokemon.isLegendary();
+        boolean isShiny = pokemon.getShiny();
+
+        double baseExperience = 200.0 + Math.max(1, level) * 10.0;
+        if (isUltraBeast) {
+            baseExperience += 100.0; // Bonus for ultra beast Pokémon
+        }
+        if (isMythical) {
+            baseExperience += 200.0; // Bonus for mythical Pokémon
+        }
+        if (isLegendary) {
+            baseExperience += 300.0; // Bonus for legendary Pokémon
+        }
+        if (isShiny) {
+            baseExperience += 400.0; // Bonus for shiny Pokémon
+        }
+        return baseExperience;
     }
 
     public static double captureCatchRateBonusPercent(int level) {

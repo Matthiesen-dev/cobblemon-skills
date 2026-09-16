@@ -4,7 +4,6 @@ import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
 import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent;
 import com.cobblemon.mod.common.api.events.berry.BerryHarvestEvent;
 import com.cobblemon.mod.common.api.events.farming.ApricornHarvestEvent;
-import com.cobblemon.mod.common.api.events.fishing.BaitConsumedEvent;
 import com.cobblemon.mod.common.api.events.fishing.BobberSpawnPokemonEvent;
 import com.cobblemon.mod.common.api.events.item.LeftoversCreatedEvent;
 import com.cobblemon.mod.common.api.events.pokeball.PokemonCatchRateEvent;
@@ -92,11 +91,13 @@ public final class ProfessionManager {
     }
 
     public static void onFishingBobberSpawn(BobberSpawnPokemonEvent.Post event) {
-        // TODO: Add experience for fishing
-    }
-
-    public static void onFishingBaitConsumed(BaitConsumedEvent event) {
-        // TODO: Add feature for fishing bait consumed
+        if (event.getBobber().getPlayerOwner() instanceof ServerPlayer serverPlayer) {
+            INSTANCE.awardProfessionExperience(
+                    serverPlayer,
+                    Profession.FISHING,
+                    ExperienceMaps.getFishingExperienceFromPokemon(event.getPokemon())
+            );
+        }
     }
 
     public static void onLeftoversCreated(LeftoversCreatedEvent event) {

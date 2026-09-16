@@ -30,7 +30,6 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
 
         // Fishing
         CobblemonEvents.BOBBER_SPAWN_POKEMON_POST.subscribe(Priority.LOWEST, ProfessionManager::onFishingBobberSpawn);
-        CobblemonEvents.BAIT_CONSUMED.subscribe(Priority.LOWEST, ProfessionManager::onFishingBaitConsumed);
 
         // Botany
         CobblemonEvents.APRICORN_HARVESTED.subscribe(Priority.LOWEST, ProfessionManager::onApricornHarvest);
