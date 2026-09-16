@@ -28,12 +28,6 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
 
         PlatformEvents.SERVER_END_TICK.subscribe(ProfessionManager::onServerTick);
 
-        // TODO: Archeology
-
-        // TODO: Botany
-
-        // TODO: Fishing
-
         // Catching
         CobblemonEvents.POKEMON_CATCH_RATE.subscribe(Priority.LOWEST, ProfessionManager::onPokemonCatchRateCalculation);
         CobblemonEvents.POKEMON_CAPTURED.subscribe(Priority.LOWEST, ProfessionManager::onPokemonCaptured);

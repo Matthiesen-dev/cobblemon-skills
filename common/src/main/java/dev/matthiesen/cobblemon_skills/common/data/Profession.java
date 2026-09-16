@@ -1,5 +1,8 @@
 package dev.matthiesen.cobblemon_skills.common.data;
 
+// TODO: Archeology
+// TODO: Botany
+// TODO: Fishing
 public enum Profession {
     ARCHEOLOGY("Archeology"), // Fossils, Gems, Crystals, etc.
     BOTANY("Botany"), // Plants, Berries, Herbs, etc.
