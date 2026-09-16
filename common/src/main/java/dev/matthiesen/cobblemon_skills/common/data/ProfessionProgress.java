@@ -4,6 +4,7 @@ import net.minecraft.nbt.CompoundTag;
 
 public final class ProfessionProgress {
     public static final int MAX_LEVEL = 100;
+    public static final int BASE_EXPERIENCE_PER_LEVEL = 1020;
     private static final String NBT_LEVEL = "level";
     private static final String NBT_EXPERIENCE = "experience";
     private int level;
@@ -50,11 +51,11 @@ public final class ProfessionProgress {
         if (level >= MAX_LEVEL) {
             return 0;
         }
-        return 1020 + level * 20;
+        return BASE_EXPERIENCE_PER_LEVEL + level * 20;
     }
 
     public double totalExperience() {
-        return (10.0 * level * level) + (1010.0 * level) + experience;
+        return (10.0 * level * level) + (BASE_EXPERIENCE_PER_LEVEL * 1.0 * level) + experience;
     }
 
     public CompoundTag toCompoundTag() {
