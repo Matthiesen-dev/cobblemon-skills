@@ -1,4 +1,4 @@
-package dev.matthiesen.cobblemon_skills.common.interfaces;
+package dev.matthiesen.cobblemon_skills.common.data;
 
 public enum Profession {
     ARCHEOLOGY("Archeology"), // Fossils, Gems, Crystals, etc.

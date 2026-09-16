@@ -1,4 +1,4 @@
-package dev.matthiesen.cobblemon_skills.common.interfaces;
+package dev.matthiesen.cobblemon_skills.common.runtime;
 
 import com.cobblemon.mod.common.CobblemonBlocks;
 import net.minecraft.world.level.block.Block;

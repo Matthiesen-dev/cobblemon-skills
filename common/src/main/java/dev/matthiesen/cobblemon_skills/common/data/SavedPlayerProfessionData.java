@@ -1,7 +1,6 @@
 package dev.matthiesen.cobblemon_skills.common.data;
 
 import dev.matthiesen.cobblemon_skills.common.CobblemonSkillsCommon;
-import dev.matthiesen.cobblemon_skills.common.interfaces.PlayerProfile;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

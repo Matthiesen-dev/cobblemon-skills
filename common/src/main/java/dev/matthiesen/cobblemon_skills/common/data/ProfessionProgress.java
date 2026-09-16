@@ -1,4 +1,4 @@
-package dev.matthiesen.cobblemon_skills.common.interfaces;
+package dev.matthiesen.cobblemon_skills.common.data;
 
 import net.minecraft.nbt.CompoundTag;
 
