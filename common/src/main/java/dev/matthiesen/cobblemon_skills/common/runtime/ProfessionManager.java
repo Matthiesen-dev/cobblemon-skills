@@ -14,23 +14,56 @@ import dev.matthiesen.cobblemon_skills.common.data.ProfessionProgress;
 import dev.matthiesen.matthiesen_core.common.api.events.server.ServerEvent;
 import dev.matthiesen.matthiesen_core.common.utility.SoundsPlayer;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitlesAnimationPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public final class ProfessionManager {
     private static final ProfessionManager INSTANCE = new ProfessionManager();
+    private final Map<UUID, Integer> playerLastFishCaughtStats = new HashMap<>();
 
     private ProfessionManager() {}
 
     public static void onServerTick(ServerEvent.EndTick event) {
-        // TODO: Implement any periodic updates or checks related to professions here, if needed in the future.
+        for (ServerPlayer player : event.server().getPlayerList().getPlayers()) {
+            INSTANCE.syncFishingStats(player);
+        }
+    }
+
+    public static void onBrewingStandTake(Player player, ItemStack itemStack) {
+        if (player instanceof ServerPlayer serverPlayer && ExperienceMaps.isCobblemonCookingItem(itemStack.getItem())) {
+            INSTANCE.awardProfessionExperience(
+                    serverPlayer,
+                    Profession.COOKING,
+                    ExperienceMaps.getCobblemonCookingItemExperience(itemStack.getItem())
+            );
+        }
+    }
+
+    public static void onCookingPotTake(Player player, ItemStack itemStack) {
+        if (player instanceof ServerPlayer serverPlayer && ExperienceMaps.isCobblemonCookingItem(itemStack.getItem())) {
+            INSTANCE.awardProfessionExperience(
+                    serverPlayer,
+                    Profession.COOKING,
+                    ExperienceMaps.getCobblemonCookingItemExperience(itemStack.getItem())
+            );
+        }
     }
 
     public static void onPokemonCatchRateCalculation(PokemonCatchRateEvent event) {
@@ -125,7 +158,27 @@ public final class ProfessionManager {
         });
     }
 
-    public void awardProfessionExperience(ServerPlayer player, Profession profession, double experience) {
+    public static void onBlockBreak(Level world, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
+        if (!(world instanceof ServerLevel serverWorld) || !(player instanceof ServerPlayer serverPlayer)) {
+            return;
+        }
+
+        if (ExperienceMaps.isArcheologyBlock(state.getBlock())) {
+            INSTANCE.awardProfessionExperience(
+                    serverPlayer,
+                    Profession.ARCHEOLOGY,
+                    ExperienceMaps.getArcheologyBlockExperience(state.getBlock())
+            );
+        } else if (ExperienceMaps.isBotanyBlock(state.getBlock())) {
+            INSTANCE.awardProfessionExperience(
+                    serverPlayer,
+                    Profession.BOTANY,
+                    ExperienceMaps.getBotanyBlockExperience(state.getBlock())
+            );
+        }
+    }
+
+    public int awardProfessionExperience(ServerPlayer player, Profession profession, double experience) {
         PlayerProfile profile = getPlayerProfile(player);
         ProfessionProgress progress = profile.getProgress(profession);
         boolean alreadyMaxLevel = progress.level() >= ProfessionProgress.MAX_LEVEL;
@@ -134,7 +187,7 @@ public final class ProfessionManager {
         save(player, profile);
 
         if (alreadyMaxLevel && levelsGained == 0) {
-            return;
+            return 0;
         }
 
         sendExperienceProgress(player, profession, experience, progress);
@@ -144,6 +197,8 @@ public final class ProfessionManager {
             sendLevelUpTitle(player, profession, progress.level());
             player.sendSystemMessage(Component.literal("Congratulations! Your " + profession.getLabel() + " profession has leveled up to level " + progress.level() + "!"));
         }
+
+        return levelsGained;
     }
 
     private void sendLevelUpTitle(ServerPlayer player, Profession profession, int level) {
@@ -179,5 +234,20 @@ public final class ProfessionManager {
 
     public void save(ServerPlayer player, PlayerProfile profile) {
         SavedPlayerProfessionData.put(player.getUUID(), profile);
+    }
+
+    private void syncFishingStats(ServerPlayer player) {
+        int currentFishCaught = player.getStats().getValue(Stats.CUSTOM.get(Stats.FISH_CAUGHT));
+        Integer lastFishCaught = playerLastFishCaughtStats.put(player.getUUID(), currentFishCaught);
+        if (lastFishCaught == null || currentFishCaught <= lastFishCaught) {
+            return;
+        }
+
+        int diff = currentFishCaught - lastFishCaught;
+        int level = INSTANCE.awardProfessionExperience(
+                player,
+                Profession.FISHING,
+                ExperienceMaps.getFishingExperience(diff)
+        );
     }
 }

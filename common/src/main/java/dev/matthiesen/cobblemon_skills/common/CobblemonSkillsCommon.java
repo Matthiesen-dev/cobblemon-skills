@@ -32,8 +32,6 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
 
         // TODO: Botany
 
-        // TODO: Cooking
-
         // TODO: Fishing
 
         // Catching

@@ -1,6 +1,9 @@
 package dev.matthiesen.cobblemon_skills.common.runtime;
 
 import com.cobblemon.mod.common.CobblemonBlocks;
+import com.cobblemon.mod.common.CobblemonItems;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 
 import java.util.Map;
@@ -166,6 +169,138 @@ public final class ExperienceMaps {
             Map.entry(CobblemonBlocks.WIKI_BERRY, COBBLEMON_BERRY_FARMING_XP),
             Map.entry(CobblemonBlocks.YACHE_BERRY, COBBLEMON_BERRY_FARMING_XP)
     );
+
+    private static final Map<Item, Integer> COBBLEMON_COOKING_ITEMS = Map.<Item, Integer>ofEntries(
+            Map.entry(CobblemonItems.ABILITY_CAPSULE, 500),
+            Map.entry(CobblemonItems.ANTIDOTE, 200),
+            Map.entry(CobblemonItems.AWAKENING, 200),
+            Map.entry(CobblemonItems.BURN_HEAL, 200),
+            Map.entry(CobblemonItems.CALCIUM, 400),
+            Map.entry(CobblemonItems.CARBOS, 400),
+            Map.entry(CobblemonItems.ELIXIR, 300),
+            Map.entry(CobblemonItems.ETHER, 300),
+            Map.entry(CobblemonItems.FULL_RESTORE, 500),
+            Map.entry(CobblemonItems.HP_UP, 400),
+            Map.entry(CobblemonItems.HYPER_POTION, 400),
+            Map.entry(CobblemonItems.ICE_HEAL, 200),
+            Map.entry(CobblemonItems.IRON, 400),
+            Map.entry(CobblemonItems.FULL_HEAL, 500),
+            Map.entry(CobblemonItems.MAX_ELIXIR, 500),
+            Map.entry(CobblemonItems.MAX_POTION, 500),
+            Map.entry(CobblemonItems.MAX_ETHER, 500),
+            Map.entry(CobblemonItems.MEDICINAL_BREW, 300),
+            Map.entry(CobblemonItems.PARALYZE_HEAL, 200),
+            Map.entry(CobblemonItems.POTION, 200),
+            Map.entry(CobblemonItems.PP_MAX, 400),
+            Map.entry(CobblemonItems.PP_UP, 400),
+            Map.entry(CobblemonItems.PROTEIN, 400),
+            Map.entry(CobblemonItems.SUPER_POTION, 400),
+            Map.entry(CobblemonItems.THROAT_SPRAY, 300),
+            Map.entry(CobblemonItems.ZINC, 400),
+
+            Map.entry(Items.BEETROOT_SOUP, 150),
+            Map.entry(CobblemonItems.BERRY_SWEET, 200),
+            Map.entry(CobblemonItems.BIG_MALASADA, 250),
+            Map.entry(CobblemonItems.APRIJUICE_BLACK, 200),
+            Map.entry(CobblemonItems.APRIJUICE_BLUE, 200),
+            Map.entry(CobblemonItems.APRIJUICE_GREEN, 200),
+            Map.entry(CobblemonItems.APRIJUICE_PINK, 200),
+            Map.entry(CobblemonItems.APRIJUICE_RED, 200),
+            Map.entry(CobblemonItems.APRIJUICE_WHITE, 200),
+            Map.entry(CobblemonItems.APRIJUICE_YELLOW, 200),
+            Map.entry(CobblemonItems.BRITTLE_CANDY, 200),
+            Map.entry(Items.CAKE, 300),
+            Map.entry(CobblemonItems.CANDIED_APPLE, 200),
+            Map.entry(CobblemonItems.CANDIED_BERRY, 200),
+            Map.entry(CobblemonItems.CASTELIACONE, 200),
+            Map.entry(CobblemonItems.CLEVER_MOCHI, 200),
+            Map.entry(CobblemonItems.CLOVER_SWEET, 200),
+            Map.entry(CobblemonItems.COURAGE_CANDY, 200),
+            Map.entry(CobblemonItems.DIRE_HIT, 200),
+            Map.entry(CobblemonItems.EXPERIENCE_CANDY_XS, 200),
+            Map.entry(CobblemonItems.EXPERIENCE_CANDY_S, 300),
+            Map.entry(CobblemonItems.EXPERIENCE_CANDY_M, 400),
+            Map.entry(CobblemonItems.EXPERIENCE_CANDY_L, 500),
+            Map.entry(CobblemonItems.EXPERIENCE_CANDY_XL, 600),
+            Map.entry(CobblemonItems.FLOWER_SWEET, 200),
+            Map.entry(CobblemonItems.FRESH_START_MOCHI, 200),
+            Map.entry(CobblemonItems.GENIUS_MOCHI, 200),
+            Map.entry(CobblemonItems.GUARD_SPEC, 200),
+            Map.entry(CobblemonItems.HEALTH_CANDY, 200),
+            Map.entry(CobblemonItems.HEALTH_MOCHI, 200),
+            Map.entry(CobblemonItems.JUBILIFE_MUFFIN, 200),
+            Map.entry(CobblemonItems.LAVA_COOKIE, 200),
+            Map.entry(CobblemonItems.LEEK_AND_POTATO_STEW, 200),
+            Map.entry(CobblemonItems.LOVE_SWEET, 200),
+            Map.entry(CobblemonItems.LUMIOSE_GALETTE, 200),
+            Map.entry(CobblemonItems.MAX_REVIVE, 500),
+            Map.entry(CobblemonItems.MIGHTY_CANDY, 200),
+            Map.entry(CobblemonItems.MUSCLE_MOCHI, 200),
+            Map.entry(Items.MUSHROOM_STEW, 200),
+            Map.entry(CobblemonItems.NUMB_CANDY, 200),
+            Map.entry(CobblemonItems.OLD_GATEAU, 200),
+            Map.entry(CobblemonItems.OPEN_FACED_SANDWICH, 200),
+            Map.entry(CobblemonItems.PEWTER_CRUNCHIES, 200),
+            Map.entry(CobblemonItems.POKE_BAIT, 200),
+            Map.entry(CobblemonItems.POKE_SNACK, 600),
+            Map.entry(CobblemonItems.PONIGIRI, 200),
+            Map.entry(CobblemonItems.POTATO_MOCHI, 200),
+            Map.entry(Items.PUMPKIN_PIE, 200),
+            Map.entry(CobblemonItems.QUICK_CANDY, 200),
+            Map.entry(Items.RABBIT_STEW, 200),
+            Map.entry(CobblemonItems.RAGE_CANDY_BAR, 200),
+            Map.entry(CobblemonItems.RESIST_MOCHI, 200),
+            Map.entry(CobblemonItems.REVIVE, 500),
+            Map.entry(CobblemonItems.RIBBON_SWEET, 200),
+            Map.entry(CobblemonItems.SICKLY_CANDY, 200),
+            Map.entry(CobblemonItems.SINISTER_TEA, 200),
+            Map.entry(CobblemonItems.SLOW_CANDY, 200),
+            Map.entry(CobblemonItems.SMART_CANDY, 200),
+            Map.entry(CobblemonItems.SMOKED_TAIL_CURRY, 200),
+            Map.entry(CobblemonItems.STAR_SWEET, 200),
+            Map.entry(CobblemonItems.STRAWBERRY_SWEET, 200),
+            Map.entry(Items.SUSPICIOUS_STEW, 200),
+            Map.entry(CobblemonItems.SWEET_HEART, 200),
+            Map.entry(CobblemonItems.SWIFT_MOCHI, 200),
+            Map.entry(CobblemonItems.TOUGH_CANDY, 200),
+            Map.entry(CobblemonItems.VIVICHOKE_DIP, 200),
+            Map.entry(CobblemonItems.WEAK_CANDY, 200),
+            Map.entry(CobblemonItems.WHIPPED_DREAM, 200),
+            Map.entry(CobblemonItems.X_ACCURACY, 200),
+            Map.entry(CobblemonItems.X_ATTACK, 200),
+            Map.entry(CobblemonItems.X_DEFENSE, 200),
+            Map.entry(CobblemonItems.X_SP_ATK, 200),
+            Map.entry(CobblemonItems.X_SP_DEF, 200),
+            Map.entry(CobblemonItems.X_SPEED, 200)
+    );
+
+    public static boolean isCobblemonCookingItem(Item item) {
+        return COBBLEMON_COOKING_ITEMS.containsKey(item);
+    }
+
+    public static int getCobblemonCookingItemExperience(Item item) {
+        return COBBLEMON_COOKING_ITEMS.getOrDefault(item, 0);
+    }
+
+    public static boolean isArcheologyBlock(Block block) {
+        return COBBLEMON_ARCHEOLOGY_BLOCKS.containsKey(block);
+    }
+
+    public static boolean isBotanyBlock(Block block) {
+        return COBBLEMON_BOTANY_BLOCKS.containsKey(block);
+    }
+
+    public static int getArcheologyBlockExperience(Block block) {
+        return COBBLEMON_ARCHEOLOGY_BLOCKS.getOrDefault(block, 0);
+    }
+
+    public static int getBotanyBlockExperience(Block block) {
+        return COBBLEMON_BOTANY_BLOCKS.getOrDefault(block, 0);
+    }
+
+    public static double getFishingExperience(int fishingCaught) {
+        return fishingCaught * 250.0;
+    }
 
     public static double captureCatchRateBonusPercent(int level) {
         return Math.min(10.0, level * 0.10);

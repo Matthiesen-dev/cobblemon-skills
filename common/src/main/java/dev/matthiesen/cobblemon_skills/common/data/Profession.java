@@ -3,7 +3,7 @@ package dev.matthiesen.cobblemon_skills.common.data;
 public enum Profession {
     ARCHEOLOGY("Archeology"), // Fossils, Gems, Crystals, etc.
     BOTANY("Botany"), // Plants, Berries, Herbs, etc.
-    COOKING("Cooking"), // Cobblemon Cooking, Recipes, etc.
+    COOKING("Cooking"),
     FISHING("Fishing"), // Cobblemon Fishing
     CATCHING("Catching"),
     TRAINING("Training"),
