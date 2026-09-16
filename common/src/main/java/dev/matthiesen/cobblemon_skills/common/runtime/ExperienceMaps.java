@@ -7,7 +7,6 @@ import com.cobblemon.mod.common.pokemon.Pokemon;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 
 import java.util.Map;
@@ -34,6 +33,9 @@ public final class ExperienceMaps {
     private static final Integer COOKING_TIER_2_XP = 400;
     private static final Integer COOKING_TIER_3_XP = 500;
     private static final Integer COOKING_TIER_4_XP = 600;
+    private static final Integer FOSSIL_XP = 1000;
+    private static final Integer COMMON_ARCHEOLOGY_ITEM_XP = 200;
+    private static final Integer UNCOMMON_ARCHEOLOGY_ITEM_XP = 400;
 
     private static final Map<Block, Integer> COBBLEMON_ARCHEOLOGY_BLOCKS = Map.<Block, Integer>ofEntries(
             // Ores
@@ -99,8 +101,6 @@ public final class ExperienceMaps {
             Map.entry(CobblemonBlocks.RELIC_COIN_POUCH, RELIC_COIN_POUCH_XP)
     );
 
-    private static final Integer FOSSIL_XP = 1000;
-
     private static final Map<Item, Integer> COBBLEMON_ARCHEOLOGY_ITEMS = Map.ofEntries(
             Map.entry(CobblemonItems.ARMOR_FOSSIL, FOSSIL_XP),
             Map.entry(CobblemonItems.CLAW_FOSSIL, FOSSIL_XP),
@@ -116,8 +116,35 @@ public final class ExperienceMaps {
             Map.entry(CobblemonItems.FOSSILIZED_BIRD, FOSSIL_XP),
             Map.entry(CobblemonItems.FOSSILIZED_DINO, FOSSIL_XP),
             Map.entry(CobblemonItems.FOSSILIZED_FISH, FOSSIL_XP),
-            Map.entry(CobblemonItems.FOSSILIZED_DRAKE, FOSSIL_XP)
-            // TODO: Add more archeology items... this is not all of the ones we need to track
+            Map.entry(CobblemonItems.FOSSILIZED_DRAKE, FOSSIL_XP),
+            Map.entry(CobblemonItems.LEAF_STONE, COMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.MIRROR_HERB, COMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.BIG_ROOT, COMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.ENERGY_ROOT, COMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.WATER_STONE, COMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.POWER_HERB, COMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.WHITE_HERB, COMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.MENTAL_HERB, COMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.SUN_STONE, COMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.ICE_STONE, COMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.NEVER_MELT_ICE, COMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.HEAT_ROCK, UNCOMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.EVERSTONE, UNCOMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.CHARCOAL, UNCOMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.PEAT_BLOCK, UNCOMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.VIVICHOKE_SEEDS, UNCOMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.DAMP_ROCK, UNCOMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.PRISM_SCALE, UNCOMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.DRAGON_FANG, UNCOMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.KINGS_ROCK, UNCOMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.SMOOTH_ROCK, UNCOMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.BLACK_AUGURITE, UNCOMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.ICY_ROCK, UNCOMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.RAZOR_CLAW, UNCOMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.DEEP_SEA_TOOTH, UNCOMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.DEEP_SEA_SCALE, UNCOMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.ABSORB_BULB, UNCOMMON_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.FAIRY_FEATHER, UNCOMMON_ARCHEOLOGY_ITEM_XP)
     );
 
     private static final Map<Block, Integer> COBBLEMON_BOTANY_BLOCKS = Map.<Block, Integer>ofEntries(
