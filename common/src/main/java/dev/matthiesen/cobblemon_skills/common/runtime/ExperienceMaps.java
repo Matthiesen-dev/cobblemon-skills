@@ -5,7 +5,9 @@ import com.cobblemon.mod.common.CobblemonItems;
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 
 import java.util.Map;
@@ -95,6 +97,27 @@ public final class ExperienceMaps {
             // Miscellaneous
             Map.entry(CobblemonBlocks.RELIC_COIN_SACK, RELIC_COIN_SACK_XP),
             Map.entry(CobblemonBlocks.RELIC_COIN_POUCH, RELIC_COIN_POUCH_XP)
+    );
+
+    private static final Integer FOSSIL_XP = 1000;
+
+    private static final Map<Item, Integer> COBBLEMON_ARCHEOLOGY_ITEMS = Map.ofEntries(
+            Map.entry(CobblemonItems.ARMOR_FOSSIL, FOSSIL_XP),
+            Map.entry(CobblemonItems.CLAW_FOSSIL, FOSSIL_XP),
+            Map.entry(CobblemonItems.COVER_FOSSIL, FOSSIL_XP),
+            Map.entry(CobblemonItems.DOME_FOSSIL, FOSSIL_XP),
+            Map.entry(CobblemonItems.HELIX_FOSSIL, FOSSIL_XP),
+            Map.entry(CobblemonItems.JAW_FOSSIL, FOSSIL_XP),
+            Map.entry(CobblemonItems.OLD_AMBER_FOSSIL, FOSSIL_XP),
+            Map.entry(CobblemonItems.PLUME_FOSSIL, FOSSIL_XP),
+            Map.entry(CobblemonItems.ROOT_FOSSIL, FOSSIL_XP),
+            Map.entry(CobblemonItems.SAIL_FOSSIL, FOSSIL_XP),
+            Map.entry(CobblemonItems.SKULL_FOSSIL, FOSSIL_XP),
+            Map.entry(CobblemonItems.FOSSILIZED_BIRD, FOSSIL_XP),
+            Map.entry(CobblemonItems.FOSSILIZED_DINO, FOSSIL_XP),
+            Map.entry(CobblemonItems.FOSSILIZED_FISH, FOSSIL_XP),
+            Map.entry(CobblemonItems.FOSSILIZED_DRAKE, FOSSIL_XP)
+            // TODO: Add more archeology items... this is not all of the ones we need to track
     );
 
     private static final Map<Block, Integer> COBBLEMON_BOTANY_BLOCKS = Map.<Block, Integer>ofEntries(
@@ -279,6 +302,14 @@ public final class ExperienceMaps {
             Map.entry(CobblemonItems.X_SP_DEF, COOKING_BASE_XP),
             Map.entry(CobblemonItems.X_SPEED, COOKING_BASE_XP)
     );
+
+    public static boolean isCobblemonArcheologyItem(ItemStack item) {
+        return COBBLEMON_ARCHEOLOGY_ITEMS.containsKey(item.getItem());
+    }
+
+    public static int getCobblemonArcheologyItemExperience(ItemStack item) {
+        return COBBLEMON_ARCHEOLOGY_ITEMS.getOrDefault(item.getItem(), 0);
+    }
 
     public static boolean isCobblemonCookingItem(Item item) {
         return COBBLEMON_COOKING_ITEMS.containsKey(item);

@@ -233,6 +233,16 @@ public final class ProfessionManager {
         }
     }
 
+    public static void onBrushableBlockDrop(ServerPlayer serverPlayer, ItemStack item) {
+        if (ExperienceMaps.isCobblemonArcheologyItem(item)) {
+            INSTANCE.awardProfessionExperience(
+                    serverPlayer,
+                    Profession.ARCHEOLOGY,
+                    ExperienceMaps.getCobblemonArcheologyItemExperience(item)
+            );
+        }
+    }
+
     @SuppressWarnings("UnusedReturnValue")
     public int awardProfessionExperience(ServerPlayer player, Profession profession, double experience) {
         PlayerProfile profile = getPlayerProfile(player);
