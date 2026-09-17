@@ -10,6 +10,7 @@ import ca.landonjw.gooeylibs2.api.helpers.PaginationHelper;
 import ca.landonjw.gooeylibs2.api.page.LinkedPage;
 import ca.landonjw.gooeylibs2.api.page.Page;
 import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
+import dev.matthiesen.cobblemon_skills.common.CobblemonSkillsCommon;
 import dev.matthiesen.cobblemon_skills.common.config.def.ProfessionTierEntry;
 import dev.matthiesen.cobblemon_skills.common.data.Profession;
 import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
@@ -78,6 +79,7 @@ public final class PlayerProfessionEntry {
                             tier.redeemRewards(sender);
                             sender.sendSystemMessage(Component.literal("You have successfully redeemed the rewards for " + tier.displayName + " in " + config.displayName() + "."));
                         } catch (RuntimeException e) {
+                            CobblemonSkillsCommon.INSTANCE.createErrorLog("Failed to redeem rewards for " + tier.displayName + " in " + config.displayName() + " for player " + sender.getScoreboardName(), e);
                             sender.sendSystemMessage(Component.literal("Failed to redeem the rewards for " + tier.displayName + " in " + config.displayName() + "."));
                         }
                     } else if (!unlocked) {
