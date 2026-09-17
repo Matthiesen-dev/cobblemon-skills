@@ -24,6 +24,12 @@ public final class RootCommand implements CoreCommand {
                 .requires(src -> PermissionsRegistry.checkPermission(src, PermissionsRegistry.COMMAND_ROOT_PERMISSION))
                 .executes(this::action)
                 .then(ResetCommand.CMD)
+                // admin
+                // -- addXp <player> <profession> <amount>
+                // -- setLevel <player> <profession> <level>
+                // leaderboard
+                // profile
+                // profession <profession>
                 .build();
 
         commandDispatcher.register(rootCommand);
