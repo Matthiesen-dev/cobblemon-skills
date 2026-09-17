@@ -146,4 +146,8 @@ public final class PlayerProfessionEntry {
     public static void open(ServerPlayer player, UUID targetUuid, Profession profession) {
         UIManager.openUIForcefully(player, new PlayerProfessionEntry(player, targetUuid, profession).getPage());
     }
+
+    public static void open(ServerPlayer player, Profession profession) {
+        open(player, player.getUUID(), profession);
+    }
 }

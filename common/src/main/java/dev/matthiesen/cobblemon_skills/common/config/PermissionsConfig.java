@@ -5,11 +5,13 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 
 public final class PermissionsConfig {
     public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills;
-
     public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_reset;
     public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_reset_self;
     public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_reset_player;
     public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_reset_all;
+    public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_leaderboard;
+    public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_profile;
+    public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_profession;
 
     public PermissionsConfig(ModConfigSpec.Builder builder) {
         builder.push("permissions");
@@ -18,7 +20,6 @@ public final class PermissionsConfig {
         command_cobbleskills = builder
                 .comment("The permission level required to use the /cobbleskills command.")
                 .defineEnum("cobbleskills", PermissionLevel.NONE);
-
         command_cobbleskills_reset = builder
                 .comment("The permission level required to use the /cobbleskills reset command.")
                 .defineEnum("cobbleskills.reset", PermissionLevel.NONE);
@@ -31,6 +32,15 @@ public final class PermissionsConfig {
         command_cobbleskills_reset_all = builder
                 .comment("The permission level required to use the /cobbleskills reset all command.")
                 .defineEnum("cobbleskills.reset.all", PermissionLevel.ALL_COMMANDS);
+        command_cobbleskills_leaderboard = builder
+                .comment("The permission level required to use the /cobbleskills leaderboard command.")
+                .defineEnum("cobbleskills.leaderboard", PermissionLevel.NONE);
+        command_cobbleskills_profile = builder
+                .comment("The permission level required to use the /cobbleskills profile command.")
+                .defineEnum("cobbleskills.profile", PermissionLevel.NONE);
+        command_cobbleskills_profession = builder
+                .comment("The permission level required to use the /cobbleskills profession command.")
+                .defineEnum("cobbleskills.profession", PermissionLevel.NONE);
 
         builder.pop();
         builder.pop();

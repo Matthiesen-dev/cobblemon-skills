@@ -28,4 +28,13 @@ public enum Profession {
     public String getNbtTag() {
         return NbtTag;
     }
+
+    public static Profession fromNbtTag(String nbtTag) {
+        for (Profession profession : values()) {
+            if (profession.getNbtTag().equals(nbtTag)) {
+                return profession;
+            }
+        }
+        throw new IllegalArgumentException("No profession found with NBT tag: " + nbtTag);
+    }
 }

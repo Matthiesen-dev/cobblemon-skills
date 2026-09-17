@@ -4,6 +4,9 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.matthiesen.cobblemon_skills.common.CobblemonSkillsCommon;
+import dev.matthiesen.cobblemon_skills.common.commands.subcommands.LeaderboardCommand;
+import dev.matthiesen.cobblemon_skills.common.commands.subcommands.ProfessionCommand;
+import dev.matthiesen.cobblemon_skills.common.commands.subcommands.ProfileCommand;
 import dev.matthiesen.cobblemon_skills.common.commands.subcommands.ResetCommand;
 import dev.matthiesen.cobblemon_skills.common.menu.MainMenu;
 import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
@@ -27,9 +30,9 @@ public final class RootCommand implements CoreCommand {
                 // admin
                 // -- addXp <player> <profession> <amount>
                 // -- setLevel <player> <profession> <level>
-                // leaderboard
-                // profile
-                // profession <profession>
+                .then(LeaderboardCommand.CMD)
+                .then(ProfileCommand.CMD)
+                .then(ProfessionCommand.CMD)
                 .build();
 
         commandDispatcher.register(rootCommand);

@@ -28,6 +28,18 @@ public final class PermissionsRegistry {
             "command.cobbleskills.reset.all",
             CobblemonSkillsConfig.PERMISSIONS_CONFIG.command_cobbleskills_reset_all.get()
     );
+    public static Permission COMMAND_LEADERBOARD_PERMISSION = register(
+            "command.cobbleskills.leaderboard",
+            CobblemonSkillsConfig.PERMISSIONS_CONFIG.command_cobbleskills_leaderboard.get()
+    );
+    public static Permission COMMAND_PROFILE_PERMISSION = register(
+            "command.cobbleskills.profile",
+            CobblemonSkillsConfig.PERMISSIONS_CONFIG.command_cobbleskills_profile.get()
+    );
+    public static Permission COMMAND_PROFESSION_PERMISSION = register(
+            "command.cobbleskills.profession",
+            CobblemonSkillsConfig.PERMISSIONS_CONFIG.command_cobbleskills_profession.get()
+    );
 
     public static void init() {}
 
