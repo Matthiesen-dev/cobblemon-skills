@@ -2,6 +2,7 @@ package dev.matthiesen.cobblemon_skills.common.config;
 
 import dev.matthiesen.cobblemon_skills.common.config.def.ProfessionTierEntry;
 import dev.matthiesen.cobblemon_skills.common.data.LiveProfessionConfig;
+import dev.matthiesen.cobblemon_skills.common.data.Profession;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -37,7 +38,7 @@ public final class CobblemonSkillsConfig {
                 .stream()
                 .map(ProfessionTierEntry::deserialize)
                 .toList();
-        return new LiveProfessionConfig(displayName, tiers);
+        return new LiveProfessionConfig(Profession.ARCHEOLOGY, displayName, tiers);
     }
 
     public static LiveProfessionConfig getBotanyConfig() {
@@ -46,7 +47,7 @@ public final class CobblemonSkillsConfig {
                 .stream()
                 .map(ProfessionTierEntry::deserialize)
                 .toList();
-        return new LiveProfessionConfig(displayName, tiers);
+        return new LiveProfessionConfig(Profession.BOTANY, displayName, tiers);
     }
 
     public static LiveProfessionConfig getCookingConfig() {
@@ -55,7 +56,7 @@ public final class CobblemonSkillsConfig {
                 .stream()
                 .map(ProfessionTierEntry::deserialize)
                 .toList();
-        return new LiveProfessionConfig(displayName, tiers);
+        return new LiveProfessionConfig(Profession.COOKING, displayName, tiers);
     }
 
     public static LiveProfessionConfig getFishingConfig() {
@@ -64,7 +65,7 @@ public final class CobblemonSkillsConfig {
                 .stream()
                 .map(ProfessionTierEntry::deserialize)
                 .toList();
-        return new LiveProfessionConfig(displayName, tiers);
+        return new LiveProfessionConfig(Profession.FISHING, displayName, tiers);
     }
 
     public static LiveProfessionConfig getCatchingConfig() {
@@ -73,7 +74,7 @@ public final class CobblemonSkillsConfig {
                 .stream()
                 .map(ProfessionTierEntry::deserialize)
                 .toList();
-        return new LiveProfessionConfig(displayName, tiers);
+        return new LiveProfessionConfig(Profession.CATCHING, displayName, tiers);
     }
 
     public static LiveProfessionConfig getTrainingConfig() {
@@ -82,7 +83,7 @@ public final class CobblemonSkillsConfig {
                 .stream()
                 .map(ProfessionTierEntry::deserialize)
                 .toList();
-        return new LiveProfessionConfig(displayName, tiers);
+        return new LiveProfessionConfig(Profession.TRAINING, displayName, tiers);
     }
 
     public static LiveProfessionConfig getBreedingConfig() {
@@ -91,6 +92,6 @@ public final class CobblemonSkillsConfig {
                 .stream()
                 .map(ProfessionTierEntry::deserialize)
                 .toList();
-        return new LiveProfessionConfig(displayName, tiers);
+        return new LiveProfessionConfig(Profession.BREEDING, displayName, tiers);
     }
 }
