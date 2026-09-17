@@ -57,4 +57,8 @@ public final class MainMenu {
         page.setTitle(Component.literal("Cobblemon Skills"));
         return page;
     }
+
+    public static void open(ServerPlayer player) {
+        UIManager.openUIForcefully(player, new MainMenu(player).getPage());
+    }
 }
