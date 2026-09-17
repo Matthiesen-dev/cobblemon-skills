@@ -1,7 +1,10 @@
 package dev.matthiesen.cobblemon_skills.common.config;
 
+import dev.matthiesen.cobblemon_skills.common.config.def.ProfessionTierEntry;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.List;
 
 public final class CobblemonSkillsConfig {
     public static final ExperienceConfig EXPERIENCE_CONFIG;
@@ -26,4 +29,62 @@ public final class CobblemonSkillsConfig {
         PROFESSIONS_CONFIG = professionsSpecPair.getLeft();
         PROFESSIONS_SPEC = professionsSpecPair.getRight();
     }
+
+    public static LiveProfessionConfig getArcheologyConfig() {
+        List<ProfessionTierEntry> tiers = PROFESSIONS_CONFIG.archeology_professionRewards.get()
+                .stream()
+                .map(ProfessionTierEntry::deserialize)
+                .toList();
+        return new LiveProfessionConfig(tiers);
+    }
+
+    public static LiveProfessionConfig getBotanyConfig() {
+        List<ProfessionTierEntry> tiers = PROFESSIONS_CONFIG.botany_professionRewards.get()
+                .stream()
+                .map(ProfessionTierEntry::deserialize)
+                .toList();
+        return new LiveProfessionConfig(tiers);
+    }
+
+    public static LiveProfessionConfig getCookingConfig() {
+        List<ProfessionTierEntry> tiers = PROFESSIONS_CONFIG.cooking_professionRewards.get()
+                .stream()
+                .map(ProfessionTierEntry::deserialize)
+                .toList();
+        return new LiveProfessionConfig(tiers);
+    }
+
+    public static LiveProfessionConfig getFishingConfig() {
+        List<ProfessionTierEntry> tiers = PROFESSIONS_CONFIG.fishing_professionRewards.get()
+                .stream()
+                .map(ProfessionTierEntry::deserialize)
+                .toList();
+        return new LiveProfessionConfig(tiers);
+    }
+
+    public static LiveProfessionConfig getCatchingConfig() {
+        List<ProfessionTierEntry> tiers = PROFESSIONS_CONFIG.catching_professionRewards.get()
+                .stream()
+                .map(ProfessionTierEntry::deserialize)
+                .toList();
+        return new LiveProfessionConfig(tiers);
+    }
+
+    public static LiveProfessionConfig getTrainingConfig() {
+        List<ProfessionTierEntry> tiers = PROFESSIONS_CONFIG.training_professionRewards.get()
+                .stream()
+                .map(ProfessionTierEntry::deserialize)
+                .toList();
+        return new LiveProfessionConfig(tiers);
+    }
+
+    public static LiveProfessionConfig getBreedingConfig() {
+        List<ProfessionTierEntry> tiers = PROFESSIONS_CONFIG.breeding_professionRewards.get()
+                .stream()
+                .map(ProfessionTierEntry::deserialize)
+                .toList();
+        return new LiveProfessionConfig(tiers);
+    }
+
+    public record LiveProfessionConfig(List<ProfessionTierEntry> tiers) {}
 }
