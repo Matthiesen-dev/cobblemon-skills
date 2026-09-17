@@ -54,7 +54,7 @@ public final class Leaderboard {
                                     Component.literal("Top profession: " + getTopProfessionName(profile))
                             })
                             .build())
-                    .onClick((action) -> UIManager.openUIForcefully(player, new PlayerProfile(player, uuid).getPage()))
+                    .onClick((action) -> PlayerProfile.open(player, uuid))
                     .build();
             leaderboardButtons.add(button);
         }
@@ -65,7 +65,7 @@ public final class Leaderboard {
                         .hideAdditional()
                         .setCustomName(Component.literal("Back"))
                         .build())
-                .onClick((action) -> UIManager.openUIForcefully(player, new MainMenu(player).getPage()))
+                .onClick((action) -> MainMenu.open(player))
                 .build();
 
         LinkedPageButton previous = LinkedPageButton.builder()
@@ -121,5 +121,9 @@ public final class Leaderboard {
             return onlinePlayer.getScoreboardName();
         }
         return user.getUsername();
+    }
+
+    public static void open(ServerPlayer player) {
+        UIManager.openUIForcefully(player, new Leaderboard(player).getPage());
     }
 }

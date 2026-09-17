@@ -27,10 +27,6 @@ public final class PlayerProfile {
     private final ServerPlayer viewer;
     private final UUID targetUuid;
 
-    public PlayerProfile(ServerPlayer viewer) {
-        this(viewer, viewer.getUUID());
-    }
-
     public PlayerProfile(ServerPlayer viewer, UUID targetUuid) {
         this.viewer = viewer;
         this.targetUuid = targetUuid;
@@ -54,7 +50,7 @@ public final class PlayerProfile {
 
             Button button = GooeyButton.builder()
                     .display(builder.build())
-                    .onClick((action) -> UIManager.openUIForcefully(viewer, new PlayerProfessionEntry(viewer, targetUuid, profession).getPage()))
+                    .onClick((action) -> PlayerProfessionEntry.open(viewer, targetUuid, profession))
                     .build();
             professionButtons.add(button);
         }
@@ -68,7 +64,7 @@ public final class PlayerProfile {
                         .hideAdditional()
                         .setCustomName(Component.literal("Back"))
                         .build())
-                .onClick((action) -> UIManager.openUIForcefully(viewer, new MainMenu(viewer).getPage()))
+                .onClick((action) -> MainMenu.open(viewer))
                 .build();
 
         LinkedPageButton previous = LinkedPageButton.builder()
@@ -101,5 +97,13 @@ public final class PlayerProfile {
             return onlinePlayer.getScoreboardName();
         }
         return user.getUsername();
+    }
+
+    public static void open(ServerPlayer player, UUID targetUuid) {
+        UIManager.openUIForcefully(player, new PlayerProfile(player, targetUuid).getPage());
+    }
+
+    public static void open(ServerPlayer player) {
+        open(player, player.getUUID());
     }
 }

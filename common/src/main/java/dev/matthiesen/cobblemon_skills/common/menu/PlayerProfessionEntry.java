@@ -108,7 +108,7 @@ public final class PlayerProfessionEntry {
                         .hideAdditional()
                         .setCustomName(Component.literal("Back to Profile"))
                         .build())
-                .onClick((action) -> UIManager.openUIForcefully(viewer, new PlayerProfile(viewer, targetUuid).getPage()))
+                .onClick((action) -> PlayerProfile.open(viewer, targetUuid))
                 .build();
 
         LinkedPageButton previous = LinkedPageButton.builder()
@@ -141,5 +141,9 @@ public final class PlayerProfessionEntry {
             return onlinePlayer.getScoreboardName();
         }
         return user.getUsername();
+    }
+
+    public static void open(ServerPlayer player, UUID targetUuid, Profession profession) {
+        UIManager.openUIForcefully(player, new PlayerProfessionEntry(player, targetUuid, profession).getPage());
     }
 }

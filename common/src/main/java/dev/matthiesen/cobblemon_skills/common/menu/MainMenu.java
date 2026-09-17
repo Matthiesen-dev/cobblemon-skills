@@ -33,7 +33,7 @@ public final class MainMenu {
                                 Component.literal("and unlock status")
                         })
                         .build())
-                .onClick((action) -> UIManager.openUIForcefully(player, new PlayerProfile(player).getPage()))
+                .onClick((action) -> PlayerProfile.open(player))
                 .build();
 
         Button leaderboardButton = GooeyButton.builder()
@@ -44,7 +44,7 @@ public final class MainMenu {
                                 Component.literal("See the strongest players"),
                                 Component.literal("in the server")})
                         .build())
-                .onClick((action) -> UIManager.openUIForcefully(player, new Leaderboard(player).getPage()))
+                .onClick((action) -> Leaderboard.open(player))
                 .build();
 
         ChestTemplate template = ChestTemplate.builder(5)
