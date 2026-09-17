@@ -14,10 +14,10 @@ public enum Profession {
     BREEDING("Breeding", CobblemonSkillsConfig::getBreedingConfig);
 
     private final Supplier<LiveProfessionConfig> config;
-    private final String NBTTag;
+    private final String NbtTag;
 
-    Profession(String NBTTag, Supplier<LiveProfessionConfig> configSupplier) {
-        this.NBTTag = NBTTag;
+    Profession(String NbtTag, Supplier<LiveProfessionConfig> configSupplier) {
+        this.NbtTag = NbtTag;
         this.config = configSupplier;
     }
 
@@ -25,7 +25,7 @@ public enum Profession {
         return config.get();
     }
 
-    public String getNBTTag() {
-        return NBTTag;
+    public String getNbtTag() {
+        return NbtTag;
     }
 }
