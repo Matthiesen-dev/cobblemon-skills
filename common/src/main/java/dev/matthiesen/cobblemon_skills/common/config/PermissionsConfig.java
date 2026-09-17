@@ -12,6 +12,9 @@ public final class PermissionsConfig {
     public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_leaderboard;
     public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_profile;
     public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_profession;
+    public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_admin;
+    public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_admin_addExp;
+    public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_admin_setLevel;
 
     public PermissionsConfig(ModConfigSpec.Builder builder) {
         builder.push("permissions");
@@ -41,6 +44,15 @@ public final class PermissionsConfig {
         command_cobbleskills_profession = builder
                 .comment("The permission level required to use the /cobbleskills profession command.")
                 .defineEnum("cobbleskills.profession", PermissionLevel.NONE);
+        command_cobbleskills_admin = builder
+                .comment("The permission level required to use the /cobbleskills admin command.")
+                .defineEnum("cobbleskills.admin", PermissionLevel.ALL_COMMANDS);
+        command_cobbleskills_admin_addExp = builder
+                .comment("The permission level required to use the /cobbleskills admin addExp command.")
+                .defineEnum("cobbleskills.admin.add-exp", PermissionLevel.ALL_COMMANDS);
+        command_cobbleskills_admin_setLevel = builder
+                .comment("The permission level required to use the /cobbleskills admin setLevel command.")
+                .defineEnum("cobbleskills.admin.set-level", PermissionLevel.ALL_COMMANDS);
 
         builder.pop();
         builder.pop();

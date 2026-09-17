@@ -40,6 +40,18 @@ public final class PermissionsRegistry {
             "command.cobbleskills.profession",
             CobblemonSkillsConfig.PERMISSIONS_CONFIG.command_cobbleskills_profession.get()
     );
+    public static Permission COMMAND_ADMIN_PERMISSION = register(
+            "command.cobbleskills.admin",
+            CobblemonSkillsConfig.PERMISSIONS_CONFIG.command_cobbleskills_admin.get()
+    );
+    public static Permission COMMAND_ADMIN_ADD_EXP_PERMISSION = register(
+            "command.cobbleskills.admin.add-exp",
+            CobblemonSkillsConfig.PERMISSIONS_CONFIG.command_cobbleskills_admin_addExp.get()
+    );
+    public static Permission COMMAND_ADMIN_SET_LEVEL_PERMISSION = register(
+            "command.cobbleskills.admin.set-level",
+            CobblemonSkillsConfig.PERMISSIONS_CONFIG.command_cobbleskills_admin_setLevel.get()
+    );
 
     public static void init() {}
 
