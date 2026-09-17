@@ -1,6 +1,7 @@
 package dev.matthiesen.cobblemon_skills.common.config;
 
 import dev.matthiesen.cobblemon_skills.common.config.def.ProfessionTierEntry;
+import dev.matthiesen.cobblemon_skills.common.data.LiveProfessionConfig;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -85,6 +86,4 @@ public final class CobblemonSkillsConfig {
                 .toList();
         return new LiveProfessionConfig(tiers);
     }
-
-    public record LiveProfessionConfig(List<ProfessionTierEntry> tiers) {}
 }

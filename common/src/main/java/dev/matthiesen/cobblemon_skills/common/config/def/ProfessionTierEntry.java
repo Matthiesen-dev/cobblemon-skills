@@ -44,7 +44,11 @@ public final class ProfessionTierEntry {
         }
 
         var rewards = config.getRaw(List.of("rewards"));
-        if (rewards != null && !(rewards instanceof List<?>)) {
+        if (rewards == null) {
+            return true; // No rewards are valid, as rewards are optional
+        }
+
+        if (!(rewards instanceof List<?>)) {
             return false;
         }
 
