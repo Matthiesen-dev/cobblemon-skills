@@ -2,11 +2,13 @@ package dev.matthiesen.cobblemon_skills.common;
 
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
+import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
 import dev.matthiesen.cobblemon_skills.common.platform.CSPlatformEvents;
 import dev.matthiesen.cobblemon_skills.common.runtime.ProfessionManager;
 import dev.matthiesen.libs.faststats.Token;
 import dev.matthiesen.matthiesen_core.common.AbstractCommonMod;
 import dev.matthiesen.matthiesen_core.common.api.events.PlatformEvents;
+import dev.matthiesen.matthiesen_core.common.api.platform.loader.ModConfigType;
 import org.jetbrains.annotations.NotNull;
 
 public final class CobblemonSkillsCommon extends AbstractCommonMod {
@@ -19,6 +21,10 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
         super(MOD_ID, MOD_NAME);
     }
 
+    public String modConfigPath(String path) {
+        return MOD_ID + "/" + path + ".toml";
+    }
+
     @Override
     public @Token @NotNull String getMetricsToken() {
         return METRICS_TOKEN;
@@ -26,6 +32,8 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
 
     public void initialize() {
         super.initialize();
+
+        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.SERVER_SPEC, modConfigPath("server"));
 
         // Platform Events
         PlatformEvents.SERVER_END_TICK.subscribe(ProfessionManager::onServerTick);

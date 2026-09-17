@@ -1,17 +1,24 @@
 package dev.matthiesen.cobblemon_skills.common.runtime.data;
 
 import com.cobblemon.mod.common.CobblemonBlocks;
+import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
+import dev.matthiesen.cobblemon_skills.common.config.ServerConfig;
 import net.minecraft.world.level.block.Block;
 
 import java.util.Map;
+import java.util.function.Supplier;
 
 public final class BotanyStatics {
-    private static final Integer COBBLEMON_WOODCUTTING_XP = 80;
-    private static final Integer COBBLEMON_WOODCUTTING_EXTRA_XP = 120;
-    private static final Integer COBBLEMON_FARMING_XP = 150;
-    private static final Integer COBBLEMON_BERRY_FARMING_XP = 200;
+    private static ServerConfig getConfig() {
+        return CobblemonSkillsConfig.SERVER_CONFIG;
+    }
 
-    public static final Map<Block, Integer> BLOCKS = Map.<Block, Integer>ofEntries(
+    private static final Supplier<Integer> COBBLEMON_WOODCUTTING_XP = () -> getConfig().botany_woodcuttingBaseXp.getAsInt();
+    private static final Supplier<Integer> COBBLEMON_WOODCUTTING_EXTRA_XP = () -> getConfig().botany_woodcuttingTier1Xp.getAsInt();
+    private static final Supplier<Integer> COBBLEMON_FARMING_XP = () -> getConfig().botany_farmingBaseXp.getAsInt();
+    private static final Supplier<Integer> COBBLEMON_BERRY_FARMING_XP = () -> getConfig().botany_farmingTier1Xp.getAsInt();
+
+    public static final Map<Block, Supplier<Integer>> BLOCKS = Map.<Block, Supplier<Integer>>ofEntries(
             Map.entry(CobblemonBlocks.APRICORN_LOG, COBBLEMON_WOODCUTTING_XP),
             Map.entry(CobblemonBlocks.APRICORN_LEAVES, COBBLEMON_WOODCUTTING_XP),
             Map.entry(CobblemonBlocks.SACCHARINE_LEAVES, COBBLEMON_WOODCUTTING_XP),

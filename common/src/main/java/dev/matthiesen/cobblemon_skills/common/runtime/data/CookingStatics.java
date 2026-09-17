@@ -1,19 +1,26 @@
 package dev.matthiesen.cobblemon_skills.common.runtime.data;
 
 import com.cobblemon.mod.common.CobblemonItems;
+import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
+import dev.matthiesen.cobblemon_skills.common.config.ServerConfig;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
 import java.util.Map;
+import java.util.function.Supplier;
 
 public final class CookingStatics {
-    private static final Integer COOKING_BASE_XP = 200;
-    private static final Integer COOKING_TIER_1_XP = 300;
-    private static final Integer COOKING_TIER_2_XP = 400;
-    private static final Integer COOKING_TIER_3_XP = 500;
-    private static final Integer COOKING_TIER_4_XP = 600;
+    private static ServerConfig getConfig() {
+        return CobblemonSkillsConfig.SERVER_CONFIG;
+    }
 
-    public static final Map<Item, Integer> ITEMS = Map.<Item, Integer>ofEntries(
+    private static final Supplier<Integer> COOKING_BASE_XP = () -> getConfig().cooking_baseXp.getAsInt();
+    private static final Supplier<Integer> COOKING_TIER_1_XP = () -> getConfig().cooking_tier1Xp.getAsInt();
+    private static final Supplier<Integer> COOKING_TIER_2_XP = () -> getConfig().cooking_tier2Xp.getAsInt();
+    private static final Supplier<Integer> COOKING_TIER_3_XP = () -> getConfig().cooking_tier3Xp.getAsInt();
+    private static final Supplier<Integer> COOKING_TIER_4_XP = () -> getConfig().cooking_tier4Xp.getAsInt();
+
+    public static final Map<Item, Supplier<Integer>> ITEMS = Map.<Item, Supplier<Integer>>ofEntries(
             Map.entry(CobblemonItems.ABILITY_CAPSULE, COOKING_TIER_3_XP),
             Map.entry(CobblemonItems.ANTIDOTE, COOKING_BASE_XP),
             Map.entry(CobblemonItems.AWAKENING, COOKING_BASE_XP),

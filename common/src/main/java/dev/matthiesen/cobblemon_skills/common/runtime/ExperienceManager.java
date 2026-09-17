@@ -2,6 +2,8 @@ package dev.matthiesen.cobblemon_skills.common.runtime;
 
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.cobblemon.mod.common.pokemon.Pokemon;
+import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
+import dev.matthiesen.cobblemon_skills.common.config.ServerConfig;
 import dev.matthiesen.cobblemon_skills.common.runtime.data.ArcheologyStatics;
 import dev.matthiesen.cobblemon_skills.common.runtime.data.BotanyStatics;
 import dev.matthiesen.cobblemon_skills.common.runtime.data.CookingStatics;
@@ -12,12 +14,16 @@ import net.minecraft.world.level.block.Block;
 public final class ExperienceManager {
     private ExperienceManager() {}
 
+    private static ServerConfig getConfig() {
+        return CobblemonSkillsConfig.SERVER_CONFIG;
+    }
+
     public static boolean isCobblemonArcheologyItem(ItemStack item) {
         return ArcheologyStatics.ITEMS.containsKey(item.getItem());
     }
 
     public static int getCobblemonArcheologyItemExperience(ItemStack item) {
-        return ArcheologyStatics.ITEMS.getOrDefault(item.getItem(), 0);
+        return ArcheologyStatics.ITEMS.getOrDefault(item.getItem(), () -> 0).get();
     }
 
     public static boolean isCobblemonCookingItem(Item item) {
@@ -25,7 +31,7 @@ public final class ExperienceManager {
     }
 
     public static int getCobblemonCookingItemExperience(Item item) {
-        return CookingStatics.ITEMS.getOrDefault(item, 0);
+        return CookingStatics.ITEMS.getOrDefault(item, () -> 0).get();
     }
 
     public static boolean isArcheologyBlock(Block block) {
@@ -37,34 +43,34 @@ public final class ExperienceManager {
     }
 
     public static int getArcheologyBlockExperience(Block block) {
-        return ArcheologyStatics.BLOCKS.getOrDefault(block, 0);
+        return ArcheologyStatics.BLOCKS.getOrDefault(block, () -> 0).get();
     }
 
     public static int getBotanyBlockExperience(Block block) {
-        return BotanyStatics.BLOCKS.getOrDefault(block, 0);
+        return BotanyStatics.BLOCKS.getOrDefault(block, () -> 0).get();
     }
 
     public static double getLeftoversExperience() {
-        return 100.0; // Base XP for getting Leftovers
+        return getConfig().training_leftoversXp.getAsDouble();
     }
 
     public static double getApricornHarvestExperience() {
-        return 150.0; // Base XP for harvesting an Apricorn
+        return getConfig().botany_apricornHarvestXp.getAsDouble();
     }
 
     public static double getBerryHarvestExperience() {
-        return 200.0; // Base XP for harvesting a Berry
+        return getConfig().botany_berryHarvestXp.getAsDouble();
     }
 
     public static double getFishingExperience(int fishingCaught) {
-        return fishingCaught * 250.0;
+        return fishingCaught * getConfig().fishing_statsXpMultiplier.getAsDouble();
     }
 
     public static double getFossilRevivalExperience(Pokemon pokemon) {
         boolean isShiny = pokemon.getShiny();
-        double baseExperience = 500.0; // Base XP for reviving a fossil Pokémon
+        double baseExperience = getConfig().archeology_fossilRevivalBaseXp.getAsDouble();
         if (isShiny) {
-            baseExperience += 400.0; // Bonus for shiny Pokémon
+            baseExperience += getConfig().archeology_fossilRevivalShinyBonusXp.getAsDouble();
         }
         return baseExperience;
     }
@@ -77,18 +83,18 @@ public final class ExperienceManager {
         boolean isLegendary = pokemon.isLegendary();
         boolean isShiny = pokemon.getShiny();
 
-        double baseExperience = 200.0 + Math.max(1, level) * 10.0;
+        double baseExperience = getConfig().fishing_catchBaseXp.getAsDouble() + Math.max(1, level) * getConfig().fishing_catchLevelXpMultiplier.getAsDouble();
         if (isUltraBeast) {
-            baseExperience += 100.0; // Bonus for ultra beast Pokémon
+            baseExperience += getConfig().fishing_catchUltraBeastBonusXp.getAsDouble();
         }
         if (isMythical) {
-            baseExperience += 200.0; // Bonus for mythical Pokémon
+            baseExperience += getConfig().fishing_catchMythicalBonusXp.getAsDouble();
         }
         if (isLegendary) {
-            baseExperience += 300.0; // Bonus for legendary Pokémon
+            baseExperience += getConfig().fishing_catchLegendaryBonusXp.getAsDouble();
         }
         if (isShiny) {
-            baseExperience += 400.0; // Bonus for shiny Pokémon
+            baseExperience += getConfig().fishing_catchShinyBonusXp.getAsDouble();
         }
         return baseExperience;
     }
@@ -102,16 +108,16 @@ public final class ExperienceManager {
     }
 
     public static double getCaptureSkillExperience(int pokemonLevel, boolean criticalCapture) {
-        double base = 200.0 + Math.max(1, pokemonLevel) * 8.0;
-        return criticalCapture ? base + 150.0 : base;
+        double base = getConfig().catching_catchBaseXp.getAsDouble() + Math.max(1, pokemonLevel) * getConfig().catching_catchLevelXpMultiplier.getAsDouble();
+        return criticalCapture ? base + getConfig().catching_catchCriticalBonusXp.getAsDouble() : base;
     }
 
     public static double getBattleExperience() {
-        return 300.0; // Base XP for winning a battle
+        return getConfig().training_baseXp.getAsDouble();
     }
 
     public static double getBreedingEggCollected() {
-        return 250.0; // Base XP for collecting an egg
+        return getConfig().breeding_eggCollectedBaseXp.getAsDouble();
     }
 
     public static int getBreedingFriendshipBonus(int breedingLevel) {
@@ -119,11 +125,11 @@ public final class ExperienceManager {
     }
 
     public static double getBreedingEggHatched(int eggCycles) {
-        return 200.0 + Math.max(0, eggCycles) * 4.0; // Base XP for hatching an egg plus bonus based on egg cycles
+        return getConfig().breeding_eggHatchedBaseXp.getAsDouble() + Math.max(0, eggCycles) * getConfig().breeding_eggHatchedCycleBonusXp.getAsDouble();
     }
 
     public static double getTrainingSkillExperienceFromLevelUp(int oldLevel, int newLevel) {
-        return Math.max(0, newLevel - oldLevel) * 300.0;
+        return Math.max(0, newLevel - oldLevel) * getConfig().training_levelUpXpMultiplier.getAsDouble();
     }
 
     public static double trainingSkillExperienceFromBattle(double battleExperience) {
