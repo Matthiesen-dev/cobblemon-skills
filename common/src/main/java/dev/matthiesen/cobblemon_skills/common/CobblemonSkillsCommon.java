@@ -35,6 +35,7 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
 
         registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.EXPERIENCE_SPEC, modConfigPath("experience"));
         registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.REWARDS_SPEC, modConfigPath("rewards"));
+        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.PROFESSIONS_SPEC, modConfigPath("professions"));
 
         // Platform Events
         PlatformEvents.SERVER_END_TICK.subscribe(ProfessionManager::onServerTick);

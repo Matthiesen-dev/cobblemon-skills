@@ -10,6 +10,9 @@ public final class CobblemonSkillsConfig {
     public static final RewardsConfig REWARDS_CONFIG;
     public static final ModConfigSpec REWARDS_SPEC;
 
+    public static final ProfessionsConfig PROFESSIONS_CONFIG;
+    public static final ModConfigSpec PROFESSIONS_SPEC;
+
     static {
         Pair<ExperienceConfig, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(ExperienceConfig::new);
         EXPERIENCE_CONFIG = specPair.getLeft();
@@ -18,5 +21,9 @@ public final class CobblemonSkillsConfig {
         Pair<RewardsConfig, ModConfigSpec> rewardsSpecPair = new ModConfigSpec.Builder().configure(RewardsConfig::new);
         REWARDS_CONFIG = rewardsSpecPair.getLeft();
         REWARDS_SPEC = rewardsSpecPair.getRight();
+
+        Pair<ProfessionsConfig, ModConfigSpec> professionsSpecPair = new ModConfigSpec.Builder().configure(ProfessionsConfig::new);
+        PROFESSIONS_CONFIG = professionsSpecPair.getLeft();
+        PROFESSIONS_SPEC = professionsSpecPair.getRight();
     }
 }
