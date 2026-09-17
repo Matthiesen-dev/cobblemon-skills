@@ -120,6 +120,18 @@ public final class CookingStatics {
             Map.entry(CobblemonItems.X_DEFENSE, COOKING_BASE_XP),
             Map.entry(CobblemonItems.X_SP_ATK, COOKING_BASE_XP),
             Map.entry(CobblemonItems.X_SP_DEF, COOKING_BASE_XP),
-            Map.entry(CobblemonItems.X_SPEED, COOKING_BASE_XP)
+            Map.entry(CobblemonItems.X_SPEED, COOKING_BASE_XP),
+
+            Map.entry(CobblemonItems.DAWN_STONE, COOKING_TIER_4_XP),
+            Map.entry(CobblemonItems.DUSK_STONE, COOKING_TIER_4_XP),
+            Map.entry(CobblemonItems.FIRE_STONE, COOKING_TIER_4_XP),
+            Map.entry(CobblemonItems.ICE_STONE, COOKING_TIER_4_XP),
+            Map.entry(CobblemonItems.LEAF_STONE, COOKING_TIER_4_XP),
+            Map.entry(CobblemonItems.MOON_STONE, COOKING_TIER_4_XP),
+            Map.entry(CobblemonItems.SHINY_STONE, COOKING_TIER_4_XP),
+            Map.entry(CobblemonItems.SUN_STONE, COOKING_TIER_4_XP),
+            Map.entry(CobblemonItems.THUNDER_STONE, COOKING_TIER_4_XP),
+            Map.entry(CobblemonItems.WATER_STONE, COOKING_TIER_4_XP),
+            Map.entry(CobblemonItems.ROASTED_LEEK, COOKING_BASE_XP)
     );
 }

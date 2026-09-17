@@ -94,6 +94,16 @@ public final class ProfessionManager {
         }
     }
 
+    public static void onFurnaceBlastingSmokingTake(Player player, ItemStack itemStack) {
+        if (player instanceof ServerPlayer serverPlayer && ExperienceManager.isCobblemonCookingItem(itemStack.getItem())) {
+            AwardManager.awardProfessionExperience(
+                    serverPlayer,
+                    Profession.COOKING,
+                    ExperienceManager.getCobblemonCookingItemExperience(itemStack.getItem())
+            );
+        }
+    }
+
     public static void onApricornHarvest(ApricornHarvestEvent event) {
         if (event.getPlayer() instanceof ServerPlayer serverPlayer) {
             AwardManager.awardProfessionExperience(

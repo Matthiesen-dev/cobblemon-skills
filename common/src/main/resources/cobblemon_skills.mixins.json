@@ -6,7 +6,8 @@
   "server": [
     "BrewingStandMenuPotionSlotMixin",
     "BrushableBlockEntityMixin",
-    "CookingPotResultSlotMixin"
+    "CookingPotResultSlotMixin",
+    "FurnaceResultSlotMixin"
   ],
   "injectors": {
     "defaultRequire": 1
