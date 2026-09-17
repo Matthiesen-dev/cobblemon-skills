@@ -1,5 +1,6 @@
 package dev.matthiesen.cobblemon_skills.common.config.def;
 
+import com.cobblemon.mod.common.util.PlayerExtensionsKt;
 import com.electronwill.nightconfig.core.Config;
 import dev.matthiesen.matthiesen_core.common.utility.commands.RunSlashCommand;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemDecoder;
@@ -102,8 +103,10 @@ public final class RewardsEntry {
                 throw new Exception("Invalid item: " + this.item);
             }
             itemStack.setCount(this.amount);
-            if (!player.getInventory().add(itemStack)) {
-                throw new Exception("Failed to add item to inventory: " + this.item);
+            try {
+                PlayerExtensionsKt.giveOrDropItemStack(player, itemStack, true);
+            } catch (RuntimeException e) {
+                throw new Exception("Failed to give item: " + this.item, e);
             }
         } else {
             throw new Exception("Item is null or empty");
