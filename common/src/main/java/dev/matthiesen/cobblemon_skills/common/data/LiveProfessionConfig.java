@@ -32,6 +32,12 @@ public record LiveProfessionConfig(
                 .build();
     }
 
+    public String getProfessionPageTitle(ServerPlayer player) {
+        PlayerProfile profile = SavedPlayerProfessionData.get(player);
+        ProfessionProgress progress = profile.getProgress(profession);
+        return displayName + " - Level " + progress.level();
+    }
+
     public Map<String, ItemStack> getRewardTierItemsMap(ServerPlayer player) {
         PlayerProfile profile = SavedPlayerProfessionData.get(player);
         return tiers.stream()
