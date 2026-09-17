@@ -94,6 +94,19 @@ public final class ProfessionManager {
         }
     }
 
+    public static void onSmithingTableTake(Player player, ItemStack itemStack) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            if (ExperienceManager.isCobblemonFishingItem(itemStack)) {
+                AwardManager.awardProfessionExperience(
+                        serverPlayer,
+                        Profession.FISHING,
+                        ExperienceManager.getCobblemonFishingItemExperience(itemStack)
+                );
+            }
+            // TODO: Add other SMithing Table related experience awards here if needed in the future.
+        }
+    }
+
     public static void onFurnaceBlastingSmokingTake(Player player, ItemStack itemStack) {
         if (player instanceof ServerPlayer serverPlayer && ExperienceManager.isCobblemonCookingItem(itemStack.getItem())) {
             AwardManager.awardProfessionExperience(

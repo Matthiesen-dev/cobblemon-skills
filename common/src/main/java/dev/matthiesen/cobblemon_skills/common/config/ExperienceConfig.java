@@ -44,6 +44,8 @@ public final class ExperienceConfig {
     public ModConfigSpec.DoubleValue fishing_catchMythicalBonusXp;
     public ModConfigSpec.DoubleValue fishing_catchLegendaryBonusXp;
     public ModConfigSpec.DoubleValue fishing_catchShinyBonusXp;
+    public ModConfigSpec.IntValue fishing_craftAncientRodXp;
+    public ModConfigSpec.IntValue fishing_craftFishingRodXp;
 
     // Catching
     public ModConfigSpec.DoubleValue catching_catchBaseXp;
@@ -139,6 +141,10 @@ public final class ExperienceConfig {
                 .defineInRange("catchLegendaryBonusXp", 300.0, 0.0, Double.MAX_VALUE);
         fishing_catchShinyBonusXp = builder.comment("Bonus experience gained from catching a Shiny Pokémon while fishing")
                 .defineInRange("catchShinyBonusXp", 400.0, 0.0, Double.MAX_VALUE);
+        fishing_craftAncientRodXp = builder.comment("Experience gained from crafting an Ancient Rod")
+                .defineInRange("craftAncientRodXp", 900, 0, Integer.MAX_VALUE);
+        fishing_craftFishingRodXp = builder.comment("Experience gained from crafting a Fishing Rod")
+                .defineInRange("craftFishingRodXp", 700, 0, Integer.MAX_VALUE);
         builder.pop(); // Pop "fishing" category
 
         builder.comment("Catching Profession Configuration").push("catching");

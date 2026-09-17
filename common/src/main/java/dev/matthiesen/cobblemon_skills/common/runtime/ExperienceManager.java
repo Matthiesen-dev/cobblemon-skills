@@ -7,6 +7,7 @@ import dev.matthiesen.cobblemon_skills.common.config.ExperienceConfig;
 import dev.matthiesen.cobblemon_skills.common.runtime.data.ArcheologyStatics;
 import dev.matthiesen.cobblemon_skills.common.runtime.data.BotanyStatics;
 import dev.matthiesen.cobblemon_skills.common.runtime.data.CookingStatics;
+import dev.matthiesen.cobblemon_skills.common.runtime.data.FishingStatics;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -24,6 +25,14 @@ public final class ExperienceManager {
 
     public static int getCobblemonArcheologyItemExperience(ItemStack item) {
         return ArcheologyStatics.ITEMS.getOrDefault(item.getItem(), () -> 0).get();
+    }
+
+    public static boolean isCobblemonFishingItem(ItemStack item) {
+        return FishingStatics.ITEMS.containsKey(item.getItem());
+    }
+
+    public static int getCobblemonFishingItemExperience(ItemStack item) {
+        return FishingStatics.ITEMS.getOrDefault(item.getItem(), () -> 0).get();
     }
 
     public static boolean isCobblemonCookingItem(Item item) {
