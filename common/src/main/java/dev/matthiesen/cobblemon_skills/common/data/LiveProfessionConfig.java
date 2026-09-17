@@ -35,7 +35,7 @@ public record LiveProfessionConfig(
     public String getProfessionPageTitle(ServerPlayer player) {
         PlayerProfile profile = SavedPlayerProfessionData.get(player);
         ProfessionProgress progress = profile.getProgress(profession);
-        return displayName + " - Level " + progress.level();
+        return displayName + " - Lvl " + progress.level();
     }
 
     public Map<String, ItemStack> getRewardTierItemsMap(ServerPlayer player) {
