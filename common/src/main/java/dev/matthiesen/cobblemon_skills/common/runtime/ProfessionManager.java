@@ -49,6 +49,9 @@ public final class ProfessionManager {
     }
 
     private static Float onShinyCalculationModify(Float rate, ServerPlayer player, Pokemon pokemon) {
+        if (player == null) {
+            return rate;
+        }
         var catchingLevel = SavedPlayerProfessionData.get(player).getProgress(Profession.CATCHING).level();
         double doubleMaxMultiplier = getRewardsConfig().catching_shinyCalculationMaxMultiplier.getAsDouble();
         float maxMultiplier = (float) doubleMaxMultiplier;

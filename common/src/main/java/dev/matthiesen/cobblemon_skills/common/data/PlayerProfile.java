@@ -21,7 +21,7 @@ public final class PlayerProfile {
         CompoundTag tag = new CompoundTag();
 
         for (Profession profession : Profession.values()) {
-            tag.put(profession.getLabel(), professionProgressMap.get(profession).toCompoundTag());
+            tag.put(profession.getNBTTag(), professionProgressMap.get(profession).toCompoundTag());
         }
 
         return tag;
@@ -31,10 +31,10 @@ public final class PlayerProfile {
         PlayerProfile profile = new PlayerProfile();
 
         for (Profession profession : Profession.values()) {
-            if (tag.contains(profession.getLabel())) {
+            if (tag.contains(profession.getNBTTag())) {
                 profile.professionProgressMap.put(
                         profession,
-                        ProfessionProgress.fromCompoundTag(tag.getCompound(profession.getLabel()))
+                        ProfessionProgress.fromCompoundTag(tag.getCompound(profession.getNBTTag()))
                 );
             }
         }

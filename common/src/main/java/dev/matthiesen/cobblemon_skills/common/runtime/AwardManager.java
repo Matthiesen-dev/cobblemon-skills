@@ -33,7 +33,7 @@ public final class AwardManager {
         if (levelsGained > 0) {
             playLevelUpSound(player, levelsGained);
             sendLevelUpTitle(player, profession, progress.level());
-            player.sendSystemMessage(Component.literal("Congratulations! Your " + profession.getLabel() + " profession has leveled up to level " + progress.level() + "!"));
+            player.sendSystemMessage(Component.literal("Congratulations! Your " + profession.getConfig().displayName() + " profession has leveled up to level " + progress.level() + "!"));
         }
 
         return levelsGained;
@@ -41,7 +41,7 @@ public final class AwardManager {
 
     private static void sendLevelUpTitle(ServerPlayer player, Profession profession, int level) {
         Component title = Component.literal("Leveled Up!").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD);
-        Component subtitle = Component.literal("Your " + profession.getLabel() + " profession is now level " + level + "!").withStyle(ChatFormatting.YELLOW);
+        Component subtitle = Component.literal("Your " + profession.getConfig().displayName() + " profession is now level " + level + "!").withStyle(ChatFormatting.YELLOW);
 
         player.connection.send(new ClientboundSetTitlesAnimationPacket(10, 50, 15));
         player.connection.send(new ClientboundSetTitleTextPacket(title));
@@ -52,7 +52,7 @@ public final class AwardManager {
         int nextLevelExperience = ProfessionProgress.experienceRequiredForNextLevel(progress.level());
         String message = String.format(
                 "%s +%.0f XP | %s",
-                profession.getLabel(),
+                profession.getConfig().displayName(),
                 experience,
                 nextLevelExperience <= 0
                         ? "Lvl " + progress.level() + " (Max)"

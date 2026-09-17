@@ -4,5 +4,8 @@ import dev.matthiesen.cobblemon_skills.common.config.def.ProfessionTierEntry;
 
 import java.util.List;
 
-public record LiveProfessionConfig(List<ProfessionTierEntry> tiers) {
+public record LiveProfessionConfig(
+        String displayName,
+        List<ProfessionTierEntry> tiers
+) {
 }

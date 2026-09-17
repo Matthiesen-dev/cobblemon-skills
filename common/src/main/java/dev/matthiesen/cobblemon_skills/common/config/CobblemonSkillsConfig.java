@@ -32,58 +32,65 @@ public final class CobblemonSkillsConfig {
     }
 
     public static LiveProfessionConfig getArcheologyConfig() {
+        String displayName = PROFESSIONS_CONFIG.archeology_professionName.get();
         List<ProfessionTierEntry> tiers = PROFESSIONS_CONFIG.archeology_professionRewards.get()
                 .stream()
                 .map(ProfessionTierEntry::deserialize)
                 .toList();
-        return new LiveProfessionConfig(tiers);
+        return new LiveProfessionConfig(displayName, tiers);
     }
 
     public static LiveProfessionConfig getBotanyConfig() {
+        String displayName = PROFESSIONS_CONFIG.botany_professionName.get();
         List<ProfessionTierEntry> tiers = PROFESSIONS_CONFIG.botany_professionRewards.get()
                 .stream()
                 .map(ProfessionTierEntry::deserialize)
                 .toList();
-        return new LiveProfessionConfig(tiers);
+        return new LiveProfessionConfig(displayName, tiers);
     }
 
     public static LiveProfessionConfig getCookingConfig() {
+        String displayName = PROFESSIONS_CONFIG.cooking_professionName.get();
         List<ProfessionTierEntry> tiers = PROFESSIONS_CONFIG.cooking_professionRewards.get()
                 .stream()
                 .map(ProfessionTierEntry::deserialize)
                 .toList();
-        return new LiveProfessionConfig(tiers);
+        return new LiveProfessionConfig(displayName, tiers);
     }
 
     public static LiveProfessionConfig getFishingConfig() {
+        String displayName = PROFESSIONS_CONFIG.fishing_professionName.get();
         List<ProfessionTierEntry> tiers = PROFESSIONS_CONFIG.fishing_professionRewards.get()
                 .stream()
                 .map(ProfessionTierEntry::deserialize)
                 .toList();
-        return new LiveProfessionConfig(tiers);
+        return new LiveProfessionConfig(displayName, tiers);
     }
 
     public static LiveProfessionConfig getCatchingConfig() {
+        String displayName = PROFESSIONS_CONFIG.catching_professionName.get();
         List<ProfessionTierEntry> tiers = PROFESSIONS_CONFIG.catching_professionRewards.get()
                 .stream()
                 .map(ProfessionTierEntry::deserialize)
                 .toList();
-        return new LiveProfessionConfig(tiers);
+        return new LiveProfessionConfig(displayName, tiers);
     }
 
     public static LiveProfessionConfig getTrainingConfig() {
+        String displayName = PROFESSIONS_CONFIG.training_professionName.get();
         List<ProfessionTierEntry> tiers = PROFESSIONS_CONFIG.training_professionRewards.get()
                 .stream()
                 .map(ProfessionTierEntry::deserialize)
                 .toList();
-        return new LiveProfessionConfig(tiers);
+        return new LiveProfessionConfig(displayName, tiers);
     }
 
     public static LiveProfessionConfig getBreedingConfig() {
+        String displayName = PROFESSIONS_CONFIG.breeding_professionName.get();
         List<ProfessionTierEntry> tiers = PROFESSIONS_CONFIG.breeding_professionRewards.get()
                 .stream()
                 .map(ProfessionTierEntry::deserialize)
                 .toList();
-        return new LiveProfessionConfig(tiers);
+        return new LiveProfessionConfig(displayName, tiers);
     }
 }
