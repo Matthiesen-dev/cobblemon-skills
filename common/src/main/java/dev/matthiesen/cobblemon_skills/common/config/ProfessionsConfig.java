@@ -13,16 +13,16 @@ public final class ProfessionsConfig {
     public ModConfigSpec.ConfigValue<List<? extends Config>> archeology_professionRewards;
 
     private static final List<ProfessionTierEntry> DEFAULT_ARCHEOLOGY_TIERS = List.of(
-            new ProfessionTierEntry("Novice", 10),
-            new ProfessionTierEntry("Apprentice", 20),
-            new ProfessionTierEntry("Adept", 30),
-            new ProfessionTierEntry("Expert", 40),
-            new ProfessionTierEntry("Master", 50),
-            new ProfessionTierEntry("Grandmaster", 60),
-            new ProfessionTierEntry("Legendary", 70),
-            new ProfessionTierEntry("Mythical", 80),
-            new ProfessionTierEntry("Divine", 90),
-            new ProfessionTierEntry("Transcendent", 100)
+            new ProfessionTierEntry("Novice", 10, List.of()),
+            new ProfessionTierEntry("Apprentice", 20, List.of()),
+            new ProfessionTierEntry("Adept", 30, List.of()),
+            new ProfessionTierEntry("Expert", 40, List.of()),
+            new ProfessionTierEntry("Master", 50, List.of()),
+            new ProfessionTierEntry("Grandmaster", 60, List.of()),
+            new ProfessionTierEntry("Legendary", 70, List.of()),
+            new ProfessionTierEntry("Mythical", 80, List.of()),
+            new ProfessionTierEntry("Divine", 90, List.of()),
+            new ProfessionTierEntry("Transcendent", 100, List.of())
     );
 
     public static List<Config> getDefaultArcheologyTiers() {
@@ -36,16 +36,16 @@ public final class ProfessionsConfig {
     public ModConfigSpec.ConfigValue<List<? extends Config>> botany_professionRewards;
 
     private static final List<ProfessionTierEntry> DEFAULT_BOTANY_TIERS = List.of(
-            new ProfessionTierEntry("Novice", 10),
-            new ProfessionTierEntry("Apprentice", 20),
-            new ProfessionTierEntry("Adept", 30),
-            new ProfessionTierEntry("Expert", 40),
-            new ProfessionTierEntry("Master", 50),
-            new ProfessionTierEntry("Grandmaster", 60),
-            new ProfessionTierEntry("Legendary", 70),
-            new ProfessionTierEntry("Mythical", 80),
-            new ProfessionTierEntry("Divine", 90),
-            new ProfessionTierEntry("Transcendent", 100)
+            new ProfessionTierEntry("Novice", 10, List.of()),
+            new ProfessionTierEntry("Apprentice", 20, List.of()),
+            new ProfessionTierEntry("Adept", 30, List.of()),
+            new ProfessionTierEntry("Expert", 40, List.of()),
+            new ProfessionTierEntry("Master", 50, List.of()),
+            new ProfessionTierEntry("Grandmaster", 60, List.of()),
+            new ProfessionTierEntry("Legendary", 70, List.of()),
+            new ProfessionTierEntry("Mythical", 80, List.of()),
+            new ProfessionTierEntry("Divine", 90, List.of()),
+            new ProfessionTierEntry("Transcendent", 100, List.of())
     );
 
     public static List<Config> getDefaultBotanyTiers() {
@@ -59,16 +59,16 @@ public final class ProfessionsConfig {
     public ModConfigSpec.ConfigValue<List<? extends Config>> cooking_professionRewards;
 
     private static final List<ProfessionTierEntry> DEFAULT_COOKING_TIERS = List.of(
-            new ProfessionTierEntry("Novice", 10),
-            new ProfessionTierEntry("Apprentice", 20),
-            new ProfessionTierEntry("Adept", 30),
-            new ProfessionTierEntry("Expert", 40),
-            new ProfessionTierEntry("Master", 50),
-            new ProfessionTierEntry("Grandmaster", 60),
-            new ProfessionTierEntry("Legendary", 70),
-            new ProfessionTierEntry("Mythical", 80),
-            new ProfessionTierEntry("Divine", 90),
-            new ProfessionTierEntry("Transcendent", 100)
+            new ProfessionTierEntry("Novice", 10, List.of()),
+            new ProfessionTierEntry("Apprentice", 20, List.of()),
+            new ProfessionTierEntry("Adept", 30, List.of()),
+            new ProfessionTierEntry("Expert", 40, List.of()),
+            new ProfessionTierEntry("Master", 50, List.of()),
+            new ProfessionTierEntry("Grandmaster", 60, List.of()),
+            new ProfessionTierEntry("Legendary", 70, List.of()),
+            new ProfessionTierEntry("Mythical", 80, List.of()),
+            new ProfessionTierEntry("Divine", 90, List.of()),
+            new ProfessionTierEntry("Transcendent", 100, List.of())
     );
 
     public static List<Config> getDefaultCookingTiers() {
@@ -82,16 +82,16 @@ public final class ProfessionsConfig {
     public ModConfigSpec.ConfigValue<List<? extends Config>> fishing_professionRewards;
 
     private static final List<ProfessionTierEntry> DEFAULT_FISHING_TIERS = List.of(
-            new ProfessionTierEntry("Novice", 10),
-            new ProfessionTierEntry("Apprentice", 20),
-            new ProfessionTierEntry("Adept", 30),
-            new ProfessionTierEntry("Expert", 40),
-            new ProfessionTierEntry("Master", 50),
-            new ProfessionTierEntry("Grandmaster", 60),
-            new ProfessionTierEntry("Legendary", 70),
-            new ProfessionTierEntry("Mythical", 80),
-            new ProfessionTierEntry("Divine", 90),
-            new ProfessionTierEntry("Transcendent", 100)
+            new ProfessionTierEntry("Novice", 10, List.of()),
+            new ProfessionTierEntry("Apprentice", 20, List.of()),
+            new ProfessionTierEntry("Adept", 30, List.of()),
+            new ProfessionTierEntry("Expert", 40, List.of()),
+            new ProfessionTierEntry("Master", 50, List.of()),
+            new ProfessionTierEntry("Grandmaster", 60, List.of()),
+            new ProfessionTierEntry("Legendary", 70, List.of()),
+            new ProfessionTierEntry("Mythical", 80, List.of()),
+            new ProfessionTierEntry("Divine", 90, List.of()),
+            new ProfessionTierEntry("Transcendent", 100, List.of())
     );
 
     public static List<Config> getDefaultFishingTiers() {
@@ -105,16 +105,16 @@ public final class ProfessionsConfig {
     public ModConfigSpec.ConfigValue<List<? extends Config>> catching_professionRewards;
 
     private static final List<ProfessionTierEntry> DEFAULT_CATCHING_TIERS = List.of(
-            new ProfessionTierEntry("Novice", 10),
-            new ProfessionTierEntry("Apprentice", 20),
-            new ProfessionTierEntry("Adept", 30),
-            new ProfessionTierEntry("Expert", 40),
-            new ProfessionTierEntry("Master", 50),
-            new ProfessionTierEntry("Grandmaster", 60),
-            new ProfessionTierEntry("Legendary", 70),
-            new ProfessionTierEntry("Mythical", 80),
-            new ProfessionTierEntry("Divine", 90),
-            new ProfessionTierEntry("Transcendent", 100)
+            new ProfessionTierEntry("Novice", 10, List.of()),
+            new ProfessionTierEntry("Apprentice", 20, List.of()),
+            new ProfessionTierEntry("Adept", 30, List.of()),
+            new ProfessionTierEntry("Expert", 40, List.of()),
+            new ProfessionTierEntry("Master", 50, List.of()),
+            new ProfessionTierEntry("Grandmaster", 60, List.of()),
+            new ProfessionTierEntry("Legendary", 70, List.of()),
+            new ProfessionTierEntry("Mythical", 80, List.of()),
+            new ProfessionTierEntry("Divine", 90, List.of()),
+            new ProfessionTierEntry("Transcendent", 100, List.of())
     );
 
     public static List<Config> getDefaultCatchingTiers() {
@@ -128,16 +128,16 @@ public final class ProfessionsConfig {
     public ModConfigSpec.ConfigValue<List<? extends Config>> training_professionRewards;
 
     private static final List<ProfessionTierEntry> DEFAULT_TRAINING_TIERS = List.of(
-            new ProfessionTierEntry("Novice", 10),
-            new ProfessionTierEntry("Apprentice", 20),
-            new ProfessionTierEntry("Adept", 30),
-            new ProfessionTierEntry("Expert", 40),
-            new ProfessionTierEntry("Master", 50),
-            new ProfessionTierEntry("Grandmaster", 60),
-            new ProfessionTierEntry("Legendary", 70),
-            new ProfessionTierEntry("Mythical", 80),
-            new ProfessionTierEntry("Divine", 90),
-            new ProfessionTierEntry("Transcendent", 100)
+            new ProfessionTierEntry("Novice", 10, List.of()),
+            new ProfessionTierEntry("Apprentice", 20, List.of()),
+            new ProfessionTierEntry("Adept", 30, List.of()),
+            new ProfessionTierEntry("Expert", 40, List.of()),
+            new ProfessionTierEntry("Master", 50, List.of()),
+            new ProfessionTierEntry("Grandmaster", 60, List.of()),
+            new ProfessionTierEntry("Legendary", 70, List.of()),
+            new ProfessionTierEntry("Mythical", 80, List.of()),
+            new ProfessionTierEntry("Divine", 90, List.of()),
+            new ProfessionTierEntry("Transcendent", 100, List.of())
     );
 
     public static List<Config> getDefaultTrainingTiers() {
@@ -151,16 +151,16 @@ public final class ProfessionsConfig {
     public ModConfigSpec.ConfigValue<List<? extends Config>> breeding_professionRewards;
 
     private static final List<ProfessionTierEntry> DEFAULT_BREEDING_TIERS = List.of(
-            new ProfessionTierEntry("Novice", 10),
-            new ProfessionTierEntry("Apprentice", 20),
-            new ProfessionTierEntry("Adept", 30),
-            new ProfessionTierEntry("Expert", 40),
-            new ProfessionTierEntry("Master", 50),
-            new ProfessionTierEntry("Grandmaster", 60),
-            new ProfessionTierEntry("Legendary", 70),
-            new ProfessionTierEntry("Mythical", 80),
-            new ProfessionTierEntry("Divine", 90),
-            new ProfessionTierEntry("Transcendent", 100)
+            new ProfessionTierEntry("Novice", 10, List.of()),
+            new ProfessionTierEntry("Apprentice", 20, List.of()),
+            new ProfessionTierEntry("Adept", 30, List.of()),
+            new ProfessionTierEntry("Expert", 40, List.of()),
+            new ProfessionTierEntry("Master", 50, List.of()),
+            new ProfessionTierEntry("Grandmaster", 60, List.of()),
+            new ProfessionTierEntry("Legendary", 70, List.of()),
+            new ProfessionTierEntry("Mythical", 80, List.of()),
+            new ProfessionTierEntry("Divine", 90, List.of()),
+            new ProfessionTierEntry("Transcendent", 100, List.of())
     );
 
     public static List<Config> getDefaultBreedingTiers() {
