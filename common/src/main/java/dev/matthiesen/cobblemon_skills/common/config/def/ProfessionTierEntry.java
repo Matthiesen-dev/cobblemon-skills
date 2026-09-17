@@ -63,6 +63,10 @@ public final class ProfessionTierEntry {
         return true;
     }
 
+    public String toId(String prefix) {
+        return prefix + "_" + displayName.toLowerCase().replace(" ", "_") + "_" + levelRequirement;
+    }
+
     public Config serialize() {
         Config config = Config.inMemory();
         config.set("displayName", this.displayName);
