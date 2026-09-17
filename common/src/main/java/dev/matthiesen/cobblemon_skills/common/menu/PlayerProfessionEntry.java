@@ -74,6 +74,7 @@ public final class PlayerProfessionEntry {
                 buttonBuilder.onClick((action) -> {
                     if (unlocked && !redeemed) {
                         ServerPlayer sender = action.getPlayer();
+                        // TODO: Implement the reward redemption logic here
                         sender.sendSystemMessage(Component.literal("TODO: redeem \"" + tier.displayName + "\" for " + config.displayName() + " once the reward system is implemented."));
                     } else if (!unlocked) {
                         ServerPlayer sender = action.getPlayer();
