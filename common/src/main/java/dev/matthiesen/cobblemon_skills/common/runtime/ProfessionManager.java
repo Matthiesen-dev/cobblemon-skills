@@ -103,7 +103,7 @@ public final class ProfessionManager {
                         ExperienceManager.getCobblemonFishingItemExperience(itemStack)
                 );
             }
-            // TODO: Add other SMithing Table related experience awards here if needed in the future.
+            // TODO: Add other Smithing Table related experience awards here if needed in the future.
         }
     }
 
