@@ -1,6 +1,7 @@
 package dev.matthiesen.cobblemon_skills.common.config.def;
 
 import com.electronwill.nightconfig.core.Config;
+import net.minecraft.server.level.ServerPlayer;
 
 import java.util.List;
 
@@ -61,6 +62,16 @@ public final class ProfessionTierEntry {
         }
 
         return true;
+    }
+
+    public void redeemRewards(ServerPlayer player) throws RuntimeException {
+        this.rewards.forEach(reward -> {
+            try {
+                reward.redeem(player);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public String toId(String prefix) {

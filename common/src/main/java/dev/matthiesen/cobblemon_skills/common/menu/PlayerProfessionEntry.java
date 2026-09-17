@@ -74,8 +74,12 @@ public final class PlayerProfessionEntry {
                 buttonBuilder.onClick((action) -> {
                     if (unlocked && !redeemed) {
                         ServerPlayer sender = action.getPlayer();
-                        // TODO: Implement the reward redemption logic here
-                        sender.sendSystemMessage(Component.literal("TODO: redeem \"" + tier.displayName + "\" for " + config.displayName() + " once the reward system is implemented."));
+                        try {
+                            tier.redeemRewards(sender);
+                            sender.sendSystemMessage(Component.literal("You have successfully redeemed the rewards for " + tier.displayName + " in " + config.displayName() + "."));
+                        } catch (RuntimeException e) {
+                            sender.sendSystemMessage(Component.literal("Failed to redeem the rewards for " + tier.displayName + " in " + config.displayName() + "."));
+                        }
                     } else if (!unlocked) {
                         ServerPlayer sender = action.getPlayer();
                         sender.sendSystemMessage(Component.literal("You have not unlocked this reward yet. Level up your " + config.displayName() + " profession to unlock it."));
