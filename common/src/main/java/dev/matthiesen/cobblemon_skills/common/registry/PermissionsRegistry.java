@@ -12,6 +12,22 @@ public final class PermissionsRegistry {
             "command.cobbleskills",
             CobblemonSkillsConfig.PERMISSIONS_CONFIG.command_cobbleskills.get()
     );
+    public static Permission COMMAND_RESET_PERMISSION = register(
+            "command.cobbleskills.reset",
+            CobblemonSkillsConfig.PERMISSIONS_CONFIG.command_cobbleskills_reset.get()
+    );
+    public static Permission COMMAND_RESET_SELF_PERMISSION = register(
+            "command.cobbleskills.reset.self",
+            CobblemonSkillsConfig.PERMISSIONS_CONFIG.command_cobbleskills_reset_self.get()
+    );
+    public static Permission COMMAND_RESET_PLAYER_PERMISSION = register(
+            "command.cobbleskills.reset.player",
+            CobblemonSkillsConfig.PERMISSIONS_CONFIG.command_cobbleskills_reset_player.get()
+    );
+    public static Permission COMMAND_RESET_ALL_PERMISSION = register(
+            "command.cobbleskills.reset.all",
+            CobblemonSkillsConfig.PERMISSIONS_CONFIG.command_cobbleskills_reset_all.get()
+    );
 
     public static void init() {}
 

@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.matthiesen.cobblemon_skills.common.CobblemonSkillsCommon;
+import dev.matthiesen.cobblemon_skills.common.commands.subcommands.ResetCommand;
 import dev.matthiesen.cobblemon_skills.common.menu.MainMenu;
 import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
 import dev.matthiesen.matthiesen_core.common.api.command.CoreCommand;
@@ -22,6 +23,7 @@ public final class RootCommand implements CoreCommand {
         var rootCommand = new CommandBuilder("cobbleskills")
                 .requires(src -> PermissionsRegistry.checkPermission(src, PermissionsRegistry.COMMAND_ROOT_PERMISSION))
                 .executes(this::action)
+                .then(ResetCommand.CMD)
                 .build();
 
         commandDispatcher.register(rootCommand);
