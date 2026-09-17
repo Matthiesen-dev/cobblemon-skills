@@ -12,6 +12,8 @@ import com.cobblemon.mod.common.api.pokemon.experience.BattleExperienceSource;
 import com.cobblemon.mod.common.entity.pokeball.EmptyPokeBallEntity;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.util.PlayerExtensionsKt;
+import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
+import dev.matthiesen.cobblemon_skills.common.config.RewardsConfig;
 import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
 import dev.matthiesen.cobblemon_skills.common.data.Profession;
 import dev.matthiesen.cobblemon_skills.common.platform.BlockBreakEvent;
@@ -32,6 +34,10 @@ public final class ProfessionManager {
 
     private ProfessionManager() {}
 
+    private static RewardsConfig getRewardsConfig() {
+        return CobblemonSkillsConfig.REWARDS_CONFIG;
+    }
+
     public static void onServerTick(ServerEvent.EndTick event) {
         for (ServerPlayer player : event.server().getPlayerList().getPlayers()) {
             syncFishingStats(player);
@@ -44,7 +50,8 @@ public final class ProfessionManager {
 
     private static Float onShinyCalculationModify(Float rate, ServerPlayer player, Pokemon pokemon) {
         var catchingLevel = SavedPlayerProfessionData.get(player).getProgress(Profession.CATCHING).level();
-        float maxMultiplier = 10.0F; // Maximum multiplier for the catch rate bonus
+        double doubleMaxMultiplier = getRewardsConfig().catching_shinyCalculationMaxMultiplier.getAsDouble();
+        float maxMultiplier = (float) doubleMaxMultiplier;
         float newCatchMultiplier = Math.min(0.01F * catchingLevel, maxMultiplier); // Ensure the multiplier doesn't exceed the maximum
         return Math.max(rate / newCatchMultiplier, 1);
     }
@@ -190,15 +197,14 @@ public final class ProfessionManager {
 
     private static boolean shouldMakeEggShiny(int breedingLevel, boolean currentShinyStatus) {
         if (currentShinyStatus) {
-            return true; // If the egg is already shiny, keep it shiny.
+            return true;
         }
 
-        float baseShinyChance = 0.01f; // Base shiny chance (1%)
-        float breedingBonus = breedingLevel * 0.001f; // Each breeding level adds 0.1% to the shiny chance
-        float totalShinyChance = baseShinyChance + breedingBonus;
+        double baseShinyChance = getRewardsConfig().breeding_baseShinyChange.getAsDouble();
+        double breedingBonus = breedingLevel * getRewardsConfig().breeding_shinyLevelBonusMultiplier.getAsDouble();
+        double totalShinyChance = baseShinyChance + breedingBonus;
 
-        // Ensure the shiny chance does not exceed a certain cap (e.g., 10%)
-        totalShinyChance = Math.min(totalShinyChance, 0.10f);
+        totalShinyChance = Math.min(totalShinyChance, getRewardsConfig().breeding_shinyMaxPercentage.getAsDouble());
 
         return Math.random() < totalShinyChance;
     }

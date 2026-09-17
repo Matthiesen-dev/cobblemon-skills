@@ -63,7 +63,7 @@ public final class ExperienceConfig {
     public ModConfigSpec.DoubleValue breeding_eggHatchedCycleBonusXp;
 
     public ExperienceConfig(ModConfigSpec.Builder builder) {
-        builder.comment("Server Configuration for Cobblemon Skills Mod").push("server");
+        builder.comment("Experience Configuration for Cobblemon Skills Mod").push("experience");
 
         builder.comment("Archeology Profession Configuration").push("archeology");
         archeology_fossilRevivalBaseXp = builder.comment("Base experience gained from reviving a fossil")
@@ -174,6 +174,6 @@ public final class ExperienceConfig {
                 .defineInRange("eggHatchedCycleBonusXp", 4.0, 0.0, Double.MAX_VALUE);
         builder.pop(); // Pop "breeding" category
 
-        builder.pop(); // Pop "server" category
+        builder.pop(); // Pop "experience" category
     }
 }
