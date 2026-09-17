@@ -11,6 +11,7 @@ import dev.matthiesen.cobblemon_skills.common.data.Profession;
 import dev.matthiesen.cobblemon_skills.common.data.ProfessionProgress;
 import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
 import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
+import dev.matthiesen.cobblemon_skills.common.runtime.AwardManager;
 import dev.matthiesen.matthiesen_core.common.utility.commands.CommandBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
@@ -65,11 +66,8 @@ public final class AdminCommand {
             Profession profession = Profession.fromNbtTag(professionName);
             double amount = DoubleArgumentType.getDouble(ctx, "amount");
 
-            PlayerProfile playerProfile = SavedPlayerProfessionData.get(targetPlayer);
-            int levelsGained = playerProfile.getProgress(profession).addExperience(amount);
-
+            int levelsGained = AwardManager.awardProfessionExperience(targetPlayer, profession, amount);
             ctx.getSource().sendSystemMessage(Component.literal("Added " + amount + " experience to player " + targetPlayer.getName().getString() + " for profession " + profession.getNbtTag() + ". Levels gained: " + levelsGained).withStyle(ChatFormatting.GREEN));
-            targetPlayer.sendSystemMessage(Component.literal("You have gained " + amount + " experience in profession " + profession.getNbtTag() + ". Levels gained: " + levelsGained).withStyle(ChatFormatting.GREEN));
 
             return 1;
         } catch (CommandSyntaxException e) {

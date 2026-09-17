@@ -14,8 +14,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 
 public final class AwardManager {
-    // TODO: This will eventually have a used return value, so for now we suppress the warning to avoid cluttering the build output.
-    @SuppressWarnings("UnusedReturnValue")
     public static int awardProfessionExperience(ServerPlayer player, Profession profession, double experience) {
         PlayerProfile profile = SavedPlayerProfessionData.get(player);
         ProfessionProgress progress = profile.getProgress(profession);
