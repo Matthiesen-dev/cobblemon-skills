@@ -29,17 +29,25 @@ public final class PlayerProfile {
         Map<String, Boolean> rewardsForProfession = new HashMap<>();
         for (ProfessionTierEntry tier : profession.getConfig().tiers()) {
             String rewardId = tier.toId(profession.getNbtTag());
-            rewardsForProfession.put(rewardId, redeemableRewards.getOrDefault(rewardId, false));
+            rewardsForProfession.put(rewardId, isRewardRedeemed(rewardId));
         }
         return rewardsForProfession;
     }
 
+    public boolean isRewardRedeemed(String rewardId) {
+        return redeemableRewards.getOrDefault(rewardId, false);
+    }
+
     public boolean isRewardRedeemed(Profession profession, ProfessionTierEntry tier) {
-        return redeemableRewards.getOrDefault(tier.toId(profession.getNbtTag()), false);
+        return isRewardRedeemed(tier.toId(profession.getNbtTag()));
+    }
+
+    public void setRewardRedeemed(String rewardId, boolean redeemed) {
+        redeemableRewards.put(rewardId, redeemed);
     }
 
     public void setRewardRedeemed(Profession profession, ProfessionTierEntry tier, boolean redeemed) {
-        redeemableRewards.put(tier.toId(profession.getNbtTag()), redeemed);
+        setRewardRedeemed(tier.toId(profession.getNbtTag()), redeemed);
     }
 
     public CompoundTag toCompoundTag() {
