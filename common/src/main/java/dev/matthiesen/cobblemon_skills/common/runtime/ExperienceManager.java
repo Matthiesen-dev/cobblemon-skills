@@ -3,7 +3,7 @@ package dev.matthiesen.cobblemon_skills.common.runtime;
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
-import dev.matthiesen.cobblemon_skills.common.config.ServerConfig;
+import dev.matthiesen.cobblemon_skills.common.config.ExperienceConfig;
 import dev.matthiesen.cobblemon_skills.common.runtime.data.ArcheologyStatics;
 import dev.matthiesen.cobblemon_skills.common.runtime.data.BotanyStatics;
 import dev.matthiesen.cobblemon_skills.common.runtime.data.CookingStatics;
@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.Block;
 public final class ExperienceManager {
     private ExperienceManager() {}
 
-    private static ServerConfig getConfig() {
-        return CobblemonSkillsConfig.SERVER_CONFIG;
+    private static ExperienceConfig getConfig() {
+        return CobblemonSkillsConfig.EXPERIENCE_CONFIG;
     }
 
     public static boolean isCobblemonArcheologyItem(ItemStack item) {

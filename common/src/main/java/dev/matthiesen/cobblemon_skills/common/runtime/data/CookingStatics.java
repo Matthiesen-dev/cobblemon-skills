@@ -2,7 +2,7 @@ package dev.matthiesen.cobblemon_skills.common.runtime.data;
 
 import com.cobblemon.mod.common.CobblemonItems;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
-import dev.matthiesen.cobblemon_skills.common.config.ServerConfig;
+import dev.matthiesen.cobblemon_skills.common.config.ExperienceConfig;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
@@ -10,8 +10,8 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public final class CookingStatics {
-    private static ServerConfig getConfig() {
-        return CobblemonSkillsConfig.SERVER_CONFIG;
+    private static ExperienceConfig getConfig() {
+        return CobblemonSkillsConfig.EXPERIENCE_CONFIG;
     }
 
     private static final Supplier<Integer> COOKING_BASE_XP = () -> getConfig().cooking_baseXp.getAsInt();

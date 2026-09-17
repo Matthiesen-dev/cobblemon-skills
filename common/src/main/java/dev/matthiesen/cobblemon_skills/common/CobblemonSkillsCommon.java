@@ -33,7 +33,7 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
     public void initialize() {
         super.initialize();
 
-        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.SERVER_SPEC, modConfigPath("server"));
+        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.EXPERIENCE_SPEC, modConfigPath("experience"));
 
         // Platform Events
         PlatformEvents.SERVER_END_TICK.subscribe(ProfessionManager::onServerTick);

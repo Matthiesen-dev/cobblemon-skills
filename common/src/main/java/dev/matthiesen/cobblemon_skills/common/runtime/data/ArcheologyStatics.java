@@ -3,7 +3,7 @@ package dev.matthiesen.cobblemon_skills.common.runtime.data;
 import com.cobblemon.mod.common.CobblemonBlocks;
 import com.cobblemon.mod.common.CobblemonItems;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
-import dev.matthiesen.cobblemon_skills.common.config.ServerConfig;
+import dev.matthiesen.cobblemon_skills.common.config.ExperienceConfig;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
@@ -11,8 +11,8 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public final class ArcheologyStatics {
-    private static ServerConfig getConfig() {
-        return CobblemonSkillsConfig.SERVER_CONFIG;
+    private static ExperienceConfig getConfig() {
+        return CobblemonSkillsConfig.EXPERIENCE_CONFIG;
     }
 
     private static final Supplier<Integer> ORE_BLOCK_XP = () -> getConfig().archeology_oreBlockXp.getAsInt();

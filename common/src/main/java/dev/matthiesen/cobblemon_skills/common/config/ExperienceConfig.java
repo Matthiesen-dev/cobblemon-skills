@@ -2,7 +2,7 @@ package dev.matthiesen.cobblemon_skills.common.config;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-public final class ServerConfig {
+public final class ExperienceConfig {
 
     // Archeology
     public ModConfigSpec.DoubleValue archeology_fossilRevivalBaseXp;
@@ -60,7 +60,7 @@ public final class ServerConfig {
     public ModConfigSpec.DoubleValue breeding_eggHatchedBaseXp;
     public ModConfigSpec.DoubleValue breeding_eggHatchedCycleBonusXp;
 
-    public ServerConfig(ModConfigSpec.Builder builder) {
+    public ExperienceConfig(ModConfigSpec.Builder builder) {
         builder.comment("Server Configuration for Cobblemon Skills Mod").push("server");
 
         builder.comment("Archeology Profession Configuration").push("archeology");
