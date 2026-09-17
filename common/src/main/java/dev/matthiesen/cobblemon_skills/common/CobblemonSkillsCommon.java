@@ -2,8 +2,10 @@ package dev.matthiesen.cobblemon_skills.common;
 
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
+import dev.matthiesen.cobblemon_skills.common.commands.RootCommand;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
 import dev.matthiesen.cobblemon_skills.common.platform.CSPlatformEvents;
+import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
 import dev.matthiesen.cobblemon_skills.common.runtime.ProfessionManager;
 import dev.matthiesen.libs.faststats.Token;
 import dev.matthiesen.matthiesen_core.common.AbstractCommonMod;
@@ -33,9 +35,13 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
     public void initialize() {
         super.initialize();
 
+        registerModConfig(MOD_ID, ModConfigType.STARTUP, CobblemonSkillsConfig.PERMISSIONS_SPEC, modConfigPath("permissions"));
         registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.EXPERIENCE_SPEC, modConfigPath("experience"));
         registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.REWARDS_SPEC, modConfigPath("rewards"));
         registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.PROFESSIONS_SPEC, modConfigPath("professions"));
+
+        PermissionsRegistry.init();
+        getCommandsRegistryManager().registerCommand(RootCommand.CMD);
 
         // Platform Events
         PlatformEvents.SERVER_END_TICK.subscribe(ProfessionManager::onServerTick);

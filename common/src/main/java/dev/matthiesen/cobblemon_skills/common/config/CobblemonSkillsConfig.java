@@ -18,6 +18,9 @@ public final class CobblemonSkillsConfig {
     public static final ProfessionsConfig PROFESSIONS_CONFIG;
     public static final ModConfigSpec PROFESSIONS_SPEC;
 
+    public static final PermissionsConfig PERMISSIONS_CONFIG;
+    public static final ModConfigSpec PERMISSIONS_SPEC;
+
     static {
         Pair<ExperienceConfig, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(ExperienceConfig::new);
         EXPERIENCE_CONFIG = specPair.getLeft();
@@ -30,6 +33,10 @@ public final class CobblemonSkillsConfig {
         Pair<ProfessionsConfig, ModConfigSpec> professionsSpecPair = new ModConfigSpec.Builder().configure(ProfessionsConfig::new);
         PROFESSIONS_CONFIG = professionsSpecPair.getLeft();
         PROFESSIONS_SPEC = professionsSpecPair.getRight();
+
+        Pair<PermissionsConfig, ModConfigSpec> permissionsSpecPair = new ModConfigSpec.Builder().configure(PermissionsConfig::new);
+        PERMISSIONS_CONFIG = permissionsSpecPair.getLeft();
+        PERMISSIONS_SPEC = permissionsSpecPair.getRight();
     }
 
     public static LiveProfessionConfig getArcheologyConfig() {
