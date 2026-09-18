@@ -23,7 +23,7 @@ public final class ProfessionTierEntry {
     public static ProfessionTierEntry deserialize(Config config) {
         String displayName = config.get("displayName");
         int levelRequirement = config.getInt("levelRequirement");
-        var rewards = config.getRaw(List.of("rewards"));
+        var rewards = config.get(List.of("rewards"));
         if (rewards instanceof List<?> rewardsList) {
             var deserializedRewards = rewardsList.stream()
                     .filter(item -> item instanceof Config)
@@ -44,7 +44,7 @@ public final class ProfessionTierEntry {
             return false;
         }
 
-        var rewards = config.getRaw(List.of("rewards"));
+        var rewards = config.get(List.of("rewards"));
         if (rewards == null) {
             return true; // No rewards are valid, as rewards are optional
         }
