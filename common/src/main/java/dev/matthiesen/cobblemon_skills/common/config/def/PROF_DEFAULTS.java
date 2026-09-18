@@ -236,16 +236,47 @@ public final class PROF_DEFAULTS {
     );
 
     private static final List<ProfessionTierEntry> DEFAULT_TRAINING_TIERS = List.of(
-            new ProfessionTierEntry("Novice", 10, List.of()),
-            new ProfessionTierEntry("Apprentice", 20, List.of()),
-            new ProfessionTierEntry("Adept", 30, List.of()),
-            new ProfessionTierEntry("Expert", 40, List.of()),
-            new ProfessionTierEntry("Master", 50, List.of()),
-            new ProfessionTierEntry("Grandmaster", 60, List.of()),
-            new ProfessionTierEntry("Legendary", 70, List.of()),
-            new ProfessionTierEntry("Mythical", 80, List.of()),
-            new ProfessionTierEntry("Divine", 90, List.of()),
-            new ProfessionTierEntry("Transcendent", 100, List.of())
+            new ProfessionTierEntry("Novice", 10, List.of(
+                    new RewardsEntry(20),
+                    new RewardsEntry("cobblemon:exp_share", 1)
+            )),
+            new ProfessionTierEntry("Apprentice", 20, List.of(
+                    new RewardsEntry(40),
+                    new RewardsEntry("cobblemon:exp_share", 2)
+            )),
+            new ProfessionTierEntry("Adept", 30, List.of(
+                    new RewardsEntry(60),
+                    new RewardsEntry("cobblemon:exp_share", 3)
+            )),
+            new ProfessionTierEntry("Expert", 40, List.of(
+                    new RewardsEntry(80),
+                    new RewardsEntry("cobblemon:poke_ball", 8)
+            )),
+            new ProfessionTierEntry("Master", 50, List.of(
+                    new RewardsEntry(100),
+                    new RewardsEntry("cobblemon:great_ball", 8)
+            )),
+            new ProfessionTierEntry("Grandmaster", 60, List.of(
+                    new RewardsEntry(120),
+                    new RewardsEntry("cobblemon:ultra_ball", 8)
+            )),
+            new ProfessionTierEntry("Legendary", 70, List.of(
+                    new RewardsEntry(150),
+                    new RewardsEntry("cobblemon:master_ball", 1)
+            )),
+            new ProfessionTierEntry("Mythical", 80, List.of(
+                    new RewardsEntry(200),
+                    new RewardsEntry("cobblemon:master_ball", 2)
+            )),
+            new ProfessionTierEntry("Divine", 90, List.of(
+                    new RewardsEntry(250),
+                    new RewardsEntry("cobblemon:ancient_origin_ball", 1)
+            )),
+            new ProfessionTierEntry("Transcendent", 100, List.of(
+                    new RewardsEntry(500),
+                    new RewardsEntry("cobblemon:ancient_origin_ball", 1),
+                    new RewardsEntry("tellraw @a [\"\",{\"text\":\"{player}\",\"bold\":true,\"color\":\"aqua\"},{\"text\":\" has transcended in Training!\",\"color\":\"gold\"}]")
+            ))
     );
 
     private static final List<ProfessionTierEntry> DEFAULT_BREEDING_TIERS = List.of(
