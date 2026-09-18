@@ -22,17 +22,12 @@ public final class RewardsManager {
     }
 
     public static void handleFishingSmithingTableRewards(ServerPlayer serverPlayer, ItemStack itemStack) {
-        // Get the player's current profession level
         PlayerProfile profile = SavedPlayerProfessionData.get(serverPlayer);
         int fishingLevel = profile.getProgress(Profession.FISHING).level();
-
-        // Check if the player is eligible for rewards based on their level
         boolean randomLuckOfTheSea = getRewardsConfig().fishing_randomLuckOfTheSea.get();
         boolean randomUnbreaking = getRewardsConfig().fishing_randomUnbreaking.get();
         boolean randomMending = getRewardsConfig().fishing_randomMending.get();
         boolean randomLure = getRewardsConfig().fishing_randomLure.get();
-
-        // Determine the maximum tier of enchantments the player can receive based on their level
         int maxLuckOfTheSeaTier = Fishing.getMaxTier(
                 fishingLevel,
                 getRewardsConfig().fishing_luckOfTheSeaTierOneMinLvl.get(),
@@ -52,8 +47,6 @@ public final class RewardsManager {
                 getRewardsConfig().fishing_lureTierThreeMinLvl.get()
         );
         boolean isMendingEligible = fishingLevel >= getRewardsConfig().fishing_mendingMinLvl.get();
-
-        // Apply enchantments to the itemStack based on the maximum tiers and eligibility
         Fishing.applyEnchantmentsToItemStack(
                 itemStack,
                 randomLuckOfTheSea, randomUnbreaking, randomMending, randomLure,
@@ -104,13 +97,10 @@ public final class RewardsManager {
         if (currentShinyStatus) {
             return true;
         }
-
         double baseShinyChance = getRewardsConfig().breeding_baseShinyChange.getAsDouble();
         double breedingBonus = breedingLevel * getRewardsConfig().breeding_shinyLevelBonusMultiplier.getAsDouble();
         double totalShinyChance = baseShinyChance + breedingBonus;
-
         totalShinyChance = Math.min(totalShinyChance, getRewardsConfig().breeding_shinyMaxPercentage.getAsDouble());
-
         return Math.random() < totalShinyChance;
     }
 

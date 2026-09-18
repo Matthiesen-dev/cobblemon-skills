@@ -91,7 +91,6 @@ public final class ExperienceManager {
         boolean isMythical = pokemon.isMythical();
         boolean isLegendary = pokemon.isLegendary();
         boolean isShiny = pokemon.getShiny();
-
         double baseExperience = getConfig().fishing_catchBaseXp.getAsDouble() + Math.max(1, level) * getConfig().fishing_catchLevelXpMultiplier.getAsDouble();
         if (isUltraBeast) {
             baseExperience += getConfig().fishing_catchUltraBeastBonusXp.getAsDouble();

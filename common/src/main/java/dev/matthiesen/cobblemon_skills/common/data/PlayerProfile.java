@@ -2,6 +2,7 @@ package dev.matthiesen.cobblemon_skills.common.data;
 
 import dev.matthiesen.cobblemon_skills.common.config.def.ProfessionTierEntry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -25,15 +26,6 @@ public final class PlayerProfile {
         return professionProgressMap.get(profession);
     }
 
-    public Map<String, Boolean> getRedeemableRewards(Profession profession) {
-        Map<String, Boolean> rewardsForProfession = new HashMap<>();
-        for (ProfessionTierEntry tier : profession.getConfig().tiers()) {
-            String rewardId = tier.toId(profession.getNbtTag());
-            rewardsForProfession.put(rewardId, isRewardRedeemed(rewardId));
-        }
-        return rewardsForProfession;
-    }
-
     public boolean isRewardRedeemed(String rewardId) {
         return redeemableRewards.getOrDefault(rewardId, false);
     }
@@ -46,8 +38,14 @@ public final class PlayerProfile {
         redeemableRewards.put(rewardId, redeemed);
     }
 
-    public void setRewardRedeemed(Profession profession, ProfessionTierEntry tier, boolean redeemed) {
-        setRewardRedeemed(tier.toId(profession.getNbtTag()), redeemed);
+    public boolean redeemTierReward(ServerPlayer player, Profession profession, ProfessionTierEntry tier) {
+        String rewardId = tier.toId(profession.getNbtTag());
+        if (isRewardRedeemed(rewardId)) {
+            return false;
+        }
+        tier.redeemRewards(player);
+        setRewardRedeemed(rewardId, true);
+        return true;
     }
 
     public CompoundTag toCompoundTag() {

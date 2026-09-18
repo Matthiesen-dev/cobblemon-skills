@@ -74,9 +74,12 @@ public final class PlayerProfessionEntry {
                     if (unlocked && !redeemed) {
                         ServerPlayer sender = action.getPlayer();
                         try {
-                            tier.redeemRewards(sender);
-                            sender.sendSystemMessage(Component.literal("You have successfully redeemed the rewards for " + tier.displayName + " in " + config.displayName() + "."));
-                            open(sender, profession); // Refresh the page to reflect the redeemed status
+                            if (profile.redeemTierReward(sender, profession, tier)) {
+                                sender.sendSystemMessage(Component.literal("You have successfully redeemed the rewards for " + tier.displayName + " in " + config.displayName() + "."));
+                                open(sender, profession); // Refresh the page to reflect the redeemed status
+                            } else {
+                                sender.sendSystemMessage(Component.literal("You have already redeemed this reward."));
+                            }
                         } catch (RuntimeException e) {
                             CobblemonSkillsCommon.INSTANCE.createErrorLog("Failed to redeem rewards for " + tier.displayName + " in " + config.displayName() + " for player " + sender.getScoreboardName(), e);
                             sender.sendSystemMessage(Component.literal("Failed to redeem the rewards for " + tier.displayName + " in " + config.displayName() + "."));

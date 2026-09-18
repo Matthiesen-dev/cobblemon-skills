@@ -121,7 +121,6 @@ public final class CookingStatics {
             Map.entry(CobblemonItems.X_SP_ATK, COOKING_BASE_XP),
             Map.entry(CobblemonItems.X_SP_DEF, COOKING_BASE_XP),
             Map.entry(CobblemonItems.X_SPEED, COOKING_BASE_XP),
-
             Map.entry(CobblemonItems.DAWN_STONE, COOKING_TIER_4_XP),
             Map.entry(CobblemonItems.DUSK_STONE, COOKING_TIER_4_XP),
             Map.entry(CobblemonItems.FIRE_STONE, COOKING_TIER_4_XP),

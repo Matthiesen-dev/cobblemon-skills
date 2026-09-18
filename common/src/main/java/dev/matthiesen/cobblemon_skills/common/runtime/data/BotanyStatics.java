@@ -43,8 +43,6 @@ public final class BotanyStatics {
             Map.entry(CobblemonBlocks.BIG_ROOT, COBBLEMON_FARMING_XP),
             Map.entry(CobblemonBlocks.REVIVAL_HERB, COBBLEMON_FARMING_XP),
             Map.entry(CobblemonBlocks.ENERGY_ROOT, COBBLEMON_FARMING_XP),
-
-            // Berries
             Map.entry(CobblemonBlocks.AGUAV_BERRY, COBBLEMON_BERRY_FARMING_XP),
             Map.entry(CobblemonBlocks.APICOT_BERRY, COBBLEMON_BERRY_FARMING_XP),
             Map.entry(CobblemonBlocks.ASPEAR_BERRY, COBBLEMON_BERRY_FARMING_XP),

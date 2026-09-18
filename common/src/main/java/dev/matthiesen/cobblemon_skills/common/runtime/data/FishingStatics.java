@@ -33,7 +33,6 @@ public final class FishingStatics {
             Map.entry(CobblemonItems.ANCIENT_ULTRA_ROD, ANCIENT_ROD_CRAFT_XP),
             Map.entry(CobblemonItems.ANCIENT_VERDANT_ROD, ANCIENT_ROD_CRAFT_XP),
             Map.entry(CobblemonItems.ANCIENT_WING_ROD, ANCIENT_ROD_CRAFT_XP),
-
             Map.entry(CobblemonItems.AZURE_ROD, FISHING_ROD_CRAFT_XP),
             Map.entry(CobblemonItems.BEAST_ROD, FISHING_ROD_CRAFT_XP),
             Map.entry(CobblemonItems.CHERISH_ROD, FISHING_ROD_CRAFT_XP),

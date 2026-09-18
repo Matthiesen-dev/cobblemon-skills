@@ -47,7 +47,6 @@ public final class ProfessionManager {
         if (lastFishCaught == null || currentFishCaught <= lastFishCaught) {
             return;
         }
-
         int diff = currentFishCaught - lastFishCaught;
         AwardManager.awardProfessionExperience(
                 player,
@@ -247,7 +246,6 @@ public final class ProfessionManager {
         if (!(event.world() instanceof ServerLevel) || !(event.player() instanceof ServerPlayer serverPlayer)) {
             return;
         }
-
         if (ExperienceManager.isArcheologyBlock(event.state().getBlock())) {
             AwardManager.awardProfessionExperience(
                     serverPlayer,

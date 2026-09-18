@@ -18,29 +18,23 @@ public final class AwardManager {
         PlayerProfile profile = SavedPlayerProfessionData.get(player);
         ProfessionProgress progress = profile.getProgress(profession);
         boolean alreadyMaxLevel = progress.level() >= ProfessionProgress.getMaxLevel();
-
         int levelsGained = progress.addExperience(experience);
         SavedPlayerProfessionData.put(player, profile);
-
         if (alreadyMaxLevel && levelsGained == 0) {
             return 0;
         }
-
         sendExperienceProgress(player, profession, experience, progress);
-
         if (levelsGained > 0) {
             playLevelUpSound(player, levelsGained);
             sendLevelUpTitle(player, profession, progress.level());
             player.sendSystemMessage(Component.literal("Congratulations! Your " + profession.getConfig().displayName() + " profession has leveled up to level " + progress.level() + "!"));
         }
-
         return levelsGained;
     }
 
     private static void sendLevelUpTitle(ServerPlayer player, Profession profession, int level) {
         Component title = Component.literal("Leveled Up!").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD);
         Component subtitle = Component.literal("Your " + profession.getConfig().displayName() + " profession is now level " + level + "!").withStyle(ChatFormatting.YELLOW);
-
         player.connection.send(new ClientboundSetTitlesAnimationPacket(10, 50, 15));
         player.connection.send(new ClientboundSetTitleTextPacket(title));
         player.connection.send(new ClientboundSetSubtitleTextPacket(subtitle));
