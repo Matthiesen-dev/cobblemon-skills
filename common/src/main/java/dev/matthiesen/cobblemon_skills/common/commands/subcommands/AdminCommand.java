@@ -49,7 +49,7 @@ public final class AdminCommand {
                                 }
                                 return builder.buildFuture();
                             })
-                            .then(Commands.argument("level", IntegerArgumentType.integer(0, ProfessionProgress.getMaxLevel()))
+                            .then(Commands.argument("level", IntegerArgumentType.integer(0))
                                     .executes(AdminCommand::setLevel)
                             )
                     )
@@ -88,6 +88,10 @@ public final class AdminCommand {
             String professionName = StringArgumentType.getString(ctx, "profession");
             Profession profession = Profession.fromNbtTag(professionName);
             int level = IntegerArgumentType.getInteger(ctx, "level");
+            if (level > ProfessionProgress.getMaxLevel()) {
+                ctx.getSource().sendFailure(Component.literal("The specified level exceeds the maximum allowed level of " + ProfessionProgress.getMaxLevel() + ".").withStyle(ChatFormatting.RED));
+                return 0;
+            }
 
             PlayerProfile playerProfile = SavedPlayerProfessionData.get(targetPlayer);
             playerProfile.getProgress(profession).setLevel(level);
