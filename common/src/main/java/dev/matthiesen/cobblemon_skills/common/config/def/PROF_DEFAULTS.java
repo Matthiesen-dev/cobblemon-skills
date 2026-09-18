@@ -143,16 +143,47 @@ public final class PROF_DEFAULTS {
     );
 
     private static final List<ProfessionTierEntry> DEFAULT_FISHING_TIERS = List.of(
-            new ProfessionTierEntry("Novice", 10, List.of()),
-            new ProfessionTierEntry("Apprentice", 20, List.of()),
-            new ProfessionTierEntry("Adept", 30, List.of()),
-            new ProfessionTierEntry("Expert", 40, List.of()),
-            new ProfessionTierEntry("Master", 50, List.of()),
-            new ProfessionTierEntry("Grandmaster", 60, List.of()),
-            new ProfessionTierEntry("Legendary", 70, List.of()),
-            new ProfessionTierEntry("Mythical", 80, List.of()),
-            new ProfessionTierEntry("Divine", 90, List.of()),
-            new ProfessionTierEntry("Transcendent", 100, List.of())
+            new ProfessionTierEntry("Novice", 10, List.of(
+                    new RewardsEntry(20),
+                    new RewardsEntry("minecraft:cod", 4)
+            )),
+            new ProfessionTierEntry("Apprentice", 20, List.of(
+                    new RewardsEntry(40),
+                    new RewardsEntry("minecraft:salmon", 4)
+            )),
+            new ProfessionTierEntry("Adept", 30, List.of(
+                    new RewardsEntry(60),
+                    new RewardsEntry("minecraft:tropical_fish", 4)
+            )),
+            new ProfessionTierEntry("Expert", 40, List.of(
+                    new RewardsEntry(80),
+                    new RewardsEntry("minecraft:pufferfish", 4)
+            )),
+            new ProfessionTierEntry("Master", 50, List.of(
+                    new RewardsEntry(100),
+                    new RewardsEntry("minecraft:nautilus_shell", 2)
+            )),
+            new ProfessionTierEntry("Grandmaster", 60, List.of(
+                    new RewardsEntry(120),
+                    new RewardsEntry("minecraft:heart_of_the_sea", 1)
+            )),
+            new ProfessionTierEntry("Legendary", 70, List.of(
+                    new RewardsEntry(150),
+                    new RewardsEntry("minecraft:trident", 1)
+            )),
+            new ProfessionTierEntry("Mythical", 80, List.of(
+                    new RewardsEntry(200),
+                    new RewardsEntry("minecraft:conduit", 1)
+            )),
+            new ProfessionTierEntry("Divine", 90, List.of(
+                    new RewardsEntry(250),
+                    new RewardsEntry("minecraft:heart_of_the_sea", 2)
+            )),
+            new ProfessionTierEntry("Transcendent", 100, List.of(
+                    new RewardsEntry(500),
+                    new RewardsEntry("cobblemon:master_rod", 1),
+                    new RewardsEntry("tellraw @a [\"\",{\"text\":\"{player}\",\"bold\":true,\"color\":\"aqua\"},{\"text\":\" has transcended in Fishing!\",\"color\":\"gold\"}]")
+            ))
     );
 
     private static final List<ProfessionTierEntry> DEFAULT_CATCHING_TIERS = List.of(
