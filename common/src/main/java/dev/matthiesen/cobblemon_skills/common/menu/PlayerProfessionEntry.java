@@ -76,6 +76,7 @@ public final class PlayerProfessionEntry {
                         try {
                             tier.redeemRewards(sender);
                             sender.sendSystemMessage(Component.literal("You have successfully redeemed the rewards for " + tier.displayName + " in " + config.displayName() + "."));
+                            open(sender, profession); // Refresh the page to reflect the redeemed status
                         } catch (RuntimeException e) {
                             CobblemonSkillsCommon.INSTANCE.createErrorLog("Failed to redeem rewards for " + tier.displayName + " in " + config.displayName() + " for player " + sender.getScoreboardName(), e);
                             sender.sendSystemMessage(Component.literal("Failed to redeem the rewards for " + tier.displayName + " in " + config.displayName() + "."));
