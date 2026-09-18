@@ -53,18 +53,16 @@ public final class PlayerProfessionEntry {
                     .hideAdditional()
                     .setCustomName(Component.literal(tier.displayName).withStyle(unlocked ? ChatFormatting.GREEN : ChatFormatting.GRAY));
 
-            String statusString = "Status: " + (redeemed ? "Redeemed" : unlocked ? "Ready" : "Locked");
-            ChatFormatting statusFormatting = redeemed ? ChatFormatting.GOLD : unlocked ? ChatFormatting.GREEN : ChatFormatting.RED;
             if (isViewingOwnProfile) {
                 builder.addLore(new Component[]{
                         Component.literal("Requirement: " + tier.levelRequirement).withStyle(ChatFormatting.GRAY),
-                        Component.literal(statusString).withStyle(statusFormatting),
+                        Component.literal("Status: " + (redeemed ? "Redeemed" : unlocked ? "Ready" : "Locked"))
+                                .withStyle(redeemed ? ChatFormatting.GOLD : unlocked ? ChatFormatting.GREEN : ChatFormatting.RED),
                         Component.literal("Rewards: " + tier.rewards.size() + " queued").withStyle(ChatFormatting.DARK_GRAY)
                 });
             } else {
                 builder.addLore(new Component[]{
                         Component.literal("Requirement: " + tier.levelRequirement).withStyle(ChatFormatting.GRAY),
-                        Component.literal(statusString).withStyle(statusFormatting)
                 });
             }
 
