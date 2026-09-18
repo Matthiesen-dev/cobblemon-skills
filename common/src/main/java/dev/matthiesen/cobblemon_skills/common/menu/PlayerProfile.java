@@ -101,18 +101,18 @@ public final class PlayerProfile {
     }
 
     public static void open(ServerPlayer player, UUID targetUuid) {
-        if (!PermissionsRegistry.checkPermission(player, PermissionsRegistry.GUI_PROFILE_OTHER_PERMISSION)) {
+        if (player.getUUID() != targetUuid && !PermissionsRegistry.checkPermission(player, PermissionsRegistry.GUI_PROFILE_OTHER_PERMISSION)) {
             player.sendSystemMessage(Component.literal("You do not have permission to access other's profile."));
+            return;
+        }
+        if (!PermissionsRegistry.checkPermission(player, PermissionsRegistry.GUI_PROFILE_PERMISSION)) {
+            player.sendSystemMessage(Component.literal("You do not have permission to access your profile."));
             return;
         }
         UIManager.openUIForcefully(player, new PlayerProfile(player, targetUuid).getPage());
     }
 
     public static void open(ServerPlayer player) {
-        if (!PermissionsRegistry.checkPermission(player, PermissionsRegistry.GUI_PROFILE_PERMISSION)) {
-            player.sendSystemMessage(Component.literal("You do not have permission to access your profile."));
-            return;
-        }
         open(player, player.getUUID());
     }
 }

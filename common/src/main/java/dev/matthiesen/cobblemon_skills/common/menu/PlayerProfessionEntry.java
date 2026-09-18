@@ -154,18 +154,18 @@ public final class PlayerProfessionEntry {
     }
 
     public static void open(ServerPlayer player, UUID targetUuid, Profession profession) {
-        if (!PermissionsRegistry.checkPermission(player, PermissionsRegistry.GUI_PROFILE_OTHER_PERMISSION)) {
+        if (player.getUUID() != targetUuid && !PermissionsRegistry.checkPermission(player, PermissionsRegistry.GUI_PROFILE_OTHER_PERMISSION)) {
             player.sendSystemMessage(Component.literal("You do not have permission to access other's profile."));
+            return;
+        }
+        if (!PermissionsRegistry.checkPermission(player, PermissionsRegistry.GUI_PROFILE_PERMISSION)) {
+            player.sendSystemMessage(Component.literal("You do not have permission to access your profile."));
             return;
         }
         UIManager.openUIForcefully(player, new PlayerProfessionEntry(player, targetUuid, profession).getPage());
     }
 
     public static void open(ServerPlayer player, Profession profession) {
-        if (!PermissionsRegistry.checkPermission(player, PermissionsRegistry.GUI_PROFILE_PERMISSION)) {
-            player.sendSystemMessage(Component.literal("You do not have permission to access your profile."));
-            return;
-        }
         open(player, player.getUUID(), profession);
     }
 }
