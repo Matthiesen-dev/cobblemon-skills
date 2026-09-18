@@ -5,9 +5,19 @@
   <img src="https://mods.matthiesen.dev/badges/cobblemon.svg" alt="Cobblemon">
 </div>
 
-Cobblemon Skill trees, level up your trees and increase your benefits while exploring your world, and fighting, breeding, catching, and more!
+Cobblemon Skills, level up your professions and increase your benefits while exploring your world, and fighting, breeding, catching, and more!
 
-TODO
+## Professions
+
+The following professions are available in this mod, each with their own rewards and passive benefits:
+
+- Archeology
+- Botany
+- Cooking
+- Fishing
+- Catching
+- Training
+- Breeding
 
 ## Requirements
 
