@@ -11,6 +11,21 @@ public final class RewardsConfig {
     // Cooking
 
     // Fishing
+    public ModConfigSpec.BooleanValue fishing_randomLuckOfTheSea;
+    public ModConfigSpec.BooleanValue fishing_randomUnbreaking;
+    public ModConfigSpec.BooleanValue fishing_randomMending;
+    public ModConfigSpec.BooleanValue fishing_randomLure;
+    public ModConfigSpec.IntValue fishing_luckOfTheSeaTierOneMinLvl;
+    public ModConfigSpec.IntValue fishing_luckOfTheSeaTierTwoMinLvl;
+    public ModConfigSpec.IntValue fishing_luckOfTheSeaTierThreeMinLvl;
+    public ModConfigSpec.IntValue fishing_unbreakingTierOneMinLvl;
+    public ModConfigSpec.IntValue fishing_unbreakingTierTwoMinLvl;
+    public ModConfigSpec.IntValue fishing_unbreakingTierThreeMinLvl;
+    public ModConfigSpec.IntValue fishing_mendingMinLvl;
+    public ModConfigSpec.IntValue fishing_lureTierOneMinLvl;
+    public ModConfigSpec.IntValue fishing_lureTierTwoMinLvl;
+    public ModConfigSpec.IntValue fishing_lureTierThreeMinLvl;
+    public ModConfigSpec.DoubleValue fishing_enchantmentChance;
 
     // Catching
     public ModConfigSpec.DoubleValue catching_shinyCalculationMaxMultiplier;
@@ -43,6 +58,36 @@ public final class RewardsConfig {
         builder.pop(); // Pop "cooking" category
 
         builder.comment("Fishing Profession Configuration").push("fishing");
+        fishing_randomLuckOfTheSea = builder.comment("Whether the Luck of the Sea enchantment is randomly applied to fishing rewards")
+                .define("randomLuckOfTheSea", true);
+        fishing_randomUnbreaking = builder.comment("Whether the Unbreaking enchantment is randomly applied to fishing rewards")
+                .define("randomUnbreaking", true);
+        fishing_randomMending = builder.comment("Whether the Mending enchantment is randomly applied to fishing rewards")
+                .define("randomMending", true);
+        fishing_randomLure = builder.comment("Whether the Lure enchantment is randomly applied to fishing rewards")
+                .define("randomLure", true);
+        fishing_luckOfTheSeaTierOneMinLvl = builder.comment("The minimum level required for Luck of the Sea Tier 1 in fishing profession")
+                .defineInRange("luckOfTheSeaTierOneMinLvl", 10, 0, Integer.MAX_VALUE);
+        fishing_luckOfTheSeaTierTwoMinLvl = builder.comment("The minimum level required for Luck of the Sea Tier 2 in fishing profession")
+                .defineInRange("luckOfTheSeaTierTwoMinLvl", 30, 0, Integer.MAX_VALUE);
+        fishing_luckOfTheSeaTierThreeMinLvl = builder.comment("The minimum level required for Luck of the Sea Tier 3 in fishing profession")
+                .defineInRange("luckOfTheSeaTierThreeMinLvl", 50, 0, Integer.MAX_VALUE);
+        fishing_unbreakingTierOneMinLvl = builder.comment("The minimum level required for Unbreaking Tier 1 in fishing profession")
+                .defineInRange("unbreakingTierOneMinLvl", 20, 0, Integer.MAX_VALUE);
+        fishing_unbreakingTierTwoMinLvl = builder.comment("The minimum level required for Unbreaking Tier 2 in fishing profession")
+                .defineInRange("unbreakingTierTwoMinLvl", 40, 0, Integer.MAX_VALUE);
+        fishing_unbreakingTierThreeMinLvl = builder.comment("The minimum level required for Unbreaking Tier 3 in fishing profession")
+                .defineInRange("unbreakingTierThreeMinLvl", 60, 0, Integer.MAX_VALUE);
+        fishing_mendingMinLvl = builder.comment("The minimum level required for Mending enchantment in fishing profession")
+                .defineInRange("mendingMinLvl", 70, 0, Integer.MAX_VALUE);
+        fishing_lureTierOneMinLvl = builder.comment("The minimum level required for Lure Tier 1 in fishing profession")
+                .defineInRange("lureTierOneMinLvl", 15, 0, Integer.MAX_VALUE);
+        fishing_lureTierTwoMinLvl = builder.comment("The minimum level required for Lure Tier 2 in fishing profession")
+                .defineInRange("lureTierTwoMinLvl", 35, 0, Integer.MAX_VALUE);
+        fishing_lureTierThreeMinLvl = builder.comment("The minimum level required for Lure Tier 3 in fishing profession")
+                .defineInRange("lureTierThreeMinLvl", 55, 0, Integer.MAX_VALUE);
+        fishing_enchantmentChance = builder.comment("The chance for an enchantment to be applied to fishing rewards")
+                .defineInRange("enchantmentChance", 0.25, 0.0, 1.0);
         builder.pop(); // Pop "fishing" category
 
         builder.comment("Catching Profession Configuration").push("catching");

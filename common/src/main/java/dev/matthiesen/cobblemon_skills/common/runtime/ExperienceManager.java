@@ -4,7 +4,6 @@ import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
 import dev.matthiesen.cobblemon_skills.common.config.ExperienceConfig;
-import dev.matthiesen.cobblemon_skills.common.config.RewardsConfig;
 import dev.matthiesen.cobblemon_skills.common.runtime.data.ArcheologyStatics;
 import dev.matthiesen.cobblemon_skills.common.runtime.data.BotanyStatics;
 import dev.matthiesen.cobblemon_skills.common.runtime.data.CookingStatics;
@@ -18,10 +17,6 @@ public final class ExperienceManager {
 
     private static ExperienceConfig getConfig() {
         return CobblemonSkillsConfig.EXPERIENCE_CONFIG;
-    }
-
-    private static RewardsConfig getRewardsConfig() {
-        return CobblemonSkillsConfig.REWARDS_CONFIG;
     }
 
     public static boolean isCobblemonArcheologyItem(ItemStack item) {
@@ -113,17 +108,6 @@ public final class ExperienceManager {
         return baseExperience;
     }
 
-    public static double captureCatchRateBonusPercent(int level) {
-        return Math.min(
-                getRewardsConfig().catching_captureRateBonusPercentMax.getAsDouble(),
-                level * getRewardsConfig().catching_captureRateLevelMultiplier.getAsDouble()
-        );
-    }
-
-    public static float getCaptureRateBonusMultiplier(int level) {
-        return (float) (1.0 + (captureCatchRateBonusPercent(level) / 100.0));
-    }
-
     public static double getCaptureSkillExperience(int pokemonLevel, boolean criticalCapture) {
         double base = getConfig().catching_catchBaseXp.getAsDouble() + Math.max(1, pokemonLevel) * getConfig().catching_catchLevelXpMultiplier.getAsDouble();
         return criticalCapture ? base + getConfig().catching_catchCriticalBonusXp.getAsDouble() : base;
@@ -137,39 +121,11 @@ public final class ExperienceManager {
         return getConfig().breeding_eggCollectedBaseXp.getAsDouble();
     }
 
-    public static int getBreedingFriendshipBonus(int breedingLevel) {
-        return Math.min(
-                getRewardsConfig().breeding_friendshipBonusMax.getAsInt(),
-                breedingLevel / getRewardsConfig().breeding_friendshipBonusLevelDivider.getAsInt()
-        );
-    }
-
     public static double getBreedingEggHatched(int eggCycles) {
         return getConfig().breeding_eggHatchedBaseXp.getAsDouble() + Math.max(0, eggCycles) * getConfig().breeding_eggHatchedCycleBonusXp.getAsDouble();
     }
 
     public static double getTrainingSkillExperienceFromLevelUp(int oldLevel, int newLevel) {
         return Math.max(0, newLevel - oldLevel) * getConfig().training_levelUpXpMultiplier.getAsDouble();
-    }
-
-    public static double trainingSkillExperienceFromBattle(double battleExperience) {
-        if (battleExperience <= 0) {
-            return 0.0;
-        }
-        return Math.max(
-                getRewardsConfig().training_experienceFromBattleMax.getAsDouble(),
-                battleExperience * getRewardsConfig().training_experienceFromBattleExpMultiplier.getAsDouble()
-        );
-    }
-
-    public static double trainingBattleExperienceBonusPercent(int level) {
-        return Math.min(
-                getRewardsConfig().training_levelUpBonusExpPercentageMax.getAsDouble(),
-                level * getRewardsConfig().training_levelUpBonusExpPercentageLevelMultiplier.getAsDouble()
-        );
-    }
-
-    public static int trainingSkillBonusExperience(int level, int baseExperience) {
-        return (int) Math.floor(baseExperience * (trainingBattleExperienceBonusPercent(level) / 100.0));
     }
 }

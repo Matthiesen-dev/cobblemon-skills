@@ -10,10 +10,7 @@ import com.cobblemon.mod.common.api.events.pokeball.PokemonCatchRateEvent;
 import com.cobblemon.mod.common.api.events.pokemon.*;
 import com.cobblemon.mod.common.api.pokemon.experience.BattleExperienceSource;
 import com.cobblemon.mod.common.entity.pokeball.EmptyPokeBallEntity;
-import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.util.PlayerExtensionsKt;
-import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
-import dev.matthiesen.cobblemon_skills.common.config.RewardsConfig;
 import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
 import dev.matthiesen.cobblemon_skills.common.data.Profession;
 import dev.matthiesen.cobblemon_skills.common.platform.BlockBreakEvent;
@@ -34,10 +31,6 @@ public final class ProfessionManager {
 
     private ProfessionManager() {}
 
-    private static RewardsConfig getRewardsConfig() {
-        return CobblemonSkillsConfig.REWARDS_CONFIG;
-    }
-
     public static void onServerTick(ServerEvent.EndTick event) {
         for (ServerPlayer player : event.server().getPlayerList().getPlayers()) {
             syncFishingStats(player);
@@ -45,18 +38,7 @@ public final class ProfessionManager {
     }
 
     public static void onShinyCalculation(ShinyChanceCalculationEvent event) {
-        event.addModificationFunction(ProfessionManager::onShinyCalculationModify);
-    }
-
-    private static Float onShinyCalculationModify(Float rate, ServerPlayer player, Pokemon pokemon) {
-        if (player == null) {
-            return rate;
-        }
-        var catchingLevel = SavedPlayerProfessionData.get(player).getProgress(Profession.CATCHING).level();
-        double doubleMaxMultiplier = getRewardsConfig().catching_shinyCalculationMaxMultiplier.getAsDouble();
-        float maxMultiplier = (float) doubleMaxMultiplier;
-        float newCatchMultiplier = Math.min(0.01F * catchingLevel, maxMultiplier); // Ensure the multiplier doesn't exceed the maximum
-        return Math.max(rate / newCatchMultiplier, 1);
+        event.addModificationFunction(RewardsManager::onShinyCalculationModify);
     }
 
     private static void syncFishingStats(ServerPlayer player) {
@@ -111,6 +93,7 @@ public final class ProfessionManager {
                     Profession.FISHING,
                     ExperienceManager.getCobblemonFishingItemExperience(itemStack)
             );
+            RewardsManager.handleFishingSmithingTableRewards(serverPlayer, itemStack);
         }
     }
 
@@ -168,7 +151,7 @@ public final class ProfessionManager {
         if (event.getThrower() instanceof ServerPlayer player) {
             var captureLevel = SavedPlayerProfessionData.get(player).getProgress(Profession.CATCHING).level();
             var currentCatchRate = event.getCatchRate();
-            event.setCatchRate(currentCatchRate * ExperienceManager.getCaptureRateBonusMultiplier(captureLevel));
+            event.setCatchRate(currentCatchRate * RewardsManager.getCaptureRateBonusMultiplier(captureLevel));
         }
     }
 
@@ -194,22 +177,8 @@ public final class ProfessionManager {
         int currentFriendShip = event.getEgg().getFriendship() != null ? event.getEgg().getFriendship() : 0;
         var egg = event.getEgg();
         boolean currentShinyStatus = Boolean.TRUE.equals(egg.getShiny());
-        egg.setShiny(shouldMakeEggShiny(breedingLevel, currentShinyStatus));
-        egg.setFriendship(currentFriendShip + ExperienceManager.getBreedingFriendshipBonus(breedingLevel));
-    }
-
-    private static boolean shouldMakeEggShiny(int breedingLevel, boolean currentShinyStatus) {
-        if (currentShinyStatus) {
-            return true;
-        }
-
-        double baseShinyChance = getRewardsConfig().breeding_baseShinyChange.getAsDouble();
-        double breedingBonus = breedingLevel * getRewardsConfig().breeding_shinyLevelBonusMultiplier.getAsDouble();
-        double totalShinyChance = baseShinyChance + breedingBonus;
-
-        totalShinyChance = Math.min(totalShinyChance, getRewardsConfig().breeding_shinyMaxPercentage.getAsDouble());
-
-        return Math.random() < totalShinyChance;
+        egg.setShiny(RewardsManager.shouldMakeEggShiny(breedingLevel, currentShinyStatus));
+        egg.setFriendship(currentFriendShip + RewardsManager.getBreedingFriendshipBonus(breedingLevel));
     }
 
     public static void onHatchEggPost(HatchEggEvent.Post event) {
@@ -225,7 +194,7 @@ public final class ProfessionManager {
             ServerPlayer owner = event.getPokemon().getOwnerPlayer();
             if (owner != null) {
                 var trainingLevel = SavedPlayerProfessionData.get(owner).getProgress(Profession.TRAINING).level();
-                var bonus = ExperienceManager.trainingSkillBonusExperience(trainingLevel, event.getExperience());
+                var bonus = RewardsManager.trainingSkillBonusExperience(trainingLevel, event.getExperience());
                 if (bonus > 0) {
                     event.setExperience(event.getExperience() + bonus);
                 }
@@ -240,7 +209,7 @@ public final class ProfessionManager {
                 AwardManager.awardProfessionExperience(
                         owner,
                         Profession.TRAINING,
-                        ExperienceManager.trainingSkillExperienceFromBattle(event.getExperience())
+                        RewardsManager.trainingSkillExperienceFromBattle(event.getExperience())
                 );
             }
         }
