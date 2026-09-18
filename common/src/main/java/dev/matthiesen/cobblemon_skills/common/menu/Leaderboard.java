@@ -12,9 +12,9 @@ import ca.landonjw.gooeylibs2.api.page.Page;
 import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
 import dev.matthiesen.cobblemon_skills.common.data.Profession;
 import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
+import dev.matthiesen.cobblemon_skills.common.menu.util.ProfileUtils;
 import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
-import dev.matthiesen.matthiesen_core.common.utility.player_data.ServerUser;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Items;
@@ -45,7 +45,7 @@ public final class Leaderboard {
             dev.matthiesen.cobblemon_skills.common.data.PlayerProfile profile = entry.getValue();
             int highestLevel = getHighestLevel(profile);
 
-            String displayName = getDisplayName(uuid);
+            String displayName = ProfileUtils.getDisplayName(uuid);
             Button button = GooeyButton.builder()
                     .display(new ItemBuilder(Items.PAPER)
                             .hideAdditional()
@@ -113,15 +113,6 @@ public final class Leaderboard {
         }
 
         return topProfession.getConfig().displayName();
-    }
-
-    private String getDisplayName(UUID uuid) {
-        ServerUser user = new ServerUser(uuid);
-        var onlinePlayer = user.getOnlinePlayer();
-        if (onlinePlayer != null) {
-            return onlinePlayer.getScoreboardName();
-        }
-        return user.getUsername();
     }
 
     public static void open(ServerPlayer player) {

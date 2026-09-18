@@ -14,9 +14,8 @@ import dev.matthiesen.cobblemon_skills.common.CobblemonSkillsCommon;
 import dev.matthiesen.cobblemon_skills.common.config.def.ProfessionTierEntry;
 import dev.matthiesen.cobblemon_skills.common.data.Profession;
 import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
-import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
+import dev.matthiesen.cobblemon_skills.common.menu.util.ProfileUtils;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
-import dev.matthiesen.matthiesen_core.common.utility.player_data.ServerUser;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -140,26 +139,12 @@ public final class PlayerProfessionEntry {
                 .build();
 
         LinkedPage page = PaginationHelper.createPagesFromPlaceholders(template, tierButtons, null);
-        page.setTitle(Component.literal(resolveTargetName() + " - " + config.displayName() + " | Lvl " + progress.level()));
+        page.setTitle(Component.literal(ProfileUtils.getDisplayName(targetUuid) + " - " + config.displayName() + " | Lvl " + progress.level()));
         return page;
     }
 
-    private String resolveTargetName() {
-        ServerUser user = new ServerUser(targetUuid);
-        var onlinePlayer = user.getOnlinePlayer();
-        if (onlinePlayer != null) {
-            return onlinePlayer.getScoreboardName();
-        }
-        return user.getUsername();
-    }
-
     public static void open(ServerPlayer player, UUID targetUuid, Profession profession) {
-        if (player.getUUID() != targetUuid && !PermissionsRegistry.checkPermission(player, PermissionsRegistry.GUI_PROFILE_OTHER_PERMISSION)) {
-            player.sendSystemMessage(Component.literal("You do not have permission to access other's profile."));
-            return;
-        }
-        if (!PermissionsRegistry.checkPermission(player, PermissionsRegistry.GUI_PROFILE_PERMISSION)) {
-            player.sendSystemMessage(Component.literal("You do not have permission to access your profile."));
+        if (!ProfileUtils.checkPermission(player, targetUuid)) {
             return;
         }
         UIManager.openUIForcefully(player, new PlayerProfessionEntry(player, targetUuid, profession).getPage());

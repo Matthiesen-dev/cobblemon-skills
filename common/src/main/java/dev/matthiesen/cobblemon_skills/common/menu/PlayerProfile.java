@@ -13,9 +13,8 @@ import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
 import dev.matthiesen.cobblemon_skills.common.data.Profession;
 import dev.matthiesen.cobblemon_skills.common.data.ProfessionProgress;
 import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
-import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
+import dev.matthiesen.cobblemon_skills.common.menu.util.ProfileUtils;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
-import dev.matthiesen.matthiesen_core.common.utility.player_data.ServerUser;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Items;
@@ -35,7 +34,7 @@ public final class PlayerProfile {
 
     public Page getPage() {
         PlaceholderButton placeholder = new PlaceholderButton();
-        String displayName = resolveDisplayName();
+        String displayName = ProfileUtils.getDisplayName(targetUuid);
         dev.matthiesen.cobblemon_skills.common.data.PlayerProfile profile = SavedPlayerProfessionData.get(targetUuid);
 
         List<Button> professionButtons = new ArrayList<>();
@@ -91,22 +90,8 @@ public final class PlayerProfile {
         return page;
     }
 
-    private String resolveDisplayName() {
-        ServerUser user = new ServerUser(targetUuid);
-        var onlinePlayer = user.getOnlinePlayer();
-        if (onlinePlayer != null) {
-            return onlinePlayer.getScoreboardName();
-        }
-        return user.getUsername();
-    }
-
     public static void open(ServerPlayer player, UUID targetUuid) {
-        if (player.getUUID() != targetUuid && !PermissionsRegistry.checkPermission(player, PermissionsRegistry.GUI_PROFILE_OTHER_PERMISSION)) {
-            player.sendSystemMessage(Component.literal("You do not have permission to access other's profile."));
-            return;
-        }
-        if (!PermissionsRegistry.checkPermission(player, PermissionsRegistry.GUI_PROFILE_PERMISSION)) {
-            player.sendSystemMessage(Component.literal("You do not have permission to access your profile."));
+        if (!ProfileUtils.checkPermission(player, targetUuid)) {
             return;
         }
         UIManager.openUIForcefully(player, new PlayerProfile(player, targetUuid).getPage());
