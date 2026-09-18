@@ -62,6 +62,7 @@ public final class ProfessionManager {
                     Profession.COOKING,
                     ExperienceManager.getCobblemonCookingItemExperience(itemStack.getItem())
             );
+            RewardsManager.handleCookingRewards(serverPlayer);
         }
     }
 
@@ -82,6 +83,7 @@ public final class ProfessionManager {
                     Profession.COOKING,
                     ExperienceManager.getCobblemonCookingItemExperience(itemStack.getItem())
             );
+            RewardsManager.handleCookingRewards(serverPlayer);
         }
     }
 
@@ -103,6 +105,7 @@ public final class ProfessionManager {
                     Profession.COOKING,
                     ExperienceManager.getCobblemonCookingItemExperience(itemStack.getItem())
             );
+            RewardsManager.handleCookingRewards(serverPlayer);
         }
     }
 

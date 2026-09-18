@@ -91,6 +91,19 @@ public final class RewardsManager {
         }
     }
 
+    public static void handleCookingRewards(ServerPlayer player) {
+        PlayerProfile profile = SavedPlayerProfessionData.get(player);
+        ProfessionProgress progress = profile.getProgress(Profession.COOKING);
+        int level = progress.level();
+        if (!getRewardsConfig().cooking_randomExtraPlayerExp.getAsBoolean()
+                || level < getRewardsConfig().cooking_randomExtraPlayerExpMinLvl.get()
+        ) return;
+        int baseAmount = getRewardsConfig().cooking_randomExtraPlayerExpBaseAmount.get();
+        int levelMultiplier = getRewardsConfig().cooking_randomExtraPlayerExpLevelMultiplier.get();
+        int playerExperienceToAward = baseAmount + (level * levelMultiplier);
+        player.giveExperiencePoints(playerExperienceToAward);
+    }
+
     public static void handleArcheologyBrush(ServerPlayer serverPlayer, ItemStack item) {
         PlayerProfile profile = SavedPlayerProfessionData.get(serverPlayer);
         if (isEligibleForExtraDrops(profile, Profession.ARCHEOLOGY) && Math.random() < getExtraDropsChance(Profession.ARCHEOLOGY)) {

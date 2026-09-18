@@ -15,6 +15,10 @@ public final class RewardsConfig {
     public ModConfigSpec.DoubleValue botany_randomExtraDropsChance;
 
     // Cooking
+    public ModConfigSpec.BooleanValue cooking_randomExtraPlayerExp;
+    public ModConfigSpec.IntValue cooking_randomExtraPlayerExpMinLvl;
+    public ModConfigSpec.IntValue cooking_randomExtraPlayerExpBaseAmount;
+    public ModConfigSpec.IntValue cooking_randomExtraPlayerExpLevelMultiplier;
 
     // Fishing
     public ModConfigSpec.BooleanValue fishing_randomLuckOfTheSea;
@@ -75,6 +79,14 @@ public final class RewardsConfig {
         builder.pop(); // Pop "botany" category
 
         builder.comment("Cooking Profession Configuration").push("cooking");
+        cooking_randomExtraPlayerExp = builder.comment("Whether extra player experience is randomly applied to cooking rewards")
+                .define("randomExtraPlayerExp", true);
+        cooking_randomExtraPlayerExpMinLvl = builder.comment("The minimum level required for extra player experience in cooking profession")
+                .defineInRange("randomExtraPlayerExpMinLvl", 10, 0, Integer.MAX_VALUE);
+        cooking_randomExtraPlayerExpBaseAmount = builder.comment("The base amount of extra player experience applied to cooking rewards")
+                .defineInRange("randomExtraPlayerExpBaseAmount", 10, 0, Integer.MAX_VALUE);
+        cooking_randomExtraPlayerExpLevelMultiplier = builder.comment("The multiplier for extra player experience based on cooking level")
+                .defineInRange("randomExtraPlayerExpLevelMultiplier", 2, 0, Integer.MAX_VALUE);
         builder.pop(); // Pop "cooking" category
 
         builder.comment("Fishing Profession Configuration").push("fishing");
