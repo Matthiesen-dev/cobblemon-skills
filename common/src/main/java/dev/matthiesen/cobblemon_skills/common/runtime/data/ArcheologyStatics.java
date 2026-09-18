@@ -129,6 +129,9 @@ public final class ArcheologyStatics {
             Map.entry(CobblemonItems.FOSSILIZED_BIRD, RARE_ARCHEOLOGY_ITEM_XP),
             Map.entry(CobblemonItems.FOSSILIZED_DINO, RARE_ARCHEOLOGY_ITEM_XP),
             Map.entry(CobblemonItems.FOSSILIZED_FISH, RARE_ARCHEOLOGY_ITEM_XP),
-            Map.entry(CobblemonItems.FOSSILIZED_DRAKE, RARE_ARCHEOLOGY_ITEM_XP)
+            Map.entry(CobblemonItems.FOSSILIZED_DRAKE, RARE_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.TUMBLESTONE, RARE_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.SKY_TUMBLESTONE, RARE_ARCHEOLOGY_ITEM_XP),
+            Map.entry(CobblemonItems.BLACK_TUMBLESTONE, RARE_ARCHEOLOGY_ITEM_XP)
     );
 }
