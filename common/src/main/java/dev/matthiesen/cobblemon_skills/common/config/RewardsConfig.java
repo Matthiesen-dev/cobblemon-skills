@@ -5,8 +5,14 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public final class RewardsConfig {
 
     // Archeology
+    public ModConfigSpec.BooleanValue archeology_randomExtraDrops;
+    public ModConfigSpec.IntValue archeology_randomExtraDropsMinLvl;
+    public ModConfigSpec.DoubleValue archeology_randomExtraDropsChance;
 
     // Botany
+    public ModConfigSpec.BooleanValue botany_randomExtraDrops;
+    public ModConfigSpec.IntValue botany_randomExtraDropsMinLvl;
+    public ModConfigSpec.DoubleValue botany_randomExtraDropsChance;
 
     // Cooking
 
@@ -51,9 +57,21 @@ public final class RewardsConfig {
         builder.comment("Rewards Configuration for Cobblemon Skills Mod").push("rewards");
 
         builder.comment("Archeology Profession Configuration").push("archeology");
+        archeology_randomExtraDrops = builder.comment("Whether extra drops are randomly applied to block breaking rewards in archeology profession")
+                .define("randomExtraDrops", true);
+        archeology_randomExtraDropsMinLvl = builder.comment("The minimum level required for extra drops in archeology profession")
+                .defineInRange("randomExtraDropsMinLvl", 10, 0, Integer.MAX_VALUE);
+        archeology_randomExtraDropsChance = builder.comment("The chance for extra drops to be applied to block breaking rewards in archeology profession")
+                .defineInRange("randomExtraDropsChance", 0.25, 0.0, 1.0);
         builder.pop(); // Pop "archeology" category
 
         builder.comment("Botany Profession Configuration").push("botany");
+        botany_randomExtraDrops = builder.comment("Whether extra drops are randomly applied to block breaking rewards in botany profession")
+                .define("randomExtraDrops", true);
+        botany_randomExtraDropsMinLvl = builder.comment("The minimum level required for extra drops in botany profession")
+                .defineInRange("randomExtraDropsMinLvl", 10, 0, Integer.MAX_VALUE);
+        botany_randomExtraDropsChance = builder.comment("The chance for extra drops to be applied to block breaking rewards in botany profession")
+                .defineInRange("randomExtraDropsChance", 0.25, 0.0, 1.0);
         builder.pop(); // Pop "botany" category
 
         builder.comment("Cooking Profession Configuration").push("cooking");
