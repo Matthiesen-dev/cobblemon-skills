@@ -19,10 +19,16 @@ public final class PermissionsConfig {
     public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_admin_setLevel;
     public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_admin_reload;
 
+    // GUI Permissions
+    public ModConfigSpec.EnumValue<PermissionLevel> gui_main_menu;
+    public ModConfigSpec.EnumValue<PermissionLevel> gui_leaderboard;
+    public ModConfigSpec.EnumValue<PermissionLevel> gui_profile;
+    public ModConfigSpec.EnumValue<PermissionLevel> gui_profile_other;
+
     public PermissionsConfig(ModConfigSpec.Builder builder) {
         builder.push("permissions");
-        builder.push("command");
 
+        builder.push("command");
         command_cobbleskills = builder
                 .comment("The permission level required to use the /cobbleskills command.")
                 .defineEnum("cobbleskills", PermissionLevel.NONE);
@@ -56,8 +62,23 @@ public final class PermissionsConfig {
         command_cobbleskills_admin_setLevel = builder
                 .comment("The permission level required to use the /cobbleskills admin setLevel command.")
                 .defineEnum("cobbleskills.admin.set-level", PermissionLevel.ALL_COMMANDS);
+        builder.pop(); // pop "command"
 
-        builder.pop();
-        builder.pop();
+        builder.comment("Permissions for accessing the GUI components of Cobblemon Skills").push("gui");
+        gui_main_menu = builder
+                .comment("The permission level required to access the main menu GUI.")
+                .defineEnum("gui.main_menu", PermissionLevel.NONE);
+        gui_leaderboard = builder
+                .comment("The permission level required to access the leaderboard GUI.")
+                .defineEnum("gui.leaderboard", PermissionLevel.NONE);
+        gui_profile = builder
+                .comment("The permission level required to access the profile GUI.")
+                .defineEnum("gui.profile", PermissionLevel.NONE);
+        gui_profile_other = builder
+                .comment("The permission level required to access another player's profile GUI.")
+                .defineEnum("gui.profile_other", PermissionLevel.NONE);
+        builder.pop(); // pop "gui"
+
+        builder.pop(); // pop "permissions"
     }
 }

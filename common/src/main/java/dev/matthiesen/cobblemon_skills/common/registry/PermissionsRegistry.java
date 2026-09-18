@@ -6,6 +6,7 @@ import dev.matthiesen.matthiesen_core.common.api.permissions.Permission;
 import dev.matthiesen.matthiesen_core.common.api.permissions.PermissionLevel;
 import dev.matthiesen.matthiesen_core.common.utility.AbstractPermission;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.server.level.ServerPlayer;
 
 public final class PermissionsRegistry {
     public static Permission COMMAND_ROOT_PERMISSION = register(
@@ -56,10 +57,30 @@ public final class PermissionsRegistry {
             "command.cobbleskills.admin.reload",
             CobblemonSkillsConfig.PERMISSIONS_CONFIG.command_cobbleskills_admin_reload.get()
     );
+    public static Permission GUI_LEADERBOARD_PERMISSION = register(
+            "gui.leaderboard",
+            CobblemonSkillsConfig.PERMISSIONS_CONFIG.gui_leaderboard.get()
+    );
+    public static Permission GUI_MAIN_MENU_PERMISSION = register(
+            "gui.main-menu",
+            CobblemonSkillsConfig.PERMISSIONS_CONFIG.gui_main_menu.get()
+    );
+    public static Permission GUI_PROFILE_PERMISSION = register(
+            "gui.profile",
+            CobblemonSkillsConfig.PERMISSIONS_CONFIG.gui_profile.get()
+    );
+    public static Permission GUI_PROFILE_OTHER_PERMISSION = register(
+            "gui.profile.other",
+            CobblemonSkillsConfig.PERMISSIONS_CONFIG.gui_profile_other.get()
+    );
 
     public static void init() {}
 
     public static boolean checkPermission(CommandSourceStack source, Permission permission) {
+        return CobblemonSkillsCommon.INSTANCE.getPermissionsManager().getPermissionValidator().hasPermission(source, permission);
+    }
+
+    public static boolean checkPermission(ServerPlayer source, Permission permission) {
         return CobblemonSkillsCommon.INSTANCE.getPermissionsManager().getPermissionValidator().hasPermission(source, permission);
     }
 

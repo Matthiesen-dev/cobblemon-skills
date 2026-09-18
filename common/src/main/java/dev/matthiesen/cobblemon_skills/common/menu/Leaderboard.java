@@ -12,6 +12,7 @@ import ca.landonjw.gooeylibs2.api.page.Page;
 import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
 import dev.matthiesen.cobblemon_skills.common.data.Profession;
 import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
+import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
 import dev.matthiesen.matthiesen_core.common.utility.player_data.ServerUser;
 import net.minecraft.network.chat.Component;
@@ -124,6 +125,10 @@ public final class Leaderboard {
     }
 
     public static void open(ServerPlayer player) {
+        if (!PermissionsRegistry.checkPermission(player, PermissionsRegistry.GUI_LEADERBOARD_PERMISSION)) {
+            player.sendSystemMessage(Component.literal("You do not have permission to access the leaderboard."));
+            return;
+        }
         UIManager.openUIForcefully(player, new Leaderboard(player).getPage());
     }
 }

@@ -7,6 +7,7 @@ import ca.landonjw.gooeylibs2.api.button.PlaceholderButton;
 import ca.landonjw.gooeylibs2.api.helpers.PaginationHelper;
 import ca.landonjw.gooeylibs2.api.page.Page;
 import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
+import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -59,6 +60,10 @@ public final class MainMenu {
     }
 
     public static void open(ServerPlayer player) {
+        if (!PermissionsRegistry.checkPermission(player, PermissionsRegistry.GUI_MAIN_MENU_PERMISSION)) {
+            player.sendSystemMessage(Component.literal("You do not have permission to access the main menu."));
+            return;
+        }
         UIManager.openUIForcefully(player, new MainMenu(player).getPage());
     }
 }
