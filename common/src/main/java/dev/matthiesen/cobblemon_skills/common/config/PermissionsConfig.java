@@ -4,6 +4,8 @@ import dev.matthiesen.matthiesen_core.common.api.permissions.PermissionLevel;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public final class PermissionsConfig {
+
+    // Command Permissions
     public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills;
     public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_reset;
     public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_reset_self;
