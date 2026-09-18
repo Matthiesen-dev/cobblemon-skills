@@ -23,7 +23,7 @@ public final class ProfessionTierEntry {
     public static ProfessionTierEntry deserialize(Config config) {
         String displayName = config.get("displayName");
         int levelRequirement = config.getInt("levelRequirement");
-        var rewards = config.get(List.of("rewards"));
+        var rewards = config.get("rewards");
         if (rewards instanceof List<?> rewardsList) {
             var deserializedRewards = rewardsList.stream()
                     .filter(item -> item instanceof Config)

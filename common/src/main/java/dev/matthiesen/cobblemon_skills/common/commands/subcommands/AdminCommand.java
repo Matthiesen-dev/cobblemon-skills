@@ -6,6 +6,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.matthiesen.cobblemon_skills.common.CobblemonSkillsCommon;
+import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
 import dev.matthiesen.cobblemon_skills.common.data.PlayerProfile;
 import dev.matthiesen.cobblemon_skills.common.data.Profession;
 import dev.matthiesen.cobblemon_skills.common.data.ProfessionProgress;
@@ -53,11 +54,15 @@ public final class AdminCommand {
                             )
                     )
             );
+    private static final CommandBuilder CMD_RELOAD = new CommandBuilder("reload")
+            .requires(src -> PermissionsRegistry.checkPermission(src, PermissionsRegistry.COMMAND_ADMIN_RELOAD_PERMISSION))
+            .executes(AdminCommand::reload);
 
     public static final CommandBuilder CMD = new CommandBuilder("admin")
             .requires(src -> PermissionsRegistry.checkPermission(src, PermissionsRegistry.COMMAND_ADMIN_PERMISSION))
             .then(CMD_ADD_EXP)
-            .then(CMD_SET_LEVEL);
+            .then(CMD_SET_LEVEL)
+            .then(CMD_RELOAD);
 
     public static int addExp(CommandContext<CommandSourceStack> ctx) {
         try {
@@ -94,6 +99,18 @@ public final class AdminCommand {
         } catch (CommandSyntaxException e) {
             CobblemonSkillsCommon.INSTANCE.createErrorLog("Failed to set level for player: " + ctx.getSource().getTextName(), e);
             ctx.getSource().sendFailure(Component.literal("An error occurred while trying to set the level for the player. Please contact an administrator.").withStyle(ChatFormatting.RED));
+            return 0;
+        }
+    }
+
+    public static int reload(CommandContext<CommandSourceStack> ctx) {
+        try {
+            CobblemonSkillsConfig.popCache();
+            ctx.getSource().sendSystemMessage(Component.literal("Cobblemon Skills configuration reloaded successfully.").withStyle(ChatFormatting.GREEN));
+            return 1;
+        } catch (Exception e) {
+            CobblemonSkillsCommon.INSTANCE.createErrorLog("Failed to reload configuration: " + ctx.getSource().getTextName(), e);
+            ctx.getSource().sendFailure(Component.literal("An error occurred while trying to reload the configuration. Please contact an administrator.").withStyle(ChatFormatting.RED));
             return 0;
         }
     }

@@ -52,6 +52,10 @@ public final class PermissionsRegistry {
             "command.cobbleskills.admin.set-level",
             CobblemonSkillsConfig.PERMISSIONS_CONFIG.command_cobbleskills_admin_setLevel.get()
     );
+    public static Permission COMMAND_ADMIN_RELOAD_PERMISSION = register(
+            "command.cobbleskills.admin.reload",
+            CobblemonSkillsConfig.PERMISSIONS_CONFIG.command_cobbleskills_admin_reload.get()
+    );
 
     public static void init() {}
 

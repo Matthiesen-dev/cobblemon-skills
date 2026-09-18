@@ -15,6 +15,7 @@ public final class PermissionsConfig {
     public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_admin;
     public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_admin_addExp;
     public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_admin_setLevel;
+    public ModConfigSpec.EnumValue<PermissionLevel> command_cobbleskills_admin_reload;
 
     public PermissionsConfig(ModConfigSpec.Builder builder) {
         builder.push("permissions");
