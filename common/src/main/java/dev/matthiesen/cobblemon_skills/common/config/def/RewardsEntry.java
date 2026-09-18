@@ -14,7 +14,7 @@ public final class RewardsEntry {
     public String item;
     public int amount;
     // TYPE: EXPERIENCE
-    public double experience;
+    public int experience;
     // TYPE: COMMAND
     public String command;
 
@@ -24,7 +24,7 @@ public final class RewardsEntry {
         this.amount = amount;
     }
 
-    public RewardsEntry(double experience) {
+    public RewardsEntry(int experience) {
         this.type = TYPE.EXPERIENCE;
         this.experience = experience;
     }
@@ -43,7 +43,7 @@ public final class RewardsEntry {
                 return new RewardsEntry(item, amount);
             }
             case EXPERIENCE -> {
-                double experience = config.getInt("experience");
+                int experience = config.getInt("experience");
                 return new RewardsEntry(experience);
             }
             case COMMAND -> {
@@ -115,7 +115,7 @@ public final class RewardsEntry {
 
     private void redeemExperience(ServerPlayer player) throws Exception {
         if (this.experience > 0) {
-            player.giveExperiencePoints((int) this.experience);
+            player.giveExperiencePoints(this.experience);
         } else {
             throw new Exception("Experience is invalid: " + this.experience);
         }
