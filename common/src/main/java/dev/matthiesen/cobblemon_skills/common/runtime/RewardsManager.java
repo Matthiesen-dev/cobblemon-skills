@@ -115,13 +115,16 @@ public final class RewardsManager {
     }
 
     public static Float onShinyCalculationModify(Float rate, ServerPlayer player, @SuppressWarnings("unused") Pokemon pokemon) {
-        if (player == null) {
+        if (player == null || !getRewardsConfig().catching_enableShinyCalculationBoosting.getAsBoolean()) {
             return rate;
         }
         var catchingLevel = SavedPlayerProfessionData.get(player).getProgress(Profession.CATCHING).level();
         double doubleMaxMultiplier = getRewardsConfig().catching_shinyCalculationMaxMultiplier.getAsDouble();
         float maxMultiplier = (float) doubleMaxMultiplier;
-        float newCatchMultiplier = Math.min(0.01F * catchingLevel, maxMultiplier); // Ensure the multiplier doesn't exceed the maximum
+        float newCatchMultiplier = (float) Math.min(
+                getRewardsConfig().catching_shinyCalculationPerLevelMultiplier.getAsDouble() * catchingLevel,
+                maxMultiplier
+        );
         return Math.max(rate / newCatchMultiplier, 1);
     }
 

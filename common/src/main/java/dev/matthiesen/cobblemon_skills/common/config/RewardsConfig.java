@@ -28,6 +28,8 @@ public final class RewardsConfig {
     public ModConfigSpec.DoubleValue fishing_enchantmentChance;
 
     // Catching
+    public ModConfigSpec.BooleanValue catching_enableShinyCalculationBoosting;
+    public ModConfigSpec.DoubleValue catching_shinyCalculationPerLevelMultiplier;
     public ModConfigSpec.DoubleValue catching_shinyCalculationMaxMultiplier;
     public ModConfigSpec.DoubleValue catching_captureRateBonusPercentMax;
     public ModConfigSpec.DoubleValue catching_captureRateLevelMultiplier;
@@ -91,8 +93,12 @@ public final class RewardsConfig {
         builder.pop(); // Pop "fishing" category
 
         builder.comment("Catching Profession Configuration").push("catching");
+        catching_enableShinyCalculationBoosting = builder.comment("Whether shiny calculation boosting is enabled in catching profession")
+                .define("enableShinyCalculationBoosting", true);
         catching_shinyCalculationMaxMultiplier = builder.comment("The maximum multiplier for shiny calculation in catching profession")
                 .defineInRange("shinyCalculationMaxMultiplier", 10.0, 0.0, 10.0);
+        catching_shinyCalculationPerLevelMultiplier = builder.comment("The multiplier for shiny calculation per level in catching profession")
+                .defineInRange("shinyCalculationPerLevelMultiplier", 0.01, 0.0, 1.0);
         catching_captureRateBonusPercentMax = builder.comment("The maximum bonus percent for capture rate in catching profession")
                 .defineInRange("captureRateBonusPercentMax", 10.0, 0.0, 100.0);
         catching_captureRateLevelMultiplier = builder.comment("The bonus multiplier for capture rate based on catching level")
