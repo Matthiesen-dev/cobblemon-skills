@@ -86,7 +86,7 @@ public final class RewardsManager {
         }
         PlayerProfile profile = SavedPlayerProfessionData.get(player);
         if (isEligibleForExtraDrops(profile, profession) && Math.random() < getExtraDropsChance(profession)) {
-            Block.getDrops(event.state(), world, event.pos(), event.blockEntity(), player, event.player().getWeaponItem())
+            Block.getDrops(event.state(), world, event.pos(), event.blockEntity(), player, event.player().getMainHandItem())
                     .forEach(drop -> PlayerExtensionsKt.giveOrDropItemStack(player, drop, true));
         }
     }
