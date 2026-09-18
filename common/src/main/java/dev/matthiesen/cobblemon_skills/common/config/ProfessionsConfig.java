@@ -8,6 +8,11 @@ import java.util.List;
 
 public final class ProfessionsConfig {
 
+    // General
+    public ModConfigSpec.IntValue professionMaxLevel;
+    public ModConfigSpec.IntValue professionBaseExpPerLevel;
+    public ModConfigSpec.IntValue professionExpLevelMultiplier;
+
     // Archeology
     public ModConfigSpec.ConfigValue<String> archeology_professionName;
     public ModConfigSpec.ConfigValue<List<? extends Config>> archeology_professionRewards;
@@ -171,6 +176,13 @@ public final class ProfessionsConfig {
 
     public ProfessionsConfig(ModConfigSpec.Builder builder) {
         builder.comment("Professions configuration for Cobblemon Skills").push("professions");
+
+        professionMaxLevel = builder.comment("Maximum level for all professions")
+                .defineInRange("professionMaxLevel", 100, 1, Integer.MAX_VALUE);
+        professionBaseExpPerLevel = builder.comment("Base experience required for each level")
+                .defineInRange("professionBaseExpPerLevel", 1020, 1, Integer.MAX_VALUE);
+        professionExpLevelMultiplier = builder.comment("Multiplier for experience required per level")
+                .defineInRange("professionExpLevelMultiplier", 20, 1, Integer.MAX_VALUE);
 
         builder.comment("Archeology Profession Configuration").push("archeology");
         archeology_professionName = builder.comment("Name of the Archeology profession")

@@ -49,7 +49,7 @@ public final class AdminCommand {
                                 }
                                 return builder.buildFuture();
                             })
-                            .then(Commands.argument("level", IntegerArgumentType.integer(0, ProfessionProgress.MAX_LEVEL))
+                            .then(Commands.argument("level", IntegerArgumentType.integer(0, ProfessionProgress.getMaxLevel()))
                                     .executes(AdminCommand::setLevel)
                             )
                     )

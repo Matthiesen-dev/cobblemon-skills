@@ -17,7 +17,7 @@ public final class AwardManager {
     public static int awardProfessionExperience(ServerPlayer player, Profession profession, double experience) {
         PlayerProfile profile = SavedPlayerProfessionData.get(player);
         ProfessionProgress progress = profile.getProgress(profession);
-        boolean alreadyMaxLevel = progress.level() >= ProfessionProgress.MAX_LEVEL;
+        boolean alreadyMaxLevel = progress.level() >= ProfessionProgress.getMaxLevel();
 
         int levelsGained = progress.addExperience(experience);
         SavedPlayerProfessionData.put(player, profile);
