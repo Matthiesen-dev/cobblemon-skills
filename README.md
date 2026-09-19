@@ -7,6 +7,13 @@
 
 Cobblemon Skills, level up your professions and increase your benefits while exploring your world, and fighting, breeding, catching, and more!
 
+Cobblemon Skills is a server-side mod that extends your player's experience in Cobblemon by adding a new set of professions that can be leveled 
+up to provide passive benefits and rewards. Each profession has its own unique set of rewards and benefits, allowing players to progress and customize
+their experience in Cobblemon.
+
+**Quick Start:** To get started, simply install the mod on your server and start playing to level up your professions! You can view your progress and 
+rewards in the GUI by using the `/cobbleskills` command.
+
 ## Professions
 
 The following professions are available in this mod, each with their own rewards and passive benefits:
