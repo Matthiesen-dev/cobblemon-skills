@@ -23,10 +23,15 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+
+import java.util.List;
 
 public final class RewardsManager {
     public static int awardProfessionExperience(ServerPlayer player, Profession profession, double experience) {
@@ -85,10 +90,19 @@ public final class RewardsManager {
             return;
         }
         PlayerProfile profile = SavedPlayerProfessionData.get(player);
+        ItemStack mainHandItem = player.getMainHandItem();
+        if (!isTool(mainHandItem)) {
+            return; // Only apply extra drops for tools, not weapons or other items
+        }
         if (isEligibleForExtraDrops(profile, profession) && Math.random() < getExtraDropsChance(profession)) {
-            Block.getDrops(event.state(), world, event.pos(), event.blockEntity(), player, event.player().getMainHandItem())
+            Block.getDrops(event.state(), world, event.pos(), event.blockEntity(), player, mainHandItem)
                     .forEach(drop -> Block.popResource(world, event.pos(), drop));
         }
+    }
+
+    private static boolean isTool(ItemStack item) {
+        List<TagKey<Item>> toolTags = List.of(ItemTags.PICKAXES, ItemTags.SHOVELS, ItemTags.AXES, ItemTags.HOES);
+        return toolTags.stream().anyMatch(item::is);
     }
 
     public static void handleCookingRewards(ServerPlayer player) {
