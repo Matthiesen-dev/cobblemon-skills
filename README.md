@@ -3,6 +3,7 @@
 <div>
   <img src="https://mods.matthiesen.dev/badges/matthiesenCore.svg" alt="Matthiesen Core">
   <img src="https://mods.matthiesen.dev/badges/cobblemon.svg" alt="Cobblemon">
+  <img src="https://mods.matthiesen.dev/badges/gooeylibs.svg" alt="GooeyLibs">
 </div>
 
 Cobblemon Skills, level up your professions and increase your benefits while exploring your world, and fighting, breeding, catching, and more!
