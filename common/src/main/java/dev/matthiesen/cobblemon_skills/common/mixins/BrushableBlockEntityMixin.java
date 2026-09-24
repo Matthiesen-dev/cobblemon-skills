@@ -23,7 +23,7 @@ public class BrushableBlockEntityMixin {
     private void onDropArchaeologyItem(
             Player player,
             CallbackInfo ci,
-            @Local(name = "itemEntity") ItemEntity itemEntity
+            @Local(ordinal = 0) ItemEntity itemEntity
     ) {
         if (player instanceof ServerPlayer serverPlayer) {
             ProfessionManager.onBrushableBlockDrop(serverPlayer, itemEntity.getItem());
