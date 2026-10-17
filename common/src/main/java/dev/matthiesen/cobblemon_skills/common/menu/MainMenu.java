@@ -1,13 +1,13 @@
 package dev.matthiesen.cobblemon_skills.common.menu;
 
-import ca.landonjw.gooeylibs2.api.UIManager;
-import ca.landonjw.gooeylibs2.api.button.Button;
-import ca.landonjw.gooeylibs2.api.button.GooeyButton;
-import ca.landonjw.gooeylibs2.api.button.PlaceholderButton;
-import ca.landonjw.gooeylibs2.api.helpers.PaginationHelper;
-import ca.landonjw.gooeylibs2.api.page.Page;
-import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
 import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.ServerUIManager;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.Button;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.PlaceholderButton;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.ServerButton;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.helpers.PaginationHelper;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.page.Page;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.template.types.ChestTemplate;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,7 +25,7 @@ public final class MainMenu {
     public Page getPage() {
         PlaceholderButton placeholder = new PlaceholderButton();
 
-        Button profileButton = GooeyButton.builder()
+        Button profileButton = ServerButton.builder()
                 .display(new ItemBuilder(Items.BOOK)
                         .hideAdditional()
                         .setCustomName(Component.literal("Your Profile"))
@@ -37,7 +37,7 @@ public final class MainMenu {
                 .onClick((action) -> PlayerProfile.open(player))
                 .build();
 
-        Button leaderboardButton = GooeyButton.builder()
+        Button leaderboardButton = ServerButton.builder()
                 .display(new ItemBuilder(Items.DIAMOND)
                         .hideAdditional()
                         .setCustomName(Component.literal("Leaderboard"))
@@ -64,6 +64,6 @@ public final class MainMenu {
             player.sendSystemMessage(Component.literal("You do not have permission to access the main menu."));
             return;
         }
-        UIManager.openUIForcefully(player, new MainMenu(player).getPage());
+        ServerUIManager.openUIForcefully(player, new MainMenu(player).getPage());
     }
 }

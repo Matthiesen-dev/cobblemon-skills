@@ -1,19 +1,19 @@
 package dev.matthiesen.cobblemon_skills.common.menu;
 
-import ca.landonjw.gooeylibs2.api.UIManager;
-import ca.landonjw.gooeylibs2.api.button.Button;
-import ca.landonjw.gooeylibs2.api.button.GooeyButton;
-import ca.landonjw.gooeylibs2.api.button.PlaceholderButton;
-import ca.landonjw.gooeylibs2.api.button.linked.LinkType;
-import ca.landonjw.gooeylibs2.api.button.linked.LinkedPageButton;
-import ca.landonjw.gooeylibs2.api.helpers.PaginationHelper;
-import ca.landonjw.gooeylibs2.api.page.LinkedPage;
-import ca.landonjw.gooeylibs2.api.page.Page;
-import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
 import dev.matthiesen.cobblemon_skills.common.data.Profession;
 import dev.matthiesen.cobblemon_skills.common.data.ProfessionProgress;
 import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
 import dev.matthiesen.cobblemon_skills.common.menu.util.ProfileUtils;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.ServerUIManager;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.Button;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.PlaceholderButton;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.ServerButton;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.linked.LinkType;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.linked.LinkedPageButton;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.helpers.PaginationHelper;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.page.LinkedPage;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.page.Page;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.template.types.ChestTemplate;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -48,18 +48,18 @@ public final class PlayerProfile {
                             Component.literal("Experience: " + progress.experience() + "/" + ProfessionProgress.experienceRequiredForNextLevel(progress.level()))
                     });
 
-            Button button = GooeyButton.builder()
+            Button button = ServerButton.builder()
                     .display(builder.build())
                     .onClick((action) -> PlayerProfessionEntry.open(viewer, targetUuid, profession))
                     .build();
             professionButtons.add(button);
         }
 
-        Button frame = GooeyButton.builder()
+        Button frame = ServerButton.builder()
                 .display(new ItemBuilder(Items.GRAY_STAINED_GLASS_PANE).hideAdditional().setCustomName(Component.literal(" ")).build())
                 .build();
 
-        Button backButton = GooeyButton.builder()
+        Button backButton = ServerButton.builder()
                 .display(new ItemBuilder(Items.OAK_DOOR)
                         .hideAdditional()
                         .setCustomName(Component.literal("Back"))
@@ -94,7 +94,7 @@ public final class PlayerProfile {
         if (!ProfileUtils.checkPermission(player, targetUuid)) {
             return;
         }
-        UIManager.openUIForcefully(player, new PlayerProfile(player, targetUuid).getPage());
+        ServerUIManager.openUIForcefully(player, new PlayerProfile(player, targetUuid).getPage());
     }
 
     public static void open(ServerPlayer player) {
