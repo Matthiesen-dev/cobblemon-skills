@@ -1,20 +1,20 @@
 package dev.matthiesen.cobblemon_skills.common.menu;
 
-import ca.landonjw.gooeylibs2.api.UIManager;
-import ca.landonjw.gooeylibs2.api.button.Button;
-import ca.landonjw.gooeylibs2.api.button.GooeyButton;
-import ca.landonjw.gooeylibs2.api.button.PlaceholderButton;
-import ca.landonjw.gooeylibs2.api.button.linked.LinkType;
-import ca.landonjw.gooeylibs2.api.button.linked.LinkedPageButton;
-import ca.landonjw.gooeylibs2.api.helpers.PaginationHelper;
-import ca.landonjw.gooeylibs2.api.page.LinkedPage;
-import ca.landonjw.gooeylibs2.api.page.Page;
-import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
 import dev.matthiesen.cobblemon_skills.common.CobblemonSkillsCommon;
 import dev.matthiesen.cobblemon_skills.common.config.def.ProfessionTierEntry;
 import dev.matthiesen.cobblemon_skills.common.data.Profession;
 import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
 import dev.matthiesen.cobblemon_skills.common.menu.util.ProfileUtils;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.ServerUIManager;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.Button;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.PlaceholderButton;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.ServerButton;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.linked.LinkType;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.linked.LinkedPageButton;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.helpers.PaginationHelper;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.page.LinkedPage;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.page.Page;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.template.types.ChestTemplate;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -66,7 +66,7 @@ public final class PlayerProfessionEntry {
                 });
             }
 
-            GooeyButton.Builder buttonBuilder = GooeyButton.builder()
+            ServerButton.Builder buttonBuilder = ServerButton.builder()
                     .display(builder.build());
 
             if (isViewingOwnProfile) {
@@ -99,7 +99,7 @@ public final class PlayerProfessionEntry {
         }
 
         if (tierButtons.isEmpty()) {
-            tierButtons.add(GooeyButton.builder()
+            tierButtons.add(ServerButton.builder()
                     .display(new ItemBuilder(Items.BARRIER)
                             .hideAdditional()
                             .setCustomName(Component.literal("No rewards configured"))
@@ -108,11 +108,11 @@ public final class PlayerProfessionEntry {
                     .build());
         }
 
-        Button frame = GooeyButton.builder()
+        Button frame = ServerButton.builder()
                 .display(new ItemBuilder(Items.GRAY_STAINED_GLASS_PANE).hideAdditional().setCustomName(Component.literal(" ")).build())
                 .build();
 
-        Button profileButton = GooeyButton.builder()
+        Button profileButton = ServerButton.builder()
                 .display(new ItemBuilder(Items.OAK_DOOR)
                         .hideAdditional()
                         .setCustomName(Component.literal("Back to Profile"))
@@ -147,7 +147,7 @@ public final class PlayerProfessionEntry {
         if (!ProfileUtils.checkPermission(player, targetUuid)) {
             return;
         }
-        UIManager.openUIForcefully(player, new PlayerProfessionEntry(player, targetUuid, profession).getPage());
+        ServerUIManager.openUIForcefully(player, new PlayerProfessionEntry(player, targetUuid, profession).getPage());
     }
 
     public static void open(ServerPlayer player, Profession profession) {

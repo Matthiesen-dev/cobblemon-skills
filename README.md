@@ -3,7 +3,6 @@
 <div>
   <img src="https://mods.matthiesen.dev/badges/matthiesenCore.svg" alt="Matthiesen Core">
   <img src="https://mods.matthiesen.dev/badges/cobblemon.svg" alt="Cobblemon">
-  <img src="https://mods.matthiesen.dev/badges/gooeylibs.svg" alt="GooeyLibs">
 </div>
 
 Cobblemon Skills, level up your professions and increase your benefits while exploring your world, and fighting, breeding, catching, and more!
@@ -31,7 +30,6 @@ The following professions are available in this mod, each with their own rewards
 
 - [Matthiesen Core](https://modrinth.com/mod/matthiesen-core)
 - [Cobblemon](https://modrinth.com/mod/cobblemon)
-- [GooeyLibs v3.1.1-1.21.x+](https://modrinth.com/mod/gooeylibs)
 - [Fabric API](https://modrinth.com/mod/fabric-api) (Fabric only)
 - [Forge Config API Port](https://modrinth.com/mod/forge-config-api-port) (Fabric only)
 
@@ -41,9 +39,10 @@ Documentation for this mod can be found at [mods.matthiesen.dev](https://mods.ma
 
 ## Version Compatibility
 
-| Minecraft Version | Matthiesen Core Version | Cobblemon Version | Mod Version |
-|-------------------|-------------------------|-------------------|-------------|
-| 1.21.1            | 1.x.x                   | 1.8.0             | 1.x.x       |
+| Minecraft Version | Matthiesen Core Version | Cobblemon Version | Mod Version    |
+|-------------------|-------------------------|-------------------|----------------|
+| 1.21.1            | 1.2.7+                  | 1.8.0+            | 1.0.0-beta.1+  |
+| 1.21.1            | 1.3.0+                  | 1.8.0+            | 1.0.0-beta.4+  |
 
 ## FastStats Metrics
 
