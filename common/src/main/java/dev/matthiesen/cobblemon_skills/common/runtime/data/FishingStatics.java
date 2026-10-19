@@ -2,19 +2,19 @@ package dev.matthiesen.cobblemon_skills.common.runtime.data;
 
 import com.cobblemon.mod.common.CobblemonItems;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
-import dev.matthiesen.cobblemon_skills.common.config.ExperienceConfig;
+import dev.matthiesen.cobblemon_skills.common.config.professions.FishingConfig;
 import net.minecraft.world.item.Item;
 
 import java.util.Map;
 import java.util.function.Supplier;
 
 public final class FishingStatics {
-    private static ExperienceConfig getConfig() {
-        return CobblemonSkillsConfig.EXPERIENCE_CONFIG;
+    private static FishingConfig getConfig() {
+        return CobblemonSkillsConfig.FISHING_CONFIG;
     }
 
-    private static final Supplier<Integer> ANCIENT_ROD_CRAFT_XP = () -> getConfig().fishing_craftAncientRodXp.getAsInt();
-    private static final Supplier<Integer> FISHING_ROD_CRAFT_XP = () -> getConfig().fishing_craftFishingRodXp.getAsInt();
+    private static final Supplier<Integer> ANCIENT_ROD_CRAFT_XP = () -> getConfig().experience_craftAncientRodXp.getAsInt();
+    private static final Supplier<Integer> FISHING_ROD_CRAFT_XP = () -> getConfig().experience_craftFishingRodXp.getAsInt();
 
     public static final Map<Item, Supplier<Integer>> ITEMS = Map.ofEntries(
             Map.entry(CobblemonItems.ANCIENT_AZURE_ROD, ANCIENT_ROD_CRAFT_XP),

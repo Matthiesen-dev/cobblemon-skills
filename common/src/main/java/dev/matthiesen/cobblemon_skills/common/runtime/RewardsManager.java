@@ -4,7 +4,6 @@ import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.util.PlayerExtensionsKt;
 import dev.matthiesen.cobblemon_skills.common.CobblemonSkillsCommon;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
-import dev.matthiesen.cobblemon_skills.common.config.RewardsConfig;
 import dev.matthiesen.cobblemon_skills.common.data.PlayerProfile;
 import dev.matthiesen.cobblemon_skills.common.data.Profession;
 import dev.matthiesen.cobblemon_skills.common.data.ProfessionProgress;
@@ -55,29 +54,30 @@ public final class RewardsManager {
     public static void handleFishingSmithingTableRewards(ServerPlayer serverPlayer, ItemStack itemStack) {
         PlayerProfile profile = SavedPlayerProfessionData.get(serverPlayer);
         int fishingLevel = profile.getProgress(Profession.FISHING).level();
-        boolean randomLuckOfTheSea = getRewardsConfig().fishing_randomLuckOfTheSea.get();
-        boolean randomUnbreaking = getRewardsConfig().fishing_randomUnbreaking.get();
-        boolean randomMending = getRewardsConfig().fishing_randomMending.get();
-        boolean randomLure = getRewardsConfig().fishing_randomLure.get();
+        var rewardsConfig = CobblemonSkillsConfig.FISHING_CONFIG;
+        boolean randomLuckOfTheSea = rewardsConfig.rewards_randomLuckOfTheSea.get();
+        boolean randomUnbreaking = rewardsConfig.rewards_randomUnbreaking.get();
+        boolean randomMending = rewardsConfig.rewards_randomMending.get();
+        boolean randomLure = rewardsConfig.rewards_randomLure.get();
         int maxLuckOfTheSeaTier = Fishing.getMaxTier(
                 fishingLevel,
-                getRewardsConfig().fishing_luckOfTheSeaTierOneMinLvl.get(),
-                getRewardsConfig().fishing_luckOfTheSeaTierTwoMinLvl.get(),
-                getRewardsConfig().fishing_luckOfTheSeaTierThreeMinLvl.get()
+                rewardsConfig.rewards_luckOfTheSeaTierOneMinLvl.get(),
+                rewardsConfig.rewards_luckOfTheSeaTierTwoMinLvl.get(),
+                rewardsConfig.rewards_luckOfTheSeaTierThreeMinLvl.get()
         );
         int maxUnbreakingTier = Fishing.getMaxTier(
                 fishingLevel,
-                getRewardsConfig().fishing_unbreakingTierOneMinLvl.get(),
-                getRewardsConfig().fishing_unbreakingTierTwoMinLvl.get(),
-                getRewardsConfig().fishing_unbreakingTierThreeMinLvl.get()
+                rewardsConfig.rewards_unbreakingTierOneMinLvl.get(),
+                rewardsConfig.rewards_unbreakingTierTwoMinLvl.get(),
+                rewardsConfig.rewards_unbreakingTierThreeMinLvl.get()
         );
         int maxLureTier = Fishing.getMaxTier(
                 fishingLevel,
-                getRewardsConfig().fishing_lureTierOneMinLvl.get(),
-                getRewardsConfig().fishing_lureTierTwoMinLvl.get(),
-                getRewardsConfig().fishing_lureTierThreeMinLvl.get()
+                rewardsConfig.rewards_lureTierOneMinLvl.get(),
+                rewardsConfig.rewards_lureTierTwoMinLvl.get(),
+                rewardsConfig.rewards_lureTierThreeMinLvl.get()
         );
-        boolean isMendingEligible = fishingLevel >= getRewardsConfig().fishing_mendingMinLvl.get();
+        boolean isMendingEligible = fishingLevel >= rewardsConfig.rewards_mendingMinLvl.get();
         Fishing.applyEnchantmentsToItemStack(
                 itemStack,
                 randomLuckOfTheSea, randomUnbreaking, randomMending, randomLure,
@@ -109,11 +109,12 @@ public final class RewardsManager {
         PlayerProfile profile = SavedPlayerProfessionData.get(player);
         ProfessionProgress progress = profile.getProgress(Profession.COOKING);
         int level = progress.level();
-        if (!getRewardsConfig().cooking_randomExtraPlayerExp.getAsBoolean()
-                || level < getRewardsConfig().cooking_randomExtraPlayerExpMinLvl.get()
+        var rewardsConfig = CobblemonSkillsConfig.COOKING_CONFIG;
+        if (!rewardsConfig.rewards_randomExtraPlayerExp.getAsBoolean()
+                || level < rewardsConfig.rewards_randomExtraPlayerExpMinLvl.get()
         ) return;
-        int baseAmount = getRewardsConfig().cooking_randomExtraPlayerExpBaseAmount.get();
-        int levelMultiplier = getRewardsConfig().cooking_randomExtraPlayerExpLevelMultiplier.get();
+        int baseAmount = rewardsConfig.rewards_randomExtraPlayerExpBaseAmount.get();
+        int levelMultiplier = rewardsConfig.rewards_randomExtraPlayerExpLevelMultiplier.get();
         int playerExperienceToAward = baseAmount + (level * levelMultiplier);
         player.giveExperiencePoints(playerExperienceToAward);
     }
@@ -129,28 +130,31 @@ public final class RewardsManager {
 
     private static boolean isEligibleForExtraDrops(PlayerProfile profile, Profession profession) {
         if (profession == Profession.ARCHEOLOGY) {
-            return getRewardsConfig().archeology_randomExtraDrops.getAsBoolean()
-                    && profile.getProgress(Profession.ARCHEOLOGY).level() >= getRewardsConfig().archeology_randomExtraDropsMinLvl.get();
+            var rewardsConfig = CobblemonSkillsConfig.ARCHEOLOGY_CONFIG;
+            return rewardsConfig.rewards_randomExtraDrops.getAsBoolean()
+                    && profile.getProgress(Profession.ARCHEOLOGY).level() >= rewardsConfig.rewards_randomExtraDropsMinLvl.get();
         } else if (profession == Profession.BOTANY) {
-            return getRewardsConfig().botany_randomExtraDrops.getAsBoolean()
-                    && profile.getProgress(Profession.BOTANY).level() >= getRewardsConfig().botany_randomExtraDropsMinLvl.get();
+            var rewardsConfig = CobblemonSkillsConfig.BOTANY_CONFIG;
+            return rewardsConfig.rewards_randomExtraDrops.getAsBoolean()
+                    && profile.getProgress(Profession.BOTANY).level() >= rewardsConfig.rewards_randomExtraDropsMinLvl.get();
         }
         return false;
     }
 
     private static double getExtraDropsChance(Profession profession) {
         if (profession == Profession.ARCHEOLOGY) {
-            return getRewardsConfig().archeology_randomExtraDropsChance.getAsDouble();
+            return CobblemonSkillsConfig.ARCHEOLOGY_CONFIG.rewards_randomExtraDropsChance.getAsDouble();
         } else if (profession == Profession.BOTANY) {
-            return getRewardsConfig().botany_randomExtraDropsChance.getAsDouble();
+            return CobblemonSkillsConfig.BOTANY_CONFIG.rewards_randomExtraDropsChance.getAsDouble();
         }
         return 0.0;
     }
 
     public static double captureCatchRateBonusPercent(int level) {
+        var rewardsConfig = CobblemonSkillsConfig.CATCHING_CONFIG;
         return Math.min(
-                getRewardsConfig().catching_captureRateBonusPercentMax.getAsDouble(),
-                level * getRewardsConfig().catching_captureRateLevelMultiplier.getAsDouble()
+                rewardsConfig.rewards_captureRateBonusPercentMax.getAsDouble(),
+                level * rewardsConfig.rewards_captureRateLevelMultiplier.getAsDouble()
         );
     }
 
@@ -159,9 +163,10 @@ public final class RewardsManager {
     }
 
     public static int getBreedingFriendshipBonus(int breedingLevel) {
+        var rewardsConfig = CobblemonSkillsConfig.BREEDING_CONFIG;
         return Math.min(
-                getRewardsConfig().breeding_friendshipBonusMax.getAsInt(),
-                breedingLevel / getRewardsConfig().breeding_friendshipBonusLevelDivider.getAsInt()
+                rewardsConfig.rewards_friendshipBonusMax.getAsInt(),
+                breedingLevel / rewardsConfig.rewards_friendshipBonusLevelDivider.getAsInt()
         );
     }
 
@@ -169,16 +174,18 @@ public final class RewardsManager {
         if (battleExperience <= 0) {
             return 0.0;
         }
+        var rewardsConfig = CobblemonSkillsConfig.TRAINING_CONFIG;
         return Math.max(
-                getRewardsConfig().training_experienceFromBattleMax.getAsDouble(),
-                battleExperience * getRewardsConfig().training_experienceFromBattleExpMultiplier.getAsDouble()
+                rewardsConfig.rewards_experienceFromBattleMax.getAsDouble(),
+                battleExperience * rewardsConfig.rewards_experienceFromBattleExpMultiplier.getAsDouble()
         );
     }
 
     public static double trainingBattleExperienceBonusPercent(int level) {
+        var rewardsConfig = CobblemonSkillsConfig.TRAINING_CONFIG;
         return Math.min(
-                getRewardsConfig().training_levelUpBonusExpPercentageMax.getAsDouble(),
-                level * getRewardsConfig().training_levelUpBonusExpPercentageLevelMultiplier.getAsDouble()
+                rewardsConfig.rewards_levelUpBonusExpPercentageMax.getAsDouble(),
+                level * rewardsConfig.rewards_levelUpBonusExpPercentageLevelMultiplier.getAsDouble()
         );
     }
 
@@ -190,29 +197,27 @@ public final class RewardsManager {
         if (currentShinyStatus) {
             return true;
         }
-        double baseShinyChance = getRewardsConfig().breeding_baseShinyChange.getAsDouble();
-        double breedingBonus = breedingLevel * getRewardsConfig().breeding_shinyLevelBonusMultiplier.getAsDouble();
+        var rewardsConfig = CobblemonSkillsConfig.BREEDING_CONFIG;
+        double baseShinyChance = rewardsConfig.rewards_baseShinyChange.getAsDouble();
+        double breedingBonus = breedingLevel * rewardsConfig.rewards_shinyLevelBonusMultiplier.getAsDouble();
         double totalShinyChance = baseShinyChance + breedingBonus;
-        totalShinyChance = Math.min(totalShinyChance, getRewardsConfig().breeding_shinyMaxPercentage.getAsDouble());
+        totalShinyChance = Math.min(totalShinyChance, rewardsConfig.rewards_shinyMaxPercentage.getAsDouble());
         return Math.random() < totalShinyChance;
     }
 
     public static Float onShinyCalculationModify(Float rate, ServerPlayer player, @SuppressWarnings("unused") Pokemon pokemon) {
-        if (player == null || !getRewardsConfig().catching_enableShinyCalculationBoosting.getAsBoolean()) {
+        var rewardsConfig = CobblemonSkillsConfig.CATCHING_CONFIG;
+        if (player == null || !rewardsConfig.rewards_enableShinyCalculationBoosting.getAsBoolean()) {
             return rate;
         }
         var catchingLevel = SavedPlayerProfessionData.get(player).getProgress(Profession.CATCHING).level();
-        double doubleMaxMultiplier = getRewardsConfig().catching_shinyCalculationMaxMultiplier.getAsDouble();
+        double doubleMaxMultiplier = rewardsConfig.rewards_shinyCalculationMaxMultiplier.getAsDouble();
         float maxMultiplier = (float) doubleMaxMultiplier;
         float newCatchMultiplier = (float) Math.min(
-                getRewardsConfig().catching_shinyCalculationPerLevelMultiplier.getAsDouble() * catchingLevel,
+                rewardsConfig.rewards_shinyCalculationPerLevelMultiplier.getAsDouble() * catchingLevel,
                 maxMultiplier
         );
         return Math.max(rate / newCatchMultiplier, 1);
-    }
-
-    private static RewardsConfig getRewardsConfig() {
-        return CobblemonSkillsConfig.REWARDS_CONFIG;
     }
 
     private static Holder<Enchantment> getEnchantment(ResourceKey<Enchantment> enchantment) {
@@ -248,7 +253,7 @@ public final class RewardsManager {
 
     private static class Fishing {
         private static double getFishingEnchantmentChance() {
-            return getRewardsConfig().fishing_enchantmentChance.get();
+            return CobblemonSkillsConfig.FISHING_CONFIG.rewards_enchantmentChance.get();
         }
 
         private static void applyEnchantmentsToItemStack(

@@ -27,6 +27,10 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
         return MOD_ID + "/" + path + ".toml";
     }
 
+    public String professionConfig(String name) {
+        return modConfigPath("professions/" + name);
+    }
+
     @Override
     public @Token @NotNull String getMetricsToken() {
         return METRICS_TOKEN;
@@ -36,9 +40,14 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
         super.initialize();
 
         registerModConfig(MOD_ID, ModConfigType.STARTUP, CobblemonSkillsConfig.PERMISSIONS_SPEC, modConfigPath("permissions"));
-        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.EXPERIENCE_SPEC, modConfigPath("experience"));
-        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.REWARDS_SPEC, modConfigPath("rewards"));
-        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.PROFESSIONS_SPEC, modConfigPath("professions"));
+        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.SERVER_SPEC, modConfigPath("server"));
+        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.ARCHEOLOGY_SPEC, professionConfig("archeology"));
+        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.BOTANY_SPEC, professionConfig("botany"));
+        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.BREEDING_SPEC, professionConfig("breeding"));
+        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.CATCHING_SPEC, professionConfig("catching"));
+        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.COOKING_SPEC, professionConfig("cooking"));
+        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.FISHING_SPEC, professionConfig("fishing"));
+        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.TRAINING_SPEC, professionConfig("training"));
 
         PermissionsRegistry.init();
         getCommandsRegistryManager().registerCommand(RootCommand.CMD);

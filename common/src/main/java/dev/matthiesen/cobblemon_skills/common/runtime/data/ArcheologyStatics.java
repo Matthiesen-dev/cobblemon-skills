@@ -3,7 +3,7 @@ package dev.matthiesen.cobblemon_skills.common.runtime.data;
 import com.cobblemon.mod.common.CobblemonBlocks;
 import com.cobblemon.mod.common.CobblemonItems;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
-import dev.matthiesen.cobblemon_skills.common.config.ExperienceConfig;
+import dev.matthiesen.cobblemon_skills.common.config.professions.ArcheologyConfig;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
@@ -11,23 +11,23 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public final class ArcheologyStatics {
-    private static ExperienceConfig getConfig() {
-        return CobblemonSkillsConfig.EXPERIENCE_CONFIG;
+    private static ArcheologyConfig getConfig() {
+        return CobblemonSkillsConfig.ARCHEOLOGY_CONFIG;
     }
 
-    private static final Supplier<Integer> ORE_BLOCK_XP = () -> getConfig().archeology_oreBlockXp.getAsInt();
-    private static final Supplier<Integer> DEEPSLATE_ORE_BLOCK_XP = () -> getConfig().archeology_deepslateOreBlockXp.getAsInt();
-    private static final Supplier<Integer> MISC_ORE_BLOCK_XP = () -> getConfig().archeology_miscOreBlockXp.getAsInt();
-    private static final Supplier<Integer> TUMBLESTONE_CLUSTER_SMALL_XP = () -> getConfig().archeology_tumblestoneClusterSmallXp.getAsInt();
-    private static final Supplier<Integer> TUMBLESTONE_CLUSTER_MEDIUM_XP = () -> getConfig().archeology_tumblestoneClusterMediumXp.getAsInt();
-    private static final Supplier<Integer> TUMBLESTONE_CLUSTER_LARGE_XP = () -> getConfig().archeology_tumblestoneClusterLargeXp.getAsInt();
-    private static final Supplier<Integer> TUMBLESTONE_CLUSTER_FULL_XP = () -> getConfig().archeology_tumblestoneClusterFullXp.getAsInt();
-    private static final Supplier<Integer> TYPE_CLUSTER_XP = () -> getConfig().archeology_typeClusterXp.getAsInt();
-    private static final Supplier<Integer> RELIC_COIN_SACK_XP = () -> getConfig().archeology_relicCoinSackXp.getAsInt();
-    private static final Supplier<Integer> RELIC_COIN_POUCH_XP = () -> getConfig().archeology_relicCoinPouchXp.getAsInt();
-    private static final Supplier<Integer> COMMON_ARCHEOLOGY_ITEM_XP = () -> getConfig().archeology_commonItemXp.getAsInt();
-    private static final Supplier<Integer> UNCOMMON_ARCHEOLOGY_ITEM_XP = () -> getConfig().archeology_uncommonItemXp.getAsInt();
-    private static final Supplier<Integer> RARE_ARCHEOLOGY_ITEM_XP = () -> getConfig().archeology_rareItemXp.getAsInt();
+    private static final Supplier<Integer> ORE_BLOCK_XP = () -> getConfig().experience_oreBlockXp.getAsInt();
+    private static final Supplier<Integer> DEEPSLATE_ORE_BLOCK_XP = () -> getConfig().experience_deepslateOreBlockXp.getAsInt();
+    private static final Supplier<Integer> MISC_ORE_BLOCK_XP = () -> getConfig().experience_miscOreBlockXp.getAsInt();
+    private static final Supplier<Integer> TUMBLESTONE_CLUSTER_SMALL_XP = () -> getConfig().experience_tumblestoneClusterSmallXp.getAsInt();
+    private static final Supplier<Integer> TUMBLESTONE_CLUSTER_MEDIUM_XP = () -> getConfig().experience_tumblestoneClusterMediumXp.getAsInt();
+    private static final Supplier<Integer> TUMBLESTONE_CLUSTER_LARGE_XP = () -> getConfig().experience_tumblestoneClusterLargeXp.getAsInt();
+    private static final Supplier<Integer> TUMBLESTONE_CLUSTER_FULL_XP = () -> getConfig().experience_tumblestoneClusterFullXp.getAsInt();
+    private static final Supplier<Integer> TYPE_CLUSTER_XP = () -> getConfig().experience_typeClusterXp.getAsInt();
+    private static final Supplier<Integer> RELIC_COIN_SACK_XP = () -> getConfig().experience_relicCoinSackXp.getAsInt();
+    private static final Supplier<Integer> RELIC_COIN_POUCH_XP = () -> getConfig().experience_relicCoinPouchXp.getAsInt();
+    private static final Supplier<Integer> COMMON_ARCHEOLOGY_ITEM_XP = () -> getConfig().experience_commonItemXp.getAsInt();
+    private static final Supplier<Integer> UNCOMMON_ARCHEOLOGY_ITEM_XP = () -> getConfig().experience_uncommonItemXp.getAsInt();
+    private static final Supplier<Integer> RARE_ARCHEOLOGY_ITEM_XP = () -> getConfig().experience_rareItemXp.getAsInt();
 
     public static final Map<Block, Supplier<Integer>> BLOCKS = Map.<Block, Supplier<Integer>>ofEntries(
             Map.entry(CobblemonBlocks.DAWN_STONE_ORE, ORE_BLOCK_XP),
