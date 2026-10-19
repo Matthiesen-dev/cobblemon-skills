@@ -10,15 +10,15 @@ public final class ProfessionProgress {
     private double experience;
 
     public static int getMaxLevel() {
-        return CobblemonSkillsConfig.PROFESSIONS_CONFIG.professionMaxLevel.getAsInt();
+        return CobblemonSkillsConfig.SERVER_CONFIG.professionMaxLevel.getAsInt();
     }
 
     public static int getExperiencePerLevel() {
-        return CobblemonSkillsConfig.PROFESSIONS_CONFIG.professionBaseExpPerLevel.getAsInt();
+        return CobblemonSkillsConfig.SERVER_CONFIG.professionBaseExpPerLevel.getAsInt();
     }
 
     private static int getLevelMultiplier() {
-        return CobblemonSkillsConfig.PROFESSIONS_CONFIG.professionExpLevelMultiplier.getAsInt();
+        return CobblemonSkillsConfig.SERVER_CONFIG.professionExpLevelMultiplier.getAsInt();
     }
 
     public int level() {

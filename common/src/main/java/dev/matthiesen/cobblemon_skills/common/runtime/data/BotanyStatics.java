@@ -2,21 +2,21 @@ package dev.matthiesen.cobblemon_skills.common.runtime.data;
 
 import com.cobblemon.mod.common.CobblemonBlocks;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
-import dev.matthiesen.cobblemon_skills.common.config.ExperienceConfig;
+import dev.matthiesen.cobblemon_skills.common.config.professions.BotanyConfig;
 import net.minecraft.world.level.block.Block;
 
 import java.util.Map;
 import java.util.function.Supplier;
 
 public final class BotanyStatics {
-    private static ExperienceConfig getConfig() {
-        return CobblemonSkillsConfig.EXPERIENCE_CONFIG;
+    private static BotanyConfig getConfig() {
+        return CobblemonSkillsConfig.BOTANY_CONFIG;
     }
 
-    private static final Supplier<Integer> COBBLEMON_WOODCUTTING_XP = () -> getConfig().botany_woodcuttingBaseXp.getAsInt();
-    private static final Supplier<Integer> COBBLEMON_WOODCUTTING_EXTRA_XP = () -> getConfig().botany_woodcuttingTier1Xp.getAsInt();
-    private static final Supplier<Integer> COBBLEMON_FARMING_XP = () -> getConfig().botany_farmingBaseXp.getAsInt();
-    private static final Supplier<Integer> COBBLEMON_BERRY_FARMING_XP = () -> getConfig().botany_farmingTier1Xp.getAsInt();
+    private static final Supplier<Integer> COBBLEMON_WOODCUTTING_XP = () -> getConfig().experience_woodcuttingBaseXp.getAsInt();
+    private static final Supplier<Integer> COBBLEMON_WOODCUTTING_EXTRA_XP = () -> getConfig().experience_woodcuttingTier1Xp.getAsInt();
+    private static final Supplier<Integer> COBBLEMON_FARMING_XP = () -> getConfig().experience_farmingBaseXp.getAsInt();
+    private static final Supplier<Integer> COBBLEMON_BERRY_FARMING_XP = () -> getConfig().experience_farmingTier1Xp.getAsInt();
 
     public static final Map<Block, Supplier<Integer>> BLOCKS = Map.<Block, Supplier<Integer>>ofEntries(
             Map.entry(CobblemonBlocks.APRICORN_LOG, COBBLEMON_WOODCUTTING_XP),

@@ -2,7 +2,7 @@ package dev.matthiesen.cobblemon_skills.common.runtime.data;
 
 import com.cobblemon.mod.common.CobblemonItems;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
-import dev.matthiesen.cobblemon_skills.common.config.ExperienceConfig;
+import dev.matthiesen.cobblemon_skills.common.config.professions.CookingConfig;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
@@ -10,15 +10,15 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public final class CookingStatics {
-    private static ExperienceConfig getConfig() {
-        return CobblemonSkillsConfig.EXPERIENCE_CONFIG;
+    private static CookingConfig getConfig() {
+        return CobblemonSkillsConfig.COOKING_CONFIG;
     }
 
-    private static final Supplier<Integer> COOKING_BASE_XP = () -> getConfig().cooking_baseXp.getAsInt();
-    private static final Supplier<Integer> COOKING_TIER_1_XP = () -> getConfig().cooking_tier1Xp.getAsInt();
-    private static final Supplier<Integer> COOKING_TIER_2_XP = () -> getConfig().cooking_tier2Xp.getAsInt();
-    private static final Supplier<Integer> COOKING_TIER_3_XP = () -> getConfig().cooking_tier3Xp.getAsInt();
-    private static final Supplier<Integer> COOKING_TIER_4_XP = () -> getConfig().cooking_tier4Xp.getAsInt();
+    private static final Supplier<Integer> COOKING_BASE_XP = () -> getConfig().experience_baseXp.getAsInt();
+    private static final Supplier<Integer> COOKING_TIER_1_XP = () -> getConfig().experience_tier1Xp.getAsInt();
+    private static final Supplier<Integer> COOKING_TIER_2_XP = () -> getConfig().experience_tier2Xp.getAsInt();
+    private static final Supplier<Integer> COOKING_TIER_3_XP = () -> getConfig().experience_tier3Xp.getAsInt();
+    private static final Supplier<Integer> COOKING_TIER_4_XP = () -> getConfig().experience_tier4Xp.getAsInt();
 
     public static final Map<Item, Supplier<Integer>> ITEMS = Map.<Item, Supplier<Integer>>ofEntries(
             Map.entry(CobblemonItems.ABILITY_CAPSULE, COOKING_TIER_3_XP),
