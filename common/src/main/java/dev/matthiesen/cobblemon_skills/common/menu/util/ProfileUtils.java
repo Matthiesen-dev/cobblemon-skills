@@ -1,7 +1,7 @@
 package dev.matthiesen.cobblemon_skills.common.menu.util;
 
 import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
-import dev.matthiesen.matthiesen_core.common.utility.player_data.ServerUser;
+import dev.matthiesen.matthiesen_core.common.core.data.ServerUser;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
