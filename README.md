@@ -44,6 +44,7 @@ Documentation for this mod can be found at [mods.matthiesen.dev](https://mods.ma
 | 1.21.1            | 1.2.7+                  | 1.8.0+            | 1.0.0-beta.1+  |
 | 1.21.1            | 1.3.0+                  | 1.8.0+            | 1.0.0-beta.4+  |
 | 1.21.1            | 1.3.0+                  | 1.8.2+            | 1.0.0-beta.5+  |
+| 1.21.1            | 2.0.0+                  | 1.8.2+            | 1.0.0-beta.8+  |
 
 ## FastStats Metrics
 
@@ -53,7 +54,7 @@ how this mod is being used and improve it over time. You can learn more about th
 
 You can also view the data collected by this mod on the [FastStats: Cobblemon Skills](https://faststats.dev/project/cobblemon-skills) page.
 
-To opt out of this data collection, set the `enabled` property to `false` in the `<game_directory>/config/matthiesen_core/metrics.properties` file.
+To opt out of this data collection, set the `enabled` property to `false` in the `<game_directory>/config/faststats/config.properties` file.
 
 ## License
 

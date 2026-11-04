@@ -7,7 +7,7 @@ import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
 import dev.matthiesen.cobblemon_skills.common.platform.CSPlatformEvents;
 import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
 import dev.matthiesen.cobblemon_skills.common.runtime.ProfessionManager;
-import dev.matthiesen.libs.faststats.Token;
+import dev.faststats.Token;
 import dev.matthiesen.matthiesen_core.common.AbstractCommonMod;
 import dev.matthiesen.matthiesen_core.common.api.events.PlatformEvents;
 import dev.matthiesen.matthiesen_core.common.api.platform.loader.ModConfigType;
@@ -21,10 +21,6 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
 
     public CobblemonSkillsCommon() {
         super(MOD_ID, MOD_NAME);
-    }
-
-    public String modConfigPath(String path) {
-        return MOD_ID + "/" + path + ".toml";
     }
 
     public String professionConfig(String name) {
