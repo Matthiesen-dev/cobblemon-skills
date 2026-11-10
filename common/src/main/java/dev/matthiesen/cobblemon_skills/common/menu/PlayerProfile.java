@@ -1,9 +1,11 @@
 package dev.matthiesen.cobblemon_skills.common.menu;
 
+import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
 import dev.matthiesen.cobblemon_skills.common.data.Profession;
 import dev.matthiesen.cobblemon_skills.common.data.ProfessionProgress;
 import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
 import dev.matthiesen.cobblemon_skills.common.menu.util.ProfileUtils;
+import dev.matthiesen.cobblemon_skills.common.runtime.TextUtils;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.ServerUIManager;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.button.Button;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.button.PlaceholderButton;
@@ -62,18 +64,18 @@ public final class PlayerProfile {
         Button backButton = ServerButton.builder()
                 .display(new ItemBuilder(Items.OAK_DOOR)
                         .hideAdditional()
-                        .setCustomName(Component.literal("Back"))
+                        .setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_buttons_backButton.get()))
                         .build())
                 .onClick((action) -> MainMenu.open(viewer))
                 .build();
 
         LinkedPageButton previous = LinkedPageButton.builder()
-                .display(new ItemBuilder(Items.ARROW).hideAdditional().setCustomName(Component.literal("Previous")).build())
+                .display(new ItemBuilder(Items.ARROW).hideAdditional().setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_buttons_navigationPrevious.get())).build())
                 .linkType(LinkType.Previous)
                 .build();
 
         LinkedPageButton next = LinkedPageButton.builder()
-                .display(new ItemBuilder(Items.ARROW).hideAdditional().setCustomName(Component.literal("Next")).build())
+                .display(new ItemBuilder(Items.ARROW).hideAdditional().setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_buttons_navigationNext.get())).build())
                 .linkType(LinkType.Next)
                 .build();
 

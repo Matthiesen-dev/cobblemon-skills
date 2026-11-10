@@ -12,6 +12,11 @@ public final class TextConfig {
     public ModConfigSpec.ConfigValue<String> gui_messages_rewardRedeemed;
     public ModConfigSpec.ConfigValue<String> gui_messages_rewardLocked;
 
+    // GUI Buttons
+    public ModConfigSpec.ConfigValue<String> gui_buttons_backButton;
+    public ModConfigSpec.ConfigValue<String> gui_buttons_navigationNext;
+    public ModConfigSpec.ConfigValue<String> gui_buttons_navigationPrevious;
+
     // Command Messages
     public ModConfigSpec.ConfigValue<String> commands_addExpSuccess;
     public ModConfigSpec.ConfigValue<String> commands_setLevelSourceSuccess;
@@ -51,6 +56,15 @@ public final class TextConfig {
         gui_messages_rewardRedeemed = builder.comment("The message displayed when a reward has already been redeemed.")
                 .define("gui_messages_rewardRedeemed", "You have successfully redeemed the rewards for %tier% in %profession%.");
         builder.pop(); // pop "messages"
+
+        builder.comment("Buttons displayed in the GUI").push("buttons");
+        gui_buttons_backButton = builder.comment("The text displayed on the back button in the GUI.")
+                .define("gui_buttons_backButton", "Back");
+        gui_buttons_navigationNext = builder.comment("The text displayed on the next page button in the GUI.")
+                .define("gui_buttons_navigationNext", "Next");
+        gui_buttons_navigationPrevious = builder.comment("The text displayed on the previous page button in the GUI.")
+                .define("gui_buttons_navigationPrevious", "Previous");
+        builder.pop(); // pop "buttons"
 
         builder.pop(); // pop "gui"
 

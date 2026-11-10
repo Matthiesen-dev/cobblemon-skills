@@ -125,18 +125,24 @@ public final class PlayerProfessionEntry {
         Button profileButton = ServerButton.builder()
                 .display(new ItemBuilder(Items.OAK_DOOR)
                         .hideAdditional()
-                        .setCustomName(Component.literal("Back to Profile"))
+                        .setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_buttons_backButton.get()))
                         .build())
                 .onClick((action) -> PlayerProfile.open(viewer, targetUuid))
                 .build();
 
         LinkedPageButton previous = LinkedPageButton.builder()
-                .display(new ItemBuilder(Items.ARROW).hideAdditional().setCustomName(Component.literal("Previous")).build())
+                .display(new ItemBuilder(Items.ARROW)
+                        .hideAdditional()
+                        .setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_buttons_navigationPrevious.get()))
+                        .build())
                 .linkType(LinkType.Previous)
                 .build();
 
         LinkedPageButton next = LinkedPageButton.builder()
-                .display(new ItemBuilder(Items.ARROW).hideAdditional().setCustomName(Component.literal("Next")).build())
+                .display(new ItemBuilder(Items.ARROW)
+                        .hideAdditional()
+                        .setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_buttons_navigationNext.get()))
+                        .build())
                 .linkType(LinkType.Next)
                 .build();
 
