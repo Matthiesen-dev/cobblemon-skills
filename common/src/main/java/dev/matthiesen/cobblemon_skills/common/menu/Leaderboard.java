@@ -1,9 +1,11 @@
 package dev.matthiesen.cobblemon_skills.common.menu;
 
+import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
 import dev.matthiesen.cobblemon_skills.common.data.Profession;
 import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
 import dev.matthiesen.cobblemon_skills.common.menu.util.ProfileUtils;
 import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
+import dev.matthiesen.cobblemon_skills.common.runtime.TextUtils;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.ServerUIManager;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.button.Button;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.button.PlaceholderButton;
@@ -117,7 +119,7 @@ public final class Leaderboard {
 
     public static void open(ServerPlayer player) {
         if (!PermissionsRegistry.checkPermission(player, PermissionsRegistry.GUI_LEADERBOARD_PERMISSION)) {
-            player.sendSystemMessage(Component.literal("You do not have permission to access the leaderboard."));
+            player.sendSystemMessage(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.errors_menuNoPermission.get()));
             return;
         }
         ServerUIManager.openUIForcefully(player, new Leaderboard(player).getPage());

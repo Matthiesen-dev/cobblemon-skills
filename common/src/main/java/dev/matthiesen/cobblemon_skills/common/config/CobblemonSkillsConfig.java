@@ -23,6 +23,9 @@ public final class CobblemonSkillsConfig {
     public static final PermissionsConfig PERMISSIONS_CONFIG;
     public static final ModConfigSpec PERMISSIONS_SPEC;
 
+    public static final TextConfig TEXT_CONFIG;
+    public static final ModConfigSpec TEXT_SPEC;
+
     public static final class Professions {
         public static final ArcheologyConfig ARCHEOLOGY_CONFIG;
         public static final ModConfigSpec ARCHEOLOGY_SPEC;
@@ -100,12 +103,17 @@ public final class CobblemonSkillsConfig {
         Pair<PermissionsConfig, ModConfigSpec> permissionsSpecPair = new ModConfigSpec.Builder().configure(PermissionsConfig::new);
         PERMISSIONS_CONFIG = permissionsSpecPair.getLeft();
         PERMISSIONS_SPEC = permissionsSpecPair.getRight();
+
+        Pair<TextConfig, ModConfigSpec> textSpecPair = new ModConfigSpec.Builder().configure(TextConfig::new);
+        TEXT_CONFIG = textSpecPair.getLeft();
+        TEXT_SPEC = textSpecPair.getRight();
     }
 
     public static void register(AbstractCommonMod mod) {
         String modId = mod.getModId();
 
         mod.registerModConfig(modId, ModConfigType.COMMON, SERVER_SPEC, mod.modConfigPath("server"));
+        mod.registerModConfig(modId, ModConfigType.COMMON, TEXT_SPEC, mod.modConfigPath("text"));
         mod.registerModConfig(modId, ModConfigType.STARTUP, PERMISSIONS_SPEC, mod.modConfigPath("permissions"));
         Professions.register(mod);
     }
