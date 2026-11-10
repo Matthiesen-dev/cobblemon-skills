@@ -8,6 +8,10 @@ public final class TextConfig {
     // General
     public ModConfigSpec.EnumValue<BuiltInTextParsers> text_parser;
 
+    // GUI Messages
+    public ModConfigSpec.ConfigValue<String> gui_messages_rewardRedeemed;
+    public ModConfigSpec.ConfigValue<String> gui_messages_rewardLocked;
+
     // Command Messages
     public ModConfigSpec.ConfigValue<String> commands_addExpSuccess;
     public ModConfigSpec.ConfigValue<String> commands_setLevelSourceSuccess;
@@ -30,12 +34,25 @@ public final class TextConfig {
     public ModConfigSpec.ConfigValue<String> errors_reset_playerError;
     public ModConfigSpec.ConfigValue<String> errors_reset_allError;
     public ModConfigSpec.ConfigValue<String> errors_menuNoPermission;
+    public ModConfigSpec.ConfigValue<String> errors_rewardAlreadyRedeemed;
+    public ModConfigSpec.ConfigValue<String> errors_rewardRedeemFailed;
 
     public TextConfig(ModConfigSpec.Builder builder) {
         builder.comment("Text Configuration").push("text");
 
         text_parser = builder.comment("The text parser to use for parsing text in the mod.")
                 .defineEnum("text_parser", BuiltInTextParsers.VANILLA);
+
+        builder.comment("GUI Configuration").push("gui");
+
+        builder.comment("Messages displayed in the GUI").push("messages");
+        gui_messages_rewardLocked = builder.comment("The message displayed when a reward is locked and cannot be redeemed.")
+                .define("gui_messages_rewardLocked", "You have not unlocked this reward yet. Level up your %profession% profession to unlock it.");
+        gui_messages_rewardRedeemed = builder.comment("The message displayed when a reward has already been redeemed.")
+                .define("gui_messages_rewardRedeemed", "You have successfully redeemed the rewards for %tier% in %profession%.");
+        builder.pop(); // pop "messages"
+
+        builder.pop(); // pop "gui"
 
         builder.comment("Command Messages").push("commands");
         commands_addExpSuccess = builder.comment("The message displayed when experience is successfully added to a player.")
@@ -79,6 +96,10 @@ public final class TextConfig {
                 .define("errors_reset_allError", "An error occurred while trying to reset the data for all players. Please contact an administrator.");
         errors_menuNoPermission = builder.comment("The error message displayed when a player tries to access a menu they don't have permission for.")
                 .define("errors_menuNoPermission", "You do not have permission to access this menu.");
+        errors_rewardAlreadyRedeemed = builder.comment("The error message displayed when a player tries to redeem a reward they have already redeemed.")
+                .define("errors_rewardAlreadyRedeemed", "You have already redeemed this reward.");
+        errors_rewardRedeemFailed = builder.comment("The error message displayed when a player tries to redeem a reward but the redemption fails.")
+                .define("errors_rewardRedeemFailed", "Failed to redeem the rewards for %tier% in %profession%. Please contact an administrator.");
         builder.pop(); // pop "errors"
 
         builder.pop(); // pop "text"

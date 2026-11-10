@@ -1,10 +1,12 @@
 package dev.matthiesen.cobblemon_skills.common.menu;
 
 import dev.matthiesen.cobblemon_skills.common.CobblemonSkillsCommon;
+import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
 import dev.matthiesen.cobblemon_skills.common.config.def.ProfessionTierEntry;
 import dev.matthiesen.cobblemon_skills.common.data.Profession;
 import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
 import dev.matthiesen.cobblemon_skills.common.menu.util.ProfileUtils;
+import dev.matthiesen.cobblemon_skills.common.runtime.TextUtils;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.ServerUIManager;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.button.Button;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.button.PlaceholderButton;
@@ -23,6 +25,7 @@ import net.minecraft.world.item.Items;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public final class PlayerProfessionEntry {
@@ -71,25 +74,32 @@ public final class PlayerProfessionEntry {
 
             if (isViewingOwnProfile) {
                 buttonBuilder.onClick((action) -> {
+                    Map<String, String> placeholders = Map.of(
+                            "%profession%", config.displayName(),
+                            "%tier%", tier.displayName
+                    );
                     if (unlocked && !redeemed) {
                         ServerPlayer sender = action.getPlayer();
                         try {
                             if (profile.redeemTierReward(sender, profession, tier)) {
-                                sender.sendSystemMessage(Component.literal("You have successfully redeemed the rewards for " + tier.displayName + " in " + config.displayName() + "."));
+                                String messageTemplate = CobblemonSkillsConfig.TEXT_CONFIG.gui_messages_rewardRedeemed.get();
+                                sender.sendSystemMessage(TextUtils.parse(messageTemplate, placeholders));
                                 open(sender, profession); // Refresh the page to reflect the redeemed status
                             } else {
-                                sender.sendSystemMessage(Component.literal("You have already redeemed this reward."));
+                                sender.sendSystemMessage(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.errors_rewardAlreadyRedeemed.get()));
                             }
                         } catch (RuntimeException e) {
                             CobblemonSkillsCommon.INSTANCE.createErrorLog("Failed to redeem rewards for " + tier.displayName + " in " + config.displayName() + " for player " + sender.getScoreboardName(), e);
-                            sender.sendSystemMessage(Component.literal("Failed to redeem the rewards for " + tier.displayName + " in " + config.displayName() + "."));
+                            String messageTemplate = CobblemonSkillsConfig.TEXT_CONFIG.errors_rewardRedeemFailed.get();
+                            sender.sendSystemMessage(TextUtils.parse(messageTemplate, placeholders));
                         }
                     } else if (!unlocked) {
                         ServerPlayer sender = action.getPlayer();
-                        sender.sendSystemMessage(Component.literal("You have not unlocked this reward yet. Level up your " + config.displayName() + " profession to unlock it."));
+                        String messageTemplate = CobblemonSkillsConfig.TEXT_CONFIG.gui_messages_rewardLocked.get();
+                        sender.sendSystemMessage(TextUtils.parse(messageTemplate, placeholders));
                     } else {
                         ServerPlayer sender = action.getPlayer();
-                        sender.sendSystemMessage(Component.literal("You have already redeemed this reward."));
+                        sender.sendSystemMessage(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.errors_rewardAlreadyRedeemed.get()));
                     }
                 });
             }
