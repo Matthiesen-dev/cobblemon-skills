@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 public final class CookingStatics {
     private static CookingConfig getConfig() {
-        return CobblemonSkillsConfig.COOKING_CONFIG;
+        return CobblemonSkillsConfig.Professions.COOKING_CONFIG;
     }
 
     private static final Supplier<Integer> COOKING_BASE_XP = () -> getConfig().experience_baseXp.getAsInt();

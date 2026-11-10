@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 
 public final class FishingStatics {
     private static FishingConfig getConfig() {
-        return CobblemonSkillsConfig.FISHING_CONFIG;
+        return CobblemonSkillsConfig.Professions.FISHING_CONFIG;
     }
 
     private static final Supplier<Integer> ANCIENT_ROD_CRAFT_XP = () -> getConfig().experience_craftAncientRodXp.getAsInt();

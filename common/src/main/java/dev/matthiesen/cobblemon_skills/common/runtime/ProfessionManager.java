@@ -13,7 +13,7 @@ import com.cobblemon.mod.common.entity.pokeball.EmptyPokeBallEntity;
 import com.cobblemon.mod.common.util.PlayerExtensionsKt;
 import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
 import dev.matthiesen.cobblemon_skills.common.data.Profession;
-import dev.matthiesen.cobblemon_skills.common.platform.BlockBreakEvent;
+import dev.matthiesen.matthiesen_core.common.api.events.server.PlayerEvent;
 import dev.matthiesen.matthiesen_core.common.api.events.server.ServerEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -245,7 +245,7 @@ public final class ProfessionManager {
         });
     }
 
-    public static void onBlockBreak(BlockBreakEvent event) {
+    public static void onBlockBreak(PlayerEvent.BlockBreakEvent event) {
         if (!(event.world() instanceof ServerLevel) || !(event.player() instanceof ServerPlayer serverPlayer)) {
             return;
         }

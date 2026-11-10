@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 
 public final class BotanyStatics {
     private static BotanyConfig getConfig() {
-        return CobblemonSkillsConfig.BOTANY_CONFIG;
+        return CobblemonSkillsConfig.Professions.BOTANY_CONFIG;
     }
 
     private static final Supplier<Integer> COBBLEMON_WOODCUTTING_XP = () -> getConfig().experience_woodcuttingBaseXp.getAsInt();
