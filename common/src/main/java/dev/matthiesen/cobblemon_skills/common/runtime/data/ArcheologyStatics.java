@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 public final class ArcheologyStatics {
     private static ArcheologyConfig getConfig() {
-        return CobblemonSkillsConfig.ARCHEOLOGY_CONFIG;
+        return CobblemonSkillsConfig.Professions.ARCHEOLOGY_CONFIG;
     }
 
     private static final Supplier<Integer> ORE_BLOCK_XP = () -> getConfig().experience_oreBlockXp.getAsInt();

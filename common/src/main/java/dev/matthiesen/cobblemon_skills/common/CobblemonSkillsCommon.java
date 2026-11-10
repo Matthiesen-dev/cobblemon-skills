@@ -4,13 +4,11 @@ import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import dev.matthiesen.cobblemon_skills.common.commands.RootCommand;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
-import dev.matthiesen.cobblemon_skills.common.platform.CSPlatformEvents;
 import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
 import dev.matthiesen.cobblemon_skills.common.runtime.ProfessionManager;
 import dev.faststats.Token;
 import dev.matthiesen.matthiesen_core.common.AbstractCommonMod;
 import dev.matthiesen.matthiesen_core.common.api.events.PlatformEvents;
-import dev.matthiesen.matthiesen_core.common.api.platform.loader.ModConfigType;
 import org.jetbrains.annotations.NotNull;
 
 public final class CobblemonSkillsCommon extends AbstractCommonMod {
@@ -23,10 +21,6 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
         super(MOD_ID, MOD_NAME);
     }
 
-    public String professionConfig(String name) {
-        return modConfigPath("professions/" + name);
-    }
-
     @Override
     public @Token @NotNull String getMetricsToken() {
         return METRICS_TOKEN;
@@ -35,22 +29,14 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
     public void initialize() {
         super.initialize();
 
-        registerModConfig(MOD_ID, ModConfigType.STARTUP, CobblemonSkillsConfig.PERMISSIONS_SPEC, modConfigPath("permissions"));
-        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.SERVER_SPEC, modConfigPath("server"));
-        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.ARCHEOLOGY_SPEC, professionConfig("archeology"));
-        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.BOTANY_SPEC, professionConfig("botany"));
-        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.BREEDING_SPEC, professionConfig("breeding"));
-        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.CATCHING_SPEC, professionConfig("catching"));
-        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.COOKING_SPEC, professionConfig("cooking"));
-        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.FISHING_SPEC, professionConfig("fishing"));
-        registerModConfig(MOD_ID, ModConfigType.SERVER, CobblemonSkillsConfig.TRAINING_SPEC, professionConfig("training"));
+        CobblemonSkillsConfig.register(this);
 
         PermissionsRegistry.init();
         getCommandsRegistryManager().registerCommand(RootCommand.CMD);
 
         // Platform Events
         PlatformEvents.SERVER_END_TICK.subscribe(ProfessionManager::onServerTick);
-        CSPlatformEvents.BLOCK_BREAK.subscribe(ProfessionManager::onBlockBreak);
+        PlatformEvents.PLAYER_BLOCK_BREAK.subscribe(ProfessionManager::onBlockBreak);
 
         // Cobblemon Events
         CobblemonEvents.FOSSIL_REVIVED.subscribe(Priority.LOWEST, ProfessionManager::onFossilRevived);

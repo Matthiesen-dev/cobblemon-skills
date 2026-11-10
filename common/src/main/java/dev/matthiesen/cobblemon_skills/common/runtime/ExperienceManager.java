@@ -52,26 +52,26 @@ public final class ExperienceManager {
     }
 
     public static double getLeftoversExperience() {
-        return CobblemonSkillsConfig.TRAINING_CONFIG.experience_leftoversXp.getAsDouble();
+        return CobblemonSkillsConfig.Professions.TRAINING_CONFIG.experience_leftoversXp.getAsDouble();
     }
 
     public static double getApricornHarvestExperience() {
-        return CobblemonSkillsConfig.BOTANY_CONFIG.experience_apricornHarvestXp.getAsDouble();
+        return CobblemonSkillsConfig.Professions.BOTANY_CONFIG.experience_apricornHarvestXp.getAsDouble();
     }
 
     public static double getBerryHarvestExperience() {
-        return CobblemonSkillsConfig.BOTANY_CONFIG.experience_berryHarvestXp.getAsDouble();
+        return CobblemonSkillsConfig.Professions.BOTANY_CONFIG.experience_berryHarvestXp.getAsDouble();
     }
 
     public static double getFishingExperience(int fishingCaught) {
-        return fishingCaught * CobblemonSkillsConfig.FISHING_CONFIG.experience_statsXpMultiplier.getAsDouble();
+        return fishingCaught * CobblemonSkillsConfig.Professions.FISHING_CONFIG.experience_statsXpMultiplier.getAsDouble();
     }
 
     public static double getFossilRevivalExperience(Pokemon pokemon) {
         boolean isShiny = pokemon.getShiny();
-        double baseExperience = CobblemonSkillsConfig.ARCHEOLOGY_CONFIG.experience_fossilRevivalBaseXp.getAsDouble();
+        double baseExperience = CobblemonSkillsConfig.Professions.ARCHEOLOGY_CONFIG.experience_fossilRevivalBaseXp.getAsDouble();
         if (isShiny) {
-            baseExperience += CobblemonSkillsConfig.ARCHEOLOGY_CONFIG.experience_fossilRevivalShinyBonusXp.getAsDouble();
+            baseExperience += CobblemonSkillsConfig.Professions.ARCHEOLOGY_CONFIG.experience_fossilRevivalShinyBonusXp.getAsDouble();
         }
         return baseExperience;
     }
@@ -83,7 +83,7 @@ public final class ExperienceManager {
         boolean isMythical = pokemon.isMythical();
         boolean isLegendary = pokemon.isLegendary();
         boolean isShiny = pokemon.getShiny();
-        var fishingConfig = CobblemonSkillsConfig.FISHING_CONFIG;
+        var fishingConfig = CobblemonSkillsConfig.Professions.FISHING_CONFIG;
         double baseExperience = fishingConfig.experience_catchBaseXp.getAsDouble() + Math.max(1, level) * fishingConfig.experience_catchLevelXpMultiplier.getAsDouble();
         if (isUltraBeast) {
             baseExperience += fishingConfig.experience_catchUltraBeastBonusXp.getAsDouble();
@@ -101,28 +101,28 @@ public final class ExperienceManager {
     }
 
     public static double getCaptureSkillExperience(int pokemonLevel, boolean criticalCapture) {
-        var catchingConfig = CobblemonSkillsConfig.CATCHING_CONFIG;
+        var catchingConfig = CobblemonSkillsConfig.Professions.CATCHING_CONFIG;
         double base = catchingConfig.experience_catchBaseXp.getAsDouble() + Math.max(1, pokemonLevel) * catchingConfig.experience_catchLevelXpMultiplier.getAsDouble();
         return criticalCapture ? base + catchingConfig.experience_catchCriticalBonusXp.getAsDouble() : base;
     }
 
     public static double getBattleExperience() {
-        var trainingConfig = CobblemonSkillsConfig.TRAINING_CONFIG;
+        var trainingConfig = CobblemonSkillsConfig.Professions.TRAINING_CONFIG;
         return trainingConfig.experience_baseXp.getAsDouble();
     }
 
     public static double getBreedingEggCollected() {
-        var breedingConfig = CobblemonSkillsConfig.BREEDING_CONFIG;
+        var breedingConfig = CobblemonSkillsConfig.Professions.BREEDING_CONFIG;
         return breedingConfig.experience_eggCollectedBaseXp.getAsDouble();
     }
 
     public static double getBreedingEggHatched(int eggCycles) {
-        var breedingConfig = CobblemonSkillsConfig.BREEDING_CONFIG;
+        var breedingConfig = CobblemonSkillsConfig.Professions.BREEDING_CONFIG;
         return breedingConfig.experience_eggHatchedBaseXp.getAsDouble() + Math.max(0, eggCycles) * breedingConfig.experience_eggHatchedCycleBonusXp.getAsDouble();
     }
 
     public static double getTrainingSkillExperienceFromLevelUp(int oldLevel, int newLevel) {
-        var trainingConfig = CobblemonSkillsConfig.TRAINING_CONFIG;
+        var trainingConfig = CobblemonSkillsConfig.Professions.TRAINING_CONFIG;
         return Math.max(0, newLevel - oldLevel) * trainingConfig.experience_levelUpXpMultiplier.getAsDouble();
     }
 }
