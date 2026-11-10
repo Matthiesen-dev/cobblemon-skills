@@ -60,6 +60,15 @@ public final class TextConfig {
     public ModConfigSpec.ConfigValue<String> commands_reset_playerNoData;
     public ModConfigSpec.ConfigValue<String> commands_reset_allSuccess;
 
+    //// Reward Messages
+
+    public ModConfigSpec.ConfigValue<String> reward_levelUp_chatMessage;
+    public ModConfigSpec.ConfigValue<String> reward_levelUp_title;
+    public ModConfigSpec.ConfigValue<String> reward_levelUp_subTitle;
+    public ModConfigSpec.ConfigValue<String> reward_experienceProgress_chatMessage;
+    public ModConfigSpec.ConfigValue<String> reward_experienceProgress_maxed;
+    public ModConfigSpec.ConfigValue<String> reward_experienceProgress_progress;
+
     //// Error Messages
 
     public ModConfigSpec.ConfigValue<String> errors_menuError;
@@ -191,6 +200,21 @@ public final class TextConfig {
         commands_reset_allSuccess = builder.comment("The message displayed when all players' data is successfully reset by an administrator.")
                 .define("commands_reset_allSuccess", "Cobblemon Skills data for %count% players has been reset.");
         builder.pop(); // pop "commands"
+
+        builder.comment("Reward Messages").push("rewards");
+        reward_levelUp_chatMessage = builder.comment("The message displayed when a player levels up in a profession.")
+                .define("reward_levelUp_chatMessage", "Congratulations! You have leveled up to level %level% in %profession%!");
+        reward_levelUp_title = builder.comment("The title displayed when a player levels up in a profession.")
+                .define("reward_levelUp_title", "&6&lLevel Up!");
+        reward_levelUp_subTitle = builder.comment("The subtitle displayed when a player levels up in a profession.")
+                .define("reward_levelUp_subTitle", "&eYou have reached level %level% in %profession%!");
+        reward_experienceProgress_chatMessage = builder.comment("The message displayed when a player gains experience in a profession.")
+                .define("reward_experienceProgress_chatMessage", "%profession% +%experience% XP | %nextLevelExperience%");
+        reward_experienceProgress_maxed = builder.comment("The message displayed when a player has maxed out their level in a profession.")
+                .define("reward_experienceProgress_maxed", "Lvl %d (Max)");
+        reward_experienceProgress_progress = builder.comment("The message displayed when a player is progressing towards the next level in a profession.")
+                .define("reward_experienceProgress_progress", "Lvl %d | %.0f/%d");
+        builder.pop(); // pop "rewards"
 
         builder.comment("Error Messages").push("errors");
         errors_menuError = builder.comment("The error message displayed when a menu fails to open.")
