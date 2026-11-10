@@ -1,20 +1,14 @@
 package dev.matthiesen.cobblemon_skills.common.menu;
 
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
-import dev.matthiesen.cobblemon_skills.common.data.Profession;
-import dev.matthiesen.cobblemon_skills.common.data.ProfessionProgress;
-import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
+import dev.matthiesen.cobblemon_skills.common.data.*;
 import dev.matthiesen.cobblemon_skills.common.menu.util.ProfileUtils;
 import dev.matthiesen.cobblemon_skills.common.runtime.TextUtils;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.ServerUIManager;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.Button;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.PlaceholderButton;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.ServerButton;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.linked.LinkType;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.linked.LinkedPageButton;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.*;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.linked.*;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.helpers.PaginationHelper;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.page.LinkedPage;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.page.Page;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.page.*;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.template.types.ChestTemplate;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
 import net.minecraft.network.chat.Component;
@@ -23,6 +17,7 @@ import net.minecraft.world.item.Items;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public final class PlayerProfile {
@@ -42,13 +37,18 @@ public final class PlayerProfile {
         List<Button> professionButtons = new ArrayList<>();
         for (Profession profession : Profession.values()) {
             ProfessionProgress progress = profile.getProgress(profession);
+
+            Map<String, String> placeholders = Map.of(
+                    "%profession%", profession.getConfig().displayName(),
+                    "%level%", String.valueOf(progress.level()),
+                    "%experience%", String.valueOf(progress.experience()),
+                    "%nextLevelExp%", String.valueOf(ProfessionProgress.experienceRequiredForNextLevel(progress.level()))
+            );
+
             ItemBuilder builder = new ItemBuilder(Items.BOOK)
                     .hideAdditional()
-                    .setCustomName(Component.literal(profession.getConfig().displayName()))
-                    .addLore(new Component[]{
-                            Component.literal("Level: " + progress.level()),
-                            Component.literal("Experience: " + progress.experience() + "/" + ProfessionProgress.experienceRequiredForNextLevel(progress.level()))
-                    });
+                    .setCustomName(TextUtils.parse(profession.getConfig().displayName()))
+                    .addLore(TextUtils.parseList(CobblemonSkillsConfig.TEXT_CONFIG.gui_playerProfile_lore.get(), placeholders));
 
             Button button = ServerButton.builder()
                     .display(builder.build())
@@ -58,7 +58,10 @@ public final class PlayerProfile {
         }
 
         Button frame = ServerButton.builder()
-                .display(new ItemBuilder(Items.GRAY_STAINED_GLASS_PANE).hideAdditional().setCustomName(Component.literal(" ")).build())
+                .display(new ItemBuilder(Items.GRAY_STAINED_GLASS_PANE)
+                        .hideAdditional()
+                        .setCustomName(Component.literal(" "))
+                        .build())
                 .build();
 
         Button backButton = ServerButton.builder()
@@ -70,12 +73,18 @@ public final class PlayerProfile {
                 .build();
 
         LinkedPageButton previous = LinkedPageButton.builder()
-                .display(new ItemBuilder(Items.ARROW).hideAdditional().setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_buttons_navigationPrevious.get())).build())
+                .display(new ItemBuilder(Items.ARROW)
+                        .hideAdditional()
+                        .setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_buttons_navigationPrevious.get()))
+                        .build())
                 .linkType(LinkType.Previous)
                 .build();
 
         LinkedPageButton next = LinkedPageButton.builder()
-                .display(new ItemBuilder(Items.ARROW).hideAdditional().setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_buttons_navigationNext.get())).build())
+                .display(new ItemBuilder(Items.ARROW)
+                        .hideAdditional()
+                        .setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_buttons_navigationNext.get()))
+                        .build())
                 .linkType(LinkType.Next)
                 .build();
 
@@ -88,7 +97,12 @@ public final class PlayerProfile {
                 .build();
 
         LinkedPage page = PaginationHelper.createPagesFromPlaceholders(template, professionButtons, null);
-        page.setTitle(Component.literal(displayName + "'s Profile"));
+
+        Map<String, String> placeholders = Map.of(
+                "%player%", displayName
+        );
+
+        page.setTitle(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_playerProfile_title.get(), placeholders));
         return page;
     }
 

@@ -4,14 +4,11 @@ import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
 import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
 import dev.matthiesen.cobblemon_skills.common.runtime.TextUtils;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.ServerUIManager;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.Button;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.PlaceholderButton;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.ServerButton;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.*;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.helpers.PaginationHelper;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.page.Page;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.template.types.ChestTemplate;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Items;
 
@@ -30,11 +27,8 @@ public final class MainMenu {
         Button profileButton = ServerButton.builder()
                 .display(new ItemBuilder(Items.BOOK)
                         .hideAdditional()
-                        .setCustomName(Component.literal("Your Profile"))
-                        .addLore(new Component[]{
-                                Component.literal("View your profession progress"),
-                                Component.literal("and unlock status")
-                        })
+                        .setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_mainMenu_yourProfileButton.get()))
+                        .addLore(TextUtils.parseList(CobblemonSkillsConfig.TEXT_CONFIG.gui_mainMenu_yourProfileButtonLore.get()))
                         .build())
                 .onClick((action) -> PlayerProfile.open(player))
                 .build();
@@ -42,10 +36,8 @@ public final class MainMenu {
         Button leaderboardButton = ServerButton.builder()
                 .display(new ItemBuilder(Items.DIAMOND)
                         .hideAdditional()
-                        .setCustomName(Component.literal("Leaderboard"))
-                        .addLore(new Component[]{
-                                Component.literal("See the strongest players"),
-                                Component.literal("in the server")})
+                        .setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_mainMenu_leaderboardButton.get()))
+                        .addLore(TextUtils.parseList(CobblemonSkillsConfig.TEXT_CONFIG.gui_mainMenu_leaderboardButtonLore.get()))
                         .build())
                 .onClick((action) -> Leaderboard.open(player))
                 .build();
@@ -57,7 +49,7 @@ public final class MainMenu {
                 .build();
 
         var page = PaginationHelper.createPagesFromPlaceholders(template, List.of(profileButton, leaderboardButton), null);
-        page.setTitle(Component.literal("Cobblemon Skills"));
+        page.setTitle(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_mainMenu_title.get()));
         return page;
     }
 

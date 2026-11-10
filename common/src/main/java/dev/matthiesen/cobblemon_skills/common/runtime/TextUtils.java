@@ -5,6 +5,7 @@ import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
 import dev.matthiesen.matthiesen_core.common.api.text_parsers.TextParser;
 import net.minecraft.network.chat.Component;
 
+import java.util.List;
 import java.util.Map;
 
 public final class TextUtils {
@@ -22,5 +23,19 @@ public final class TextUtils {
     public static Component parse(String text) {
         TextParser parser = getTextParser();
         return parser.parse(text);
+    }
+
+    public static Component[] parseList(List<? extends String> textList, Map<String, String> placeholders) {
+        TextParser parser = getTextParser();
+        return textList.stream()
+                .map(text -> parser.parse(text, placeholders))
+                .toArray(Component[]::new);
+    }
+
+    public static Component[] parseList(List<? extends String> textList) {
+        TextParser parser = getTextParser();
+        return textList.stream()
+                .map(parser::parse)
+                .toArray(Component[]::new);
     }
 }

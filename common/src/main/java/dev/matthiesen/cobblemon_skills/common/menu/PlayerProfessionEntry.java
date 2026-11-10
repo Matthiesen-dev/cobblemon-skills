@@ -3,19 +3,14 @@ package dev.matthiesen.cobblemon_skills.common.menu;
 import dev.matthiesen.cobblemon_skills.common.CobblemonSkillsCommon;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
 import dev.matthiesen.cobblemon_skills.common.config.def.ProfessionTierEntry;
-import dev.matthiesen.cobblemon_skills.common.data.Profession;
-import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
+import dev.matthiesen.cobblemon_skills.common.data.*;
 import dev.matthiesen.cobblemon_skills.common.menu.util.ProfileUtils;
 import dev.matthiesen.cobblemon_skills.common.runtime.TextUtils;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.ServerUIManager;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.Button;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.PlaceholderButton;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.ServerButton;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.linked.LinkType;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.linked.LinkedPageButton;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.*;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.linked.*;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.helpers.PaginationHelper;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.page.LinkedPage;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.page.Page;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.page.*;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.template.types.ChestTemplate;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
 import net.minecraft.ChatFormatting;
@@ -44,7 +39,6 @@ public final class PlayerProfessionEntry {
         dev.matthiesen.cobblemon_skills.common.data.PlayerProfile profile = SavedPlayerProfessionData.get(targetUuid);
         var config = profession.getConfig();
         var progress = profile.getProgress(profession);
-
         boolean isViewingOwnProfile = viewer.getUUID().equals(targetUuid);
 
         List<Button> tierButtons = new ArrayList<>();
@@ -56,17 +50,22 @@ public final class PlayerProfessionEntry {
                     .hideAdditional()
                     .setCustomName(Component.literal(tier.displayName).withStyle(unlocked ? ChatFormatting.GREEN : ChatFormatting.GRAY));
 
+            Map<String, String> tierPlaceholders = Map.of(
+                    "%profession%", config.displayName(),
+                    "%tier%", tier.displayName,
+                    "%levelRequirement%", String.valueOf(tier.levelRequirement),
+                    "%status%", redeemed
+                            ? CobblemonSkillsConfig.TEXT_CONFIG.gui_professionEntry_status_redeemed.get()
+                            : unlocked
+                                ? CobblemonSkillsConfig.TEXT_CONFIG.gui_professionEntry_status_ready.get()
+                                : CobblemonSkillsConfig.TEXT_CONFIG.gui_professionEntry_status_locked.get(),
+                    "%rewardCount%", String.valueOf(tier.rewards.size())
+            );
+
             if (isViewingOwnProfile) {
-                builder.addLore(new Component[]{
-                        Component.literal("Requirement: " + tier.levelRequirement).withStyle(ChatFormatting.GRAY),
-                        Component.literal("Status: " + (redeemed ? "Redeemed" : unlocked ? "Ready" : "Locked"))
-                                .withStyle(redeemed ? ChatFormatting.GOLD : unlocked ? ChatFormatting.GREEN : ChatFormatting.RED),
-                        Component.literal("Rewards: " + tier.rewards.size() + " queued").withStyle(ChatFormatting.DARK_GRAY)
-                });
+                builder.addLore(TextUtils.parseList(CobblemonSkillsConfig.TEXT_CONFIG.gui_professionEntry_viewingOwnProfileLore.get(), tierPlaceholders));
             } else {
-                builder.addLore(new Component[]{
-                        Component.literal("Requirement: " + tier.levelRequirement).withStyle(ChatFormatting.GRAY),
-                });
+                builder.addLore(TextUtils.parseList(CobblemonSkillsConfig.TEXT_CONFIG.gui_professionEntry_viewingOtherProfileLore.get(), tierPlaceholders));
             }
 
             ServerButton.Builder buttonBuilder = ServerButton.builder()
@@ -112,14 +111,17 @@ public final class PlayerProfessionEntry {
             tierButtons.add(ServerButton.builder()
                     .display(new ItemBuilder(Items.BARRIER)
                             .hideAdditional()
-                            .setCustomName(Component.literal("No rewards configured"))
-                            .addLore(new Component[]{Component.literal("Add tiers in the config to populate this page.")})
+                            .setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_professionEntry_noRewardsConfigured.get()))
+                            .addLore(TextUtils.parseList(CobblemonSkillsConfig.TEXT_CONFIG.gui_professionEntry_noRewardsConfiguredLore.get()))
                             .build())
                     .build());
         }
 
         Button frame = ServerButton.builder()
-                .display(new ItemBuilder(Items.GRAY_STAINED_GLASS_PANE).hideAdditional().setCustomName(Component.literal(" ")).build())
+                .display(new ItemBuilder(Items.GRAY_STAINED_GLASS_PANE)
+                        .hideAdditional()
+                        .setCustomName(Component.literal(" "))
+                        .build())
                 .build();
 
         Button profileButton = ServerButton.builder()
@@ -155,7 +157,14 @@ public final class PlayerProfessionEntry {
                 .build();
 
         LinkedPage page = PaginationHelper.createPagesFromPlaceholders(template, tierButtons, null);
-        page.setTitle(Component.literal(ProfileUtils.getDisplayName(targetUuid) + " - " + config.displayName() + " | Lvl " + progress.level()));
+
+        Map<String, String> placeholders = Map.of(
+                "%player%", ProfileUtils.getDisplayName(targetUuid),
+                "%profession%", config.displayName(),
+                "%level%", String.valueOf(progress.level())
+        );
+
+        page.setTitle(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_professionEntry_title.get(), placeholders));
         return page;
     }
 

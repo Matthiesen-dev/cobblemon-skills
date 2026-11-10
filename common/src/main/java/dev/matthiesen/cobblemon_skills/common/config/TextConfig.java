@@ -3,10 +3,14 @@ package dev.matthiesen.cobblemon_skills.common.config;
 import dev.matthiesen.matthiesen_core.common.api.text_parsers.BuiltInTextParsers;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
+import java.util.List;
+
 public final class TextConfig {
 
     // General
     public ModConfigSpec.EnumValue<BuiltInTextParsers> text_parser;
+
+    //// GUI Configuration
 
     // GUI Messages
     public ModConfigSpec.ConfigValue<String> gui_messages_rewardRedeemed;
@@ -17,7 +21,34 @@ public final class TextConfig {
     public ModConfigSpec.ConfigValue<String> gui_buttons_navigationNext;
     public ModConfigSpec.ConfigValue<String> gui_buttons_navigationPrevious;
 
-    // Command Messages
+    // Leaderboard
+    public ModConfigSpec.ConfigValue<String> gui_leaderboard_title;
+    public ModConfigSpec.ConfigValue<String> gui_leaderboard_rank;
+    public ModConfigSpec.ConfigValue<List<? extends String>> gui_leaderboard_lore;
+
+    // Main Menu
+    public ModConfigSpec.ConfigValue<String> gui_mainMenu_title;
+    public ModConfigSpec.ConfigValue<String> gui_mainMenu_yourProfileButton;
+    public ModConfigSpec.ConfigValue<List<? extends String>> gui_mainMenu_yourProfileButtonLore;
+    public ModConfigSpec.ConfigValue<String> gui_mainMenu_leaderboardButton;
+    public ModConfigSpec.ConfigValue<List<? extends String>> gui_mainMenu_leaderboardButtonLore;
+
+    // Player Profile
+    public ModConfigSpec.ConfigValue<String> gui_playerProfile_title;
+    public ModConfigSpec.ConfigValue<List<? extends String>> gui_playerProfile_lore;
+
+    // Profession Entry
+    public ModConfigSpec.ConfigValue<String> gui_professionEntry_title;
+    public ModConfigSpec.ConfigValue<String> gui_professionEntry_status_redeemed;
+    public ModConfigSpec.ConfigValue<String> gui_professionEntry_status_ready;
+    public ModConfigSpec.ConfigValue<String> gui_professionEntry_status_locked;
+    public ModConfigSpec.ConfigValue<List<? extends String>> gui_professionEntry_viewingOwnProfileLore;
+    public ModConfigSpec.ConfigValue<List<? extends String>> gui_professionEntry_viewingOtherProfileLore;
+    public ModConfigSpec.ConfigValue<String> gui_professionEntry_noRewardsConfigured;
+    public ModConfigSpec.ConfigValue<List<? extends String>> gui_professionEntry_noRewardsConfiguredLore;
+
+    //// Command Messages
+
     public ModConfigSpec.ConfigValue<String> commands_addExpSuccess;
     public ModConfigSpec.ConfigValue<String> commands_setLevelSourceSuccess;
     public ModConfigSpec.ConfigValue<String> commands_setLevelTargetSuccess;
@@ -29,7 +60,8 @@ public final class TextConfig {
     public ModConfigSpec.ConfigValue<String> commands_reset_playerNoData;
     public ModConfigSpec.ConfigValue<String> commands_reset_allSuccess;
 
-    // Error Messages
+    //// Error Messages
+
     public ModConfigSpec.ConfigValue<String> errors_menuError;
     public ModConfigSpec.ConfigValue<String> errors_addExpError;
     public ModConfigSpec.ConfigValue<String> errors_setLevelError;
@@ -65,6 +97,75 @@ public final class TextConfig {
         gui_buttons_navigationPrevious = builder.comment("The text displayed on the previous page button in the GUI.")
                 .define("gui_buttons_navigationPrevious", "Previous");
         builder.pop(); // pop "buttons"
+
+        builder.comment("Leaderboard Configuration").push("leaderboard");
+        gui_leaderboard_title = builder.comment("The title displayed on the leaderboard GUI.")
+                .define("gui_leaderboard_title", "Cobblemon Skills Leaderboard");
+        gui_leaderboard_rank = builder.comment("The format for displaying the rank of a player on the leaderboard.")
+                .define("gui_leaderboard_rank", "%rank%. %player%");
+        gui_leaderboard_lore = builder.comment("The lore displayed on the leaderboard GUI.")
+                .defineList("gui_leaderboard_lore", List.of(
+                        "Highest Profession Level: %highestLevel%",
+                        "Top Profession: %topProfession%"
+                ), () -> "", o -> o instanceof String);
+        builder.pop(); // pop "leaderboard"
+
+        builder.comment("Main Menu Configuration").push("mainMenu");
+        gui_mainMenu_title = builder.comment("The title displayed on the main menu GUI.")
+                .define("gui_mainMenu_title", "Cobblemon Skills");
+        gui_mainMenu_yourProfileButton = builder.comment("The text displayed on the 'Your Profile' button in the main menu GUI.")
+                .define("gui_mainMenu_yourProfileButton", "Your Profile");
+        gui_mainMenu_yourProfileButtonLore = builder.comment("The lore displayed on the 'Your Profile' button in the main menu GUI.")
+                .defineList("gui_mainMenu_yourProfileButtonLore", List.of(
+                        "View your profession progress",
+                        "and unlock status"
+                ), () -> "", o -> o instanceof String);
+        gui_mainMenu_leaderboardButton = builder.comment("The text displayed on the 'Leaderboard' button in the main menu GUI.")
+                .define("gui_mainMenu_leaderboardButton", "Leaderboard");
+        gui_mainMenu_leaderboardButtonLore = builder.comment("The lore displayed on the 'Leaderboard' button in the main menu GUI.")
+                .defineList("gui_mainMenu_leaderboardButtonLore", List.of(
+                        "See the strongest players",
+                        "in the server"
+                ), () -> "", o -> o instanceof String);
+        builder.pop(); // pop "mainMenu"
+
+        builder.comment("Player Profile Configuration").push("playerProfile");
+        gui_playerProfile_title = builder.comment("The title displayed on the player profile GUI.")
+                .define("gui_playerProfile_title", "%player%'s Profile");
+        gui_playerProfile_lore = builder.comment("The lore displayed on the player profile GUI.")
+                .defineList("gui_playerProfile_lore", List.of(
+                        "Level: %level%",
+                        "Experience: %experience%/%nextLevelExp%"
+                ), () -> "", o -> o instanceof String);
+        builder.pop(); // pop "playerProfile"
+
+        builder.comment("Profession Entry Configuration").push("professionEntry");
+        gui_professionEntry_title = builder.comment("The title displayed on the profession entry GUI.")
+                .define("gui_professionEntry_title", "%player% - %profession% | Lvl %level%");
+        gui_professionEntry_status_redeemed = builder.comment("The text displayed for a redeemed reward in the profession entry GUI.")
+                .define("gui_professionEntry_status_redeemed", "Redeemed");
+        gui_professionEntry_status_ready = builder.comment("The text displayed for a ready-to-redeem reward in the profession entry GUI.")
+                .define("gui_professionEntry_status_ready", "Ready");
+        gui_professionEntry_status_locked = builder.comment("The text displayed for a locked reward in the profession entry GUI.")
+                .define("gui_professionEntry_status_locked", "Locked");
+        gui_professionEntry_viewingOwnProfileLore = builder.comment("The lore displayed on the profession entry GUI when viewing your own profile.")
+                .defineList("gui_professionEntry_viewingOwnProfileLore", List.of(
+                        "Requirement: %levelRequirement%",
+                        "Status: %status%",
+                        "Reward Count: %rewardCount%"
+                ), () -> "", o -> o instanceof String);
+        gui_professionEntry_viewingOtherProfileLore = builder.comment("The lore displayed on the profession entry GUI when viewing another player's profile.")
+                .defineList("gui_professionEntry_viewingOtherProfileLore", List.of(
+                        "Requirement: %levelRequirement%"
+                ), () -> "", o -> o instanceof String);
+        gui_professionEntry_noRewardsConfigured = builder.comment("The text displayed when a profession has no rewards configured.")
+                .define("gui_professionEntry_noRewardsConfigured", "No rewards configured.");
+        gui_professionEntry_noRewardsConfiguredLore = builder.comment("The lore displayed when a profession has no rewards configured.")
+                .defineList("gui_professionEntry_noRewardsConfiguredLore", List.of(
+                        "This profession currently has no rewards configured.",
+                        "Please ask an Admin to add some."
+                ), () -> "", o -> o instanceof String);
+        builder.pop(); // pop "professionEntry"
 
         builder.pop(); // pop "gui"
 
