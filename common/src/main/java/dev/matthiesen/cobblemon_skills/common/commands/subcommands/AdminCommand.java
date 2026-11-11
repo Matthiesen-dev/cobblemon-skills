@@ -7,19 +7,19 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.matthiesen.cobblemon_skills.common.CobblemonSkillsCommon;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
-import dev.matthiesen.cobblemon_skills.common.data.PlayerProfile;
-import dev.matthiesen.cobblemon_skills.common.data.Profession;
-import dev.matthiesen.cobblemon_skills.common.data.ProfessionProgress;
-import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
+import dev.matthiesen.cobblemon_skills.common.data.*;
 import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
-import dev.matthiesen.cobblemon_skills.common.runtime.RewardsManager;
+import dev.matthiesen.cobblemon_skills.common.runtime.*;
 import dev.matthiesen.matthiesen_core.common.utility.commands.CommandBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
+
+import java.util.Map;
 
 public final class AdminCommand {
     private static final CommandBuilder CMD_ADD_EXP = new CommandBuilder("addExp")
@@ -72,12 +72,22 @@ public final class AdminCommand {
             double amount = DoubleArgumentType.getDouble(ctx, "amount");
 
             int levelsGained = RewardsManager.awardProfessionExperience(targetPlayer, profession, amount);
-            ctx.getSource().sendSystemMessage(Component.literal("Added " + amount + " experience to player " + targetPlayer.getName().getString() + " for profession " + profession.getNbtTag() + ". Levels gained: " + levelsGained).withStyle(ChatFormatting.GREEN));
+
+            Map<String, String> placeholders = Map.of(
+                    "%amount%", String.valueOf(amount),
+                    "%player%", targetPlayer.getName().getString(),
+                    "%profession%", profession.getNbtTag(),
+                    "%levelsGained%", String.valueOf(levelsGained)
+            );
+
+            String messageTemplate = CobblemonSkillsConfig.TEXT_CONFIG.commands_addExpSuccess.get();
+            Component message = TextUtils.parse(messageTemplate, placeholders);
+            ctx.getSource().sendSystemMessage(message.copy().withStyle(ChatFormatting.GREEN));
 
             return 1;
         } catch (CommandSyntaxException e) {
             CobblemonSkillsCommon.INSTANCE.createErrorLog("Failed to add experience to player: " + ctx.getSource().getTextName(), e);
-            ctx.getSource().sendFailure(Component.literal("An error occurred while trying to add experience to the player. Please contact an administrator.").withStyle(ChatFormatting.RED));
+            ctx.getSource().sendFailure(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.errors_addExpError.get()));
             return 0;
         }
     }
@@ -89,20 +99,36 @@ public final class AdminCommand {
             Profession profession = Profession.fromNbtTag(professionName);
             int level = IntegerArgumentType.getInteger(ctx, "level");
             if (level > ProfessionProgress.getMaxLevel()) {
-                ctx.getSource().sendFailure(Component.literal("The specified level exceeds the maximum allowed level of " + ProfessionProgress.getMaxLevel() + ".").withStyle(ChatFormatting.RED));
+                Map<String, String> placeholders = Map.of(
+                        "%maxLevel%", String.valueOf(ProfessionProgress.getMaxLevel())
+                );
+                String messageTemplate = CobblemonSkillsConfig.TEXT_CONFIG.errors_setLevelExceedMaxLevel.get();
+                ctx.getSource().sendFailure(TextUtils.parse(messageTemplate, placeholders));
                 return 0;
             }
 
             PlayerProfile playerProfile = SavedPlayerProfessionData.get(targetPlayer);
             playerProfile.getProgress(profession).setLevel(level);
 
-            ctx.getSource().sendSystemMessage(Component.literal("Set level of player " + targetPlayer.getName().getString() + " for profession " + profession.getNbtTag() + " to " + level).withStyle(ChatFormatting.GREEN));
-            targetPlayer.sendSystemMessage(Component.literal("Your level for profession " + profession.getNbtTag() + " has been set to " + level + " by an administrator.").withStyle(ChatFormatting.GREEN));
+            Map<String, String> placeholders = Map.of(
+                    "%player%", targetPlayer.getName().getString(),
+                    "%profession%", profession.getNbtTag(),
+                    "%level%", String.valueOf(level)
+            );
+
+            String targetMessageTemplate = CobblemonSkillsConfig.TEXT_CONFIG.commands_setLevelTargetSuccess.get();
+            String sourceMessageTemplate = CobblemonSkillsConfig.TEXT_CONFIG.commands_setLevelSourceSuccess.get();
+
+            MutableComponent targetMessage = TextUtils.parse(targetMessageTemplate, placeholders).copy();
+            MutableComponent sourceMessage = TextUtils.parse(sourceMessageTemplate, placeholders).copy();
+
+            ctx.getSource().sendSystemMessage(sourceMessage.withStyle(ChatFormatting.GREEN));
+            targetPlayer.sendSystemMessage(targetMessage.withStyle(ChatFormatting.GREEN));
 
             return 1;
         } catch (CommandSyntaxException e) {
             CobblemonSkillsCommon.INSTANCE.createErrorLog("Failed to set level for player: " + ctx.getSource().getTextName(), e);
-            ctx.getSource().sendFailure(Component.literal("An error occurred while trying to set the level for the player. Please contact an administrator.").withStyle(ChatFormatting.RED));
+            ctx.getSource().sendFailure(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.errors_setLevelError.get()));
             return 0;
         }
     }
@@ -110,11 +136,11 @@ public final class AdminCommand {
     public static int reload(CommandContext<CommandSourceStack> ctx) {
         try {
             CobblemonSkillsConfig.popCache();
-            ctx.getSource().sendSystemMessage(Component.literal("Cobblemon Skills configuration reloaded successfully.").withStyle(ChatFormatting.GREEN));
+            ctx.getSource().sendSystemMessage(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.commands_reloadSuccess.get()));
             return 1;
         } catch (Exception e) {
             CobblemonSkillsCommon.INSTANCE.createErrorLog("Failed to reload configuration: " + ctx.getSource().getTextName(), e);
-            ctx.getSource().sendFailure(Component.literal("An error occurred while trying to reload the configuration. Please contact an administrator.").withStyle(ChatFormatting.RED));
+            ctx.getSource().sendFailure(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.errors_reloadError.get()));
             return 0;
         }
     }

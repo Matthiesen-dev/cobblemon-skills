@@ -1,8 +1,9 @@
 package dev.matthiesen.cobblemon_skills.common.menu.util;
 
+import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
 import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
+import dev.matthiesen.cobblemon_skills.common.runtime.TextUtils;
 import dev.matthiesen.matthiesen_core.common.core.data.ServerUser;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.HashMap;
@@ -14,11 +15,11 @@ public final class ProfileUtils {
 
     public static boolean checkPermission(ServerPlayer player, UUID targetUuid) {
         if (player.getUUID() != targetUuid && !PermissionsRegistry.checkPermission(player, PermissionsRegistry.GUI_PROFILE_OTHER_PERMISSION)) {
-            player.sendSystemMessage(Component.literal("You do not have permission to access other's profile."));
+            player.sendSystemMessage(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.errors_menuNoPermission.get()));
             return false;
         }
         if (!PermissionsRegistry.checkPermission(player, PermissionsRegistry.GUI_PROFILE_PERMISSION)) {
-            player.sendSystemMessage(Component.literal("You do not have permission to access your profile."));
+            player.sendSystemMessage(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.errors_menuNoPermission.get()));
             return false;
         }
         return true;

@@ -1,12 +1,12 @@
 package dev.matthiesen.cobblemon_skills.common;
 
+import dev.faststats.Token;
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import dev.matthiesen.cobblemon_skills.common.commands.RootCommand;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
 import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
 import dev.matthiesen.cobblemon_skills.common.runtime.ProfessionManager;
-import dev.faststats.Token;
 import dev.matthiesen.matthiesen_core.common.AbstractCommonMod;
 import dev.matthiesen.matthiesen_core.common.api.events.PlatformEvents;
 import org.jetbrains.annotations.NotNull;

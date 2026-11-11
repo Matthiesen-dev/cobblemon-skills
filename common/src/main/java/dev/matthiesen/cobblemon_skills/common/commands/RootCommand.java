@@ -5,6 +5,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.matthiesen.cobblemon_skills.common.CobblemonSkillsCommon;
 import dev.matthiesen.cobblemon_skills.common.commands.subcommands.*;
+import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
 import dev.matthiesen.cobblemon_skills.common.menu.MainMenu;
 import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
 import dev.matthiesen.matthiesen_core.common.api.command.CoreCommand;
@@ -40,7 +41,7 @@ public final class RootCommand implements CoreCommand {
             return 1;
         } catch (CommandSyntaxException e) {
             CobblemonSkillsCommon.INSTANCE.createErrorLog("Failed to open the Cobblemon Skills menu for player: " + ctx.getSource().getTextName(), e);
-            ctx.getSource().sendFailure(Component.literal("An error occurred while trying to open the Cobblemon Skills menu. Please contact an administrator."));
+            ctx.getSource().sendFailure(Component.literal(CobblemonSkillsConfig.TEXT_CONFIG.errors_menuError.get()));
             return 0;
         }
     }

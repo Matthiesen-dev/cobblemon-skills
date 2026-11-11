@@ -1,18 +1,15 @@
 package dev.matthiesen.cobblemon_skills.common.menu;
 
-import dev.matthiesen.cobblemon_skills.common.data.Profession;
-import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
+import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
+import dev.matthiesen.cobblemon_skills.common.data.*;
 import dev.matthiesen.cobblemon_skills.common.menu.util.ProfileUtils;
 import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
+import dev.matthiesen.cobblemon_skills.common.runtime.TextUtils;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.ServerUIManager;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.Button;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.PlaceholderButton;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.ServerButton;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.linked.LinkType;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.linked.LinkedPageButton;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.*;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.linked.*;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.helpers.PaginationHelper;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.page.LinkedPage;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.page.Page;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.page.*;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.template.types.ChestTemplate;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
 import net.minecraft.network.chat.Component;
@@ -44,16 +41,20 @@ public final class Leaderboard {
             UUID uuid = entry.getKey();
             dev.matthiesen.cobblemon_skills.common.data.PlayerProfile profile = entry.getValue();
             int highestLevel = getHighestLevel(profile);
-
             String displayName = ProfileUtils.getDisplayName(uuid);
+
+            Map<String, String> placeholders = Map.of(
+                    "%rank%", String.valueOf(i + 1),
+                    "%player%", displayName,
+                    "%highestLevel%", String.valueOf(highestLevel),
+                    "%topProfession%", getTopProfessionName(profile)
+            );
+
             Button button = ServerButton.builder()
                     .display(new ItemBuilder(Items.PAPER)
                             .hideAdditional()
-                            .setCustomName(Component.literal((i + 1) + ". " + displayName))
-                            .addLore(new Component[]{
-                                    Component.literal("Highest Profession Level: " + highestLevel),
-                                    Component.literal("Top profession: " + getTopProfessionName(profile))
-                            })
+                            .setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_leaderboard_rank.get(), placeholders))
+                            .addLore(TextUtils.parseList(CobblemonSkillsConfig.TEXT_CONFIG.gui_leaderboard_lore.get(), placeholders))
                             .build())
                     .onClick((action) -> PlayerProfile.open(player, uuid))
                     .build();
@@ -64,18 +65,24 @@ public final class Leaderboard {
         Button backButton = ServerButton.builder()
                 .display(new ItemBuilder(Items.OAK_DOOR)
                         .hideAdditional()
-                        .setCustomName(Component.literal("Back"))
+                        .setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_buttons_backButton.get()))
                         .build())
                 .onClick((action) -> MainMenu.open(player))
                 .build();
 
         LinkedPageButton previous = LinkedPageButton.builder()
-                .display(new ItemBuilder(Items.ARROW).hideAdditional().setCustomName(Component.literal("Previous")).build())
+                .display(new ItemBuilder(Items.ARROW)
+                        .hideAdditional()
+                        .setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_buttons_navigationPrevious.get()))
+                        .build())
                 .linkType(LinkType.Previous)
                 .build();
 
         LinkedPageButton next = LinkedPageButton.builder()
-                .display(new ItemBuilder(Items.ARROW).hideAdditional().setCustomName(Component.literal("Next")).build())
+                .display(new ItemBuilder(Items.ARROW)
+                        .hideAdditional()
+                        .setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_buttons_navigationNext.get()))
+                        .build())
                 .linkType(LinkType.Next)
                 .build();
 
@@ -88,7 +95,7 @@ public final class Leaderboard {
                 .build();
 
         LinkedPage page = PaginationHelper.createPagesFromPlaceholders(template, leaderboardButtons, null);
-        page.setTitle(Component.literal("Cobblemon Skills Leaderboard"));
+        page.setTitle(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_leaderboard_title.get()));
         return page;
     }
 
@@ -117,7 +124,7 @@ public final class Leaderboard {
 
     public static void open(ServerPlayer player) {
         if (!PermissionsRegistry.checkPermission(player, PermissionsRegistry.GUI_LEADERBOARD_PERMISSION)) {
-            player.sendSystemMessage(Component.literal("You do not have permission to access the leaderboard."));
+            player.sendSystemMessage(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.errors_menuNoPermission.get()));
             return;
         }
         ServerUIManager.openUIForcefully(player, new Leaderboard(player).getPage());

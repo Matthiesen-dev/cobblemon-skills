@@ -1,19 +1,16 @@
 package dev.matthiesen.cobblemon_skills.common.menu;
 
 import dev.matthiesen.cobblemon_skills.common.CobblemonSkillsCommon;
+import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
 import dev.matthiesen.cobblemon_skills.common.config.def.ProfessionTierEntry;
-import dev.matthiesen.cobblemon_skills.common.data.Profession;
-import dev.matthiesen.cobblemon_skills.common.data.SavedPlayerProfessionData;
+import dev.matthiesen.cobblemon_skills.common.data.*;
 import dev.matthiesen.cobblemon_skills.common.menu.util.ProfileUtils;
+import dev.matthiesen.cobblemon_skills.common.runtime.TextUtils;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.ServerUIManager;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.Button;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.PlaceholderButton;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.ServerButton;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.linked.LinkType;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.button.linked.LinkedPageButton;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.*;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.linked.*;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.helpers.PaginationHelper;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.page.LinkedPage;
-import dev.matthiesen.matthiesen_core.common.api.server_menu.page.Page;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.page.*;
 import dev.matthiesen.matthiesen_core.common.api.server_menu.template.types.ChestTemplate;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
 import net.minecraft.ChatFormatting;
@@ -23,6 +20,7 @@ import net.minecraft.world.item.Items;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public final class PlayerProfessionEntry {
@@ -41,7 +39,6 @@ public final class PlayerProfessionEntry {
         dev.matthiesen.cobblemon_skills.common.data.PlayerProfile profile = SavedPlayerProfessionData.get(targetUuid);
         var config = profession.getConfig();
         var progress = profile.getProgress(profession);
-
         boolean isViewingOwnProfile = viewer.getUUID().equals(targetUuid);
 
         List<Button> tierButtons = new ArrayList<>();
@@ -53,17 +50,22 @@ public final class PlayerProfessionEntry {
                     .hideAdditional()
                     .setCustomName(Component.literal(tier.displayName).withStyle(unlocked ? ChatFormatting.GREEN : ChatFormatting.GRAY));
 
+            Map<String, String> tierPlaceholders = Map.of(
+                    "%profession%", config.displayName(),
+                    "%tier%", tier.displayName,
+                    "%levelRequirement%", String.valueOf(tier.levelRequirement),
+                    "%status%", redeemed
+                            ? CobblemonSkillsConfig.TEXT_CONFIG.gui_professionEntry_status_redeemed.get()
+                            : unlocked
+                                ? CobblemonSkillsConfig.TEXT_CONFIG.gui_professionEntry_status_ready.get()
+                                : CobblemonSkillsConfig.TEXT_CONFIG.gui_professionEntry_status_locked.get(),
+                    "%rewardCount%", String.valueOf(tier.rewards.size())
+            );
+
             if (isViewingOwnProfile) {
-                builder.addLore(new Component[]{
-                        Component.literal("Requirement: " + tier.levelRequirement).withStyle(ChatFormatting.GRAY),
-                        Component.literal("Status: " + (redeemed ? "Redeemed" : unlocked ? "Ready" : "Locked"))
-                                .withStyle(redeemed ? ChatFormatting.GOLD : unlocked ? ChatFormatting.GREEN : ChatFormatting.RED),
-                        Component.literal("Rewards: " + tier.rewards.size() + " queued").withStyle(ChatFormatting.DARK_GRAY)
-                });
+                builder.addLore(TextUtils.parseList(CobblemonSkillsConfig.TEXT_CONFIG.gui_professionEntry_viewingOwnProfileLore.get(), tierPlaceholders));
             } else {
-                builder.addLore(new Component[]{
-                        Component.literal("Requirement: " + tier.levelRequirement).withStyle(ChatFormatting.GRAY),
-                });
+                builder.addLore(TextUtils.parseList(CobblemonSkillsConfig.TEXT_CONFIG.gui_professionEntry_viewingOtherProfileLore.get(), tierPlaceholders));
             }
 
             ServerButton.Builder buttonBuilder = ServerButton.builder()
@@ -71,25 +73,32 @@ public final class PlayerProfessionEntry {
 
             if (isViewingOwnProfile) {
                 buttonBuilder.onClick((action) -> {
+                    Map<String, String> placeholders = Map.of(
+                            "%profession%", config.displayName(),
+                            "%tier%", tier.displayName
+                    );
                     if (unlocked && !redeemed) {
                         ServerPlayer sender = action.getPlayer();
                         try {
                             if (profile.redeemTierReward(sender, profession, tier)) {
-                                sender.sendSystemMessage(Component.literal("You have successfully redeemed the rewards for " + tier.displayName + " in " + config.displayName() + "."));
+                                String messageTemplate = CobblemonSkillsConfig.TEXT_CONFIG.gui_messages_rewardRedeemed.get();
+                                sender.sendSystemMessage(TextUtils.parse(messageTemplate, placeholders));
                                 open(sender, profession); // Refresh the page to reflect the redeemed status
                             } else {
-                                sender.sendSystemMessage(Component.literal("You have already redeemed this reward."));
+                                sender.sendSystemMessage(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.errors_rewardAlreadyRedeemed.get()));
                             }
                         } catch (RuntimeException e) {
                             CobblemonSkillsCommon.INSTANCE.createErrorLog("Failed to redeem rewards for " + tier.displayName + " in " + config.displayName() + " for player " + sender.getScoreboardName(), e);
-                            sender.sendSystemMessage(Component.literal("Failed to redeem the rewards for " + tier.displayName + " in " + config.displayName() + "."));
+                            String messageTemplate = CobblemonSkillsConfig.TEXT_CONFIG.errors_rewardRedeemFailed.get();
+                            sender.sendSystemMessage(TextUtils.parse(messageTemplate, placeholders));
                         }
                     } else if (!unlocked) {
                         ServerPlayer sender = action.getPlayer();
-                        sender.sendSystemMessage(Component.literal("You have not unlocked this reward yet. Level up your " + config.displayName() + " profession to unlock it."));
+                        String messageTemplate = CobblemonSkillsConfig.TEXT_CONFIG.gui_messages_rewardLocked.get();
+                        sender.sendSystemMessage(TextUtils.parse(messageTemplate, placeholders));
                     } else {
                         ServerPlayer sender = action.getPlayer();
-                        sender.sendSystemMessage(Component.literal("You have already redeemed this reward."));
+                        sender.sendSystemMessage(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.errors_rewardAlreadyRedeemed.get()));
                     }
                 });
             }
@@ -102,31 +111,40 @@ public final class PlayerProfessionEntry {
             tierButtons.add(ServerButton.builder()
                     .display(new ItemBuilder(Items.BARRIER)
                             .hideAdditional()
-                            .setCustomName(Component.literal("No rewards configured"))
-                            .addLore(new Component[]{Component.literal("Add tiers in the config to populate this page.")})
+                            .setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_professionEntry_noRewardsConfigured.get()))
+                            .addLore(TextUtils.parseList(CobblemonSkillsConfig.TEXT_CONFIG.gui_professionEntry_noRewardsConfiguredLore.get()))
                             .build())
                     .build());
         }
 
         Button frame = ServerButton.builder()
-                .display(new ItemBuilder(Items.GRAY_STAINED_GLASS_PANE).hideAdditional().setCustomName(Component.literal(" ")).build())
+                .display(new ItemBuilder(Items.GRAY_STAINED_GLASS_PANE)
+                        .hideAdditional()
+                        .setCustomName(Component.literal(" "))
+                        .build())
                 .build();
 
         Button profileButton = ServerButton.builder()
                 .display(new ItemBuilder(Items.OAK_DOOR)
                         .hideAdditional()
-                        .setCustomName(Component.literal("Back to Profile"))
+                        .setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_buttons_backButton.get()))
                         .build())
                 .onClick((action) -> PlayerProfile.open(viewer, targetUuid))
                 .build();
 
         LinkedPageButton previous = LinkedPageButton.builder()
-                .display(new ItemBuilder(Items.ARROW).hideAdditional().setCustomName(Component.literal("Previous")).build())
+                .display(new ItemBuilder(Items.ARROW)
+                        .hideAdditional()
+                        .setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_buttons_navigationPrevious.get()))
+                        .build())
                 .linkType(LinkType.Previous)
                 .build();
 
         LinkedPageButton next = LinkedPageButton.builder()
-                .display(new ItemBuilder(Items.ARROW).hideAdditional().setCustomName(Component.literal("Next")).build())
+                .display(new ItemBuilder(Items.ARROW)
+                        .hideAdditional()
+                        .setCustomName(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_buttons_navigationNext.get()))
+                        .build())
                 .linkType(LinkType.Next)
                 .build();
 
@@ -139,7 +157,14 @@ public final class PlayerProfessionEntry {
                 .build();
 
         LinkedPage page = PaginationHelper.createPagesFromPlaceholders(template, tierButtons, null);
-        page.setTitle(Component.literal(ProfileUtils.getDisplayName(targetUuid) + " - " + config.displayName() + " | Lvl " + progress.level()));
+
+        Map<String, String> placeholders = Map.of(
+                "%player%", ProfileUtils.getDisplayName(targetUuid),
+                "%profession%", config.displayName(),
+                "%level%", String.valueOf(progress.level())
+        );
+
+        page.setTitle(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_professionEntry_title.get(), placeholders));
         return page;
     }
 
