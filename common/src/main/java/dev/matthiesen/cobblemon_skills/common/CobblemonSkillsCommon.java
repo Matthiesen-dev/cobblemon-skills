@@ -5,10 +5,12 @@ import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import dev.matthiesen.cobblemon_skills.common.commands.RootCommand;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
+import dev.matthiesen.cobblemon_skills.common.data.AwardExperience;
 import dev.matthiesen.cobblemon_skills.common.registry.PermissionsRegistry;
 import dev.matthiesen.cobblemon_skills.common.runtime.ProfessionManager;
 import dev.matthiesen.matthiesen_core.common.AbstractCommonMod;
 import dev.matthiesen.matthiesen_core.common.api.events.PlatformEvents;
+import dev.matthiesen.matthiesen_core.common.api.events.observable.results.ResultEventObservable;
 import org.jetbrains.annotations.NotNull;
 
 public final class CobblemonSkillsCommon extends AbstractCommonMod {
@@ -16,6 +18,10 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
     public static final String MOD_NAME = "Cobblemon Skills";
     public static @Token final String METRICS_TOKEN = "b3e8303bd1bab88edbdb97c598b825d4";
     public static final CobblemonSkillsCommon INSTANCE = new CobblemonSkillsCommon();
+
+    public static class Events {
+        public static final ResultEventObservable<AwardExperience, Integer> AWARD_EXPERIENCE = new ResultEventObservable<>();
+    }
 
     public CobblemonSkillsCommon() {
         super(MOD_ID, MOD_NAME);
@@ -33,6 +39,9 @@ public final class CobblemonSkillsCommon extends AbstractCommonMod {
 
         PermissionsRegistry.init();
         getCommandsRegistryManager().registerCommand(RootCommand.CMD);
+
+        // Skills Events
+        Events.AWARD_EXPERIENCE.subscribe(AwardExperience::handle);
 
         // Platform Events
         PlatformEvents.SERVER_END_TICK.subscribe(ProfessionManager::onServerTick);

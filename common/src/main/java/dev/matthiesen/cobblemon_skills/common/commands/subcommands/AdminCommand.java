@@ -71,7 +71,7 @@ public final class AdminCommand {
             Profession profession = Profession.fromNbtTag(professionName);
             double amount = DoubleArgumentType.getDouble(ctx, "amount");
 
-            int levelsGained = RewardsManager.awardProfessionExperience(targetPlayer, profession, amount);
+            Integer levelsGained = profession.awardExperience(targetPlayer, amount);
 
             Map<String, String> placeholders = Map.of(
                     "%amount%", String.valueOf(amount),
