@@ -1,6 +1,8 @@
 package dev.matthiesen.cobblemon_skills.common.data;
 
+import dev.matthiesen.cobblemon_skills.common.CobblemonSkillsCommon;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
+import net.minecraft.server.level.ServerPlayer;
 
 import java.util.function.Supplier;
 
@@ -23,6 +25,10 @@ public enum Profession {
 
     public LiveProfessionConfig getConfig() {
         return config.get();
+    }
+
+    public Integer awardExperience(ServerPlayer player, double experience) {
+        return CobblemonSkillsCommon.Events.AWARD_EXPERIENCE.emit(new AwardExperience(player, this, experience));
     }
 
     public String getNbtTag() {
