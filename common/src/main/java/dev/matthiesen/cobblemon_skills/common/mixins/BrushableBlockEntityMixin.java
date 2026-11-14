@@ -1,7 +1,7 @@
 package dev.matthiesen.cobblemon_skills.common.mixins;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import dev.matthiesen.cobblemon_skills.common.runtime.ProfessionManager;
+import dev.matthiesen.cobblemon_skills.common.runtime.ProfessionEventManager;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -26,7 +26,7 @@ public class BrushableBlockEntityMixin {
             @Local(ordinal = 0) ItemEntity itemEntity
     ) {
         if (player instanceof ServerPlayer serverPlayer) {
-            ProfessionManager.onBrushableBlockDrop(serverPlayer, itemEntity.getItem());
+            ProfessionEventManager.onBrushableBlockDrop(serverPlayer, itemEntity.getItem());
         }
     }
 }

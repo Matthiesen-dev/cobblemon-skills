@@ -42,6 +42,7 @@ public final class PlayerProfile {
                     "%profession%", profession.getConfig().displayName(),
                     "%level%", String.valueOf(progress.level()),
                     "%experience%", String.valueOf(progress.experience()),
+                    "%totalExperience%", String.valueOf(progress.totalExperience()),
                     "%nextLevelExp%", String.valueOf(ProfessionProgress.experienceRequiredForNextLevel(progress.level()))
             );
 

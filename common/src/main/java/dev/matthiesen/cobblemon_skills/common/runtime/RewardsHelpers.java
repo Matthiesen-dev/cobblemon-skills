@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.List;
 
-public final class RewardsManager {
+public final class RewardsHelpers {
     public static void handleFishingSmithingTableRewards(ServerPlayer serverPlayer, ItemStack itemStack) {
         PlayerProfile profile = SavedPlayerProfessionData.get(serverPlayer);
         int fishingLevel = profile.getProgress(Profession.FISHING).level();

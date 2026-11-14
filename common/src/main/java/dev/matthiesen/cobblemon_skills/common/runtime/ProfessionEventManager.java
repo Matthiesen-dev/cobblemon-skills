@@ -11,7 +11,12 @@ import com.cobblemon.mod.common.api.events.pokemon.*;
 import com.cobblemon.mod.common.api.pokemon.experience.BattleExperienceSource;
 import com.cobblemon.mod.common.entity.pokeball.EmptyPokeBallEntity;
 import com.cobblemon.mod.common.util.PlayerExtensionsKt;
+import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
 import dev.matthiesen.cobblemon_skills.common.data.*;
+import dev.matthiesen.cobblemon_skills.common.runtime.data.ArcheologyStatics;
+import dev.matthiesen.cobblemon_skills.common.runtime.data.BotanyStatics;
+import dev.matthiesen.cobblemon_skills.common.runtime.data.CookingStatics;
+import dev.matthiesen.cobblemon_skills.common.runtime.data.FishingStatics;
 import dev.matthiesen.matthiesen_core.common.api.events.server.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -24,10 +29,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public final class ProfessionManager {
+public final class ProfessionEventManager {
     private static final Map<UUID, Integer> playerLastFishCaughtStats = new HashMap<>();
 
-    private ProfessionManager() {}
+    private ProfessionEventManager() {}
 
     public static void onServerTick(ServerEvent.EndTick event) {
         for (ServerPlayer player : event.server().getPlayerList().getPlayers()) {
@@ -36,7 +41,7 @@ public final class ProfessionManager {
     }
 
     public static void onShinyCalculation(ShinyChanceCalculationEvent event) {
-        event.addModificationFunction(RewardsManager::onShinyCalculationModify);
+        event.addModificationFunction(RewardsHelpers::onShinyCalculationModify);
     }
 
     private static void syncFishingStats(ServerPlayer player) {
@@ -46,16 +51,17 @@ public final class ProfessionManager {
             return;
         }
         int diff = currentFishCaught - lastFishCaught;
-        Profession.FISHING.awardExperience(player, ExperienceManager.getFishingExperience(diff));
+        int experienceToAward = (int) (diff * CobblemonSkillsConfig.Professions.FISHING_CONFIG.experience_statsXpMultiplier.getAsDouble());
+        Profession.FISHING.awardExperience(player, experienceToAward);
     }
 
     public static void onBrewingStandTake(Player player, ItemStack itemStack) {
-        if (player instanceof ServerPlayer serverPlayer && ExperienceManager.isCobblemonCookingItem(itemStack.getItem())) {
+        if (player instanceof ServerPlayer serverPlayer && CookingStatics.ITEMS.containsKey(itemStack.getItem())) {
             Profession.COOKING.awardExperience(
                     serverPlayer,
-                    ExperienceManager.getCobblemonCookingItemExperience(itemStack.getItem())
+                    CookingStatics.ITEMS.getOrDefault(itemStack.getItem(), () -> 0).get()
             );
-            RewardsManager.handleCookingRewards(serverPlayer);
+            RewardsHelpers.handleCookingRewards(serverPlayer);
         }
     }
 
@@ -63,38 +69,38 @@ public final class ProfessionManager {
         if (event.getPlayer() instanceof ServerPlayer serverPlayer) {
             Profession.ARCHEOLOGY.awardExperience(
                     serverPlayer,
-                    ExperienceManager.getFossilRevivalExperience(event.getPokemon())
+                    ExperienceHelpers.getFossilRevivalExperience(event.getPokemon())
             );
         }
     }
 
     public static void onCookingPotTake(Player player, ItemStack itemStack) {
-        if (player instanceof ServerPlayer serverPlayer && ExperienceManager.isCobblemonCookingItem(itemStack.getItem())) {
+        if (player instanceof ServerPlayer serverPlayer && CookingStatics.ITEMS.containsKey(itemStack.getItem())) {
             Profession.COOKING.awardExperience(
                     serverPlayer,
-                    ExperienceManager.getCobblemonCookingItemExperience(itemStack.getItem())
+                    CookingStatics.ITEMS.getOrDefault(itemStack.getItem(), () -> 0).get()
             );
-            RewardsManager.handleCookingRewards(serverPlayer);
+            RewardsHelpers.handleCookingRewards(serverPlayer);
         }
     }
 
     public static void onSmithingTableTake(Player player, ItemStack itemStack) {
-        if (player instanceof ServerPlayer serverPlayer && ExperienceManager.isCobblemonFishingItem(itemStack)) {
+        if (player instanceof ServerPlayer serverPlayer && FishingStatics.ITEMS.containsKey(itemStack.getItem())) {
             Profession.FISHING.awardExperience(
                     serverPlayer,
-                    ExperienceManager.getCobblemonFishingItemExperience(itemStack)
+                    FishingStatics.ITEMS.getOrDefault(itemStack.getItem(), () -> 0).get()
             );
-            RewardsManager.handleFishingSmithingTableRewards(serverPlayer, itemStack);
+            RewardsHelpers.handleFishingSmithingTableRewards(serverPlayer, itemStack);
         }
     }
 
     public static void onFurnaceBlastingSmokingTake(Player player, ItemStack itemStack) {
-        if (player instanceof ServerPlayer serverPlayer && ExperienceManager.isCobblemonCookingItem(itemStack.getItem())) {
+        if (player instanceof ServerPlayer serverPlayer && CookingStatics.ITEMS.containsKey(itemStack.getItem())) {
             Profession.COOKING.awardExperience(
                     serverPlayer,
-                    ExperienceManager.getCobblemonCookingItemExperience(itemStack.getItem())
+                    CookingStatics.ITEMS.getOrDefault(itemStack.getItem(), () -> 0).get()
             );
-            RewardsManager.handleCookingRewards(serverPlayer);
+            RewardsHelpers.handleCookingRewards(serverPlayer);
         }
     }
 
@@ -102,7 +108,7 @@ public final class ProfessionManager {
         if (event.getPlayer() instanceof ServerPlayer serverPlayer) {
             Profession.BOTANY.awardExperience(
                     serverPlayer,
-                    ExperienceManager.getApricornHarvestExperience()
+                    CobblemonSkillsConfig.Professions.BOTANY_CONFIG.experience_apricornHarvestXp.getAsDouble()
             );
         }
     }
@@ -111,7 +117,7 @@ public final class ProfessionManager {
         if (event.getPlayer() instanceof ServerPlayer serverPlayer) {
             Profession.BOTANY.awardExperience(
                     serverPlayer,
-                    ExperienceManager.getBerryHarvestExperience()
+                    CobblemonSkillsConfig.Professions.BOTANY_CONFIG.experience_berryHarvestXp.getAsDouble()
             );
         }
     }
@@ -120,7 +126,7 @@ public final class ProfessionManager {
         if (event.getBobber().getPlayerOwner() instanceof ServerPlayer serverPlayer) {
             Profession.FISHING.awardExperience(
                     serverPlayer,
-                    ExperienceManager.getFishingExperienceFromPokemon(event.getPokemon())
+                    ExperienceHelpers.getFishingExperienceFromPokemon(event.getPokemon())
             );
         }
     }
@@ -129,7 +135,7 @@ public final class ProfessionManager {
         if (event.getPlayerEntity() instanceof ServerPlayer serverPlayer) {
             Profession.TRAINING.awardExperience(
                     serverPlayer,
-                    ExperienceManager.getLeftoversExperience()
+                    CobblemonSkillsConfig.Professions.TRAINING_CONFIG.experience_leftoversXp.getAsDouble()
             );
         }
     }
@@ -138,7 +144,7 @@ public final class ProfessionManager {
         if (event.getThrower() instanceof ServerPlayer player) {
             var captureLevel = SavedPlayerProfessionData.get(player).getProgress(Profession.CATCHING).level();
             var currentCatchRate = event.getCatchRate();
-            event.setCatchRate(currentCatchRate * RewardsManager.getCaptureRateBonusMultiplier(captureLevel));
+            event.setCatchRate(currentCatchRate * RewardsHelpers.getCaptureRateBonusMultiplier(captureLevel));
         }
     }
 
@@ -146,14 +152,14 @@ public final class ProfessionManager {
         boolean isCriticalCapture = event.getPokeBallEntity().getCaptureState() == EmptyPokeBallEntity.CaptureState.CRITICAL;
         Profession.CATCHING.awardExperience(
                 event.getPlayer(),
-                ExperienceManager.getCaptureSkillExperience(event.getPokemon().getLevel(), isCriticalCapture)
+                ExperienceHelpers.getCaptureSkillExperience(event.getPokemon().getLevel(), isCriticalCapture)
         );
     }
 
     public static void onCollectEgg(CollectEggEvent event) {
         Profession.BREEDING.awardExperience(
                 event.getPlayer(),
-                ExperienceManager.getBreedingEggCollected()
+                CobblemonSkillsConfig.Professions.BREEDING_CONFIG.experience_eggCollectedBaseXp.getAsDouble()
         );
     }
 
@@ -162,14 +168,14 @@ public final class ProfessionManager {
         int currentFriendShip = event.getEgg().getFriendship() != null ? event.getEgg().getFriendship() : 0;
         var egg = event.getEgg();
         boolean currentShinyStatus = Boolean.TRUE.equals(egg.getShiny());
-        egg.setShiny(RewardsManager.shouldMakeEggShiny(breedingLevel, currentShinyStatus));
-        egg.setFriendship(currentFriendShip + RewardsManager.getBreedingFriendshipBonus(breedingLevel));
+        egg.setShiny(RewardsHelpers.shouldMakeEggShiny(breedingLevel, currentShinyStatus));
+        egg.setFriendship(currentFriendShip + RewardsHelpers.getBreedingFriendshipBonus(breedingLevel));
     }
 
     public static void onHatchEggPost(HatchEggEvent.Post event) {
         Profession.BREEDING.awardExperience(
                 event.getPlayer(),
-                ExperienceManager.getBreedingEggHatched(event.getPokemon().getSpecies().getEggCycles())
+                ExperienceHelpers.getBreedingEggHatched(event.getPokemon().getSpecies().getEggCycles())
         );
     }
 
@@ -178,7 +184,7 @@ public final class ProfessionManager {
             ServerPlayer owner = event.getPokemon().getOwnerPlayer();
             if (owner != null) {
                 var trainingLevel = SavedPlayerProfessionData.get(owner).getProgress(Profession.TRAINING).level();
-                var bonus = RewardsManager.trainingSkillBonusExperience(trainingLevel, event.getExperience());
+                var bonus = RewardsHelpers.trainingSkillBonusExperience(trainingLevel, event.getExperience());
                 if (bonus > 0) {
                     event.setExperience(event.getExperience() + bonus);
                 }
@@ -192,7 +198,7 @@ public final class ProfessionManager {
             if (owner != null) {
                 Profession.TRAINING.awardExperience(
                         owner,
-                        RewardsManager.trainingSkillExperienceFromBattle(event.getExperience())
+                        RewardsHelpers.trainingSkillExperienceFromBattle(event.getExperience())
                 );
             }
         }
@@ -201,7 +207,7 @@ public final class ProfessionManager {
     public static void onLevelUp(LevelUpEvent event) {
         ServerPlayer owner = event.getPokemon().getOwnerPlayer();
         if (owner != null) {
-            var skillExperience = ExperienceManager.getTrainingSkillExperienceFromLevelUp(event.getOldLevel(), event.getNewLevel());
+            var skillExperience = ExperienceHelpers.getTrainingSkillExperienceFromLevelUp(event.getOldLevel(), event.getNewLevel());
             if (skillExperience > 0.0) {
                 Profession.TRAINING.awardExperience(
                         owner,
@@ -218,7 +224,7 @@ public final class ProfessionManager {
             if (player != null) {
                 Profession.TRAINING.awardExperience(
                         player,
-                        ExperienceManager.getBattleExperience()
+                        CobblemonSkillsConfig.Professions.TRAINING_CONFIG.experience_baseXp.getAsDouble()
                 );
             }
         });
@@ -228,28 +234,28 @@ public final class ProfessionManager {
         if (!(event.world() instanceof ServerLevel) || !(event.player() instanceof ServerPlayer serverPlayer)) {
             return;
         }
-        if (ExperienceManager.isArcheologyBlock(event.state().getBlock())) {
+        if (ArcheologyStatics.BLOCKS.containsKey(event.state().getBlock())) {
             Profession.ARCHEOLOGY.awardExperience(
                     serverPlayer,
-                    ExperienceManager.getArcheologyBlockExperience(event.state().getBlock())
+                    ArcheologyStatics.BLOCKS.getOrDefault(event.state().getBlock(), () -> 0).get()
             );
-            RewardsManager.handleBlockBreakRewards(event, Profession.ARCHEOLOGY);
-        } else if (ExperienceManager.isBotanyBlock(event.state().getBlock())) {
+            RewardsHelpers.handleBlockBreakRewards(event, Profession.ARCHEOLOGY);
+        } else if (BotanyStatics.BLOCKS.containsKey(event.state().getBlock())) {
             Profession.BOTANY.awardExperience(
                     serverPlayer,
-                    ExperienceManager.getBotanyBlockExperience(event.state().getBlock())
+                    BotanyStatics.BLOCKS.getOrDefault(event.state().getBlock(), () -> 0).get()
             );
-            RewardsManager.handleBlockBreakRewards(event, Profession.BOTANY);
+            RewardsHelpers.handleBlockBreakRewards(event, Profession.BOTANY);
         }
     }
 
     public static void onBrushableBlockDrop(ServerPlayer serverPlayer, ItemStack item) {
-        if (ExperienceManager.isCobblemonArcheologyItem(item)) {
+        if (ArcheologyStatics.ITEMS.containsKey(item.getItem())) {
             Profession.ARCHEOLOGY.awardExperience(
                     serverPlayer,
-                    ExperienceManager.getCobblemonArcheologyItemExperience(item)
+                    ArcheologyStatics.ITEMS.getOrDefault(item.getItem(), () -> 0).get()
             );
-            RewardsManager.handleArcheologyBrush(serverPlayer, item);
+            RewardsHelpers.handleArcheologyBrush(serverPlayer, item);
         }
     }
 }

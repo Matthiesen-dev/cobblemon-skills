@@ -1,6 +1,6 @@
 package dev.matthiesen.cobblemon_skills.common.mixins;
 
-import dev.matthiesen.cobblemon_skills.common.runtime.ProfessionManager;
+import dev.matthiesen.cobblemon_skills.common.runtime.ProfessionEventManager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.FurnaceResultSlot;
 import net.minecraft.world.item.ItemStack;
@@ -16,6 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class FurnaceResultSlotMixin {
     @Inject(method = "onTake", at = @At("TAIL"))
     private void cobblemon_skills$onTake(Player player, ItemStack itemStack, CallbackInfo ci) {
-        ProfessionManager.onFurnaceBlastingSmokingTake(player, itemStack);
+        ProfessionEventManager.onFurnaceBlastingSmokingTake(player, itemStack);
     }
 }
