@@ -122,100 +122,79 @@ public final class CobblemonSkillsConfig {
     }
 
     public static LiveProfessionConfig getArcheologyConfig() {
-        if (PROFESSION_CACHE.containsKey(Profession.ARCHEOLOGY)) {
-            return PROFESSION_CACHE.get(Profession.ARCHEOLOGY);
-        }
-        String displayName = Professions.ARCHEOLOGY_CONFIG.professionName.get();
-        List<ProfessionTierEntry> tiers = Professions.ARCHEOLOGY_CONFIG.professionRewards.get()
-                .stream()
-                .map(ProfessionTierEntry::deserialize)
-                .toList();
-        LiveProfessionConfig config = new LiveProfessionConfig(Profession.ARCHEOLOGY, displayName, tiers);
-        PROFESSION_CACHE.put(Profession.ARCHEOLOGY, config);
-        return config;
+        return PROFESSION_CACHE.computeIfAbsent(Profession.ARCHEOLOGY, p -> {
+            String displayName = Professions.ARCHEOLOGY_CONFIG.professionName.get();
+            List<ProfessionTierEntry> tiers = Professions.ARCHEOLOGY_CONFIG.professionRewards.get()
+                    .stream()
+                    .map(ProfessionTierEntry::deserialize)
+                    .toList();
+            return new LiveProfessionConfig(Profession.ARCHEOLOGY, displayName, tiers);
+        });
     }
 
     public static LiveProfessionConfig getBotanyConfig() {
-        if (PROFESSION_CACHE.containsKey(Profession.BOTANY)) {
-            return PROFESSION_CACHE.get(Profession.BOTANY);
-        }
-        String displayName = Professions.BOTANY_CONFIG.professionName.get();
-        List<ProfessionTierEntry> tiers = Professions.BOTANY_CONFIG.professionRewards.get()
-                .stream()
-                .map(ProfessionTierEntry::deserialize)
-                .toList();
-        LiveProfessionConfig config = new LiveProfessionConfig(Profession.BOTANY, displayName, tiers);
-        PROFESSION_CACHE.put(Profession.BOTANY, config);
-        return config;
+        return PROFESSION_CACHE.computeIfAbsent(Profession.BOTANY, p -> {
+            String displayName = Professions.BOTANY_CONFIG.professionName.get();
+            List<ProfessionTierEntry> tiers = Professions.BOTANY_CONFIG.professionRewards.get()
+                    .stream()
+                    .map(ProfessionTierEntry::deserialize)
+                    .toList();
+            return new LiveProfessionConfig(Profession.BOTANY, displayName, tiers);
+        });
     }
 
     public static LiveProfessionConfig getCookingConfig() {
-        if (PROFESSION_CACHE.containsKey(Profession.COOKING)) {
-            return PROFESSION_CACHE.get(Profession.COOKING);
-        }
-        String displayName = Professions.COOKING_CONFIG.professionName.get();
-        List<ProfessionTierEntry> tiers = Professions.COOKING_CONFIG.professionRewards.get()
-                .stream()
-                .map(ProfessionTierEntry::deserialize)
-                .toList();
-        LiveProfessionConfig config = new LiveProfessionConfig(Profession.COOKING, displayName, tiers);
-        PROFESSION_CACHE.put(Profession.COOKING, config);
-        return config;
+        return PROFESSION_CACHE.computeIfAbsent(Profession.COOKING, p -> {
+            String displayName = Professions.COOKING_CONFIG.professionName.get();
+            List<ProfessionTierEntry> tiers = Professions.COOKING_CONFIG.professionRewards.get()
+                    .stream()
+                    .map(ProfessionTierEntry::deserialize)
+                    .toList();
+            return new LiveProfessionConfig(Profession.COOKING, displayName, tiers);
+        });
     }
 
     public static LiveProfessionConfig getFishingConfig() {
-        if (PROFESSION_CACHE.containsKey(Profession.FISHING)) {
-            return PROFESSION_CACHE.get(Profession.FISHING);
-        }
-        String displayName = Professions.FISHING_CONFIG.professionName.get();
-        List<ProfessionTierEntry> tiers = Professions.FISHING_CONFIG.professionRewards.get()
-                .stream()
-                .map(ProfessionTierEntry::deserialize)
-                .toList();
-        LiveProfessionConfig config = new LiveProfessionConfig(Profession.FISHING, displayName, tiers);
-        PROFESSION_CACHE.put(Profession.FISHING, config);
-        return config;
+        return PROFESSION_CACHE.computeIfAbsent(Profession.FISHING, p -> {
+            String displayName = Professions.FISHING_CONFIG.professionName.get();
+            List<ProfessionTierEntry> tiers = Professions.FISHING_CONFIG.professionRewards.get()
+                    .stream()
+                    .map(ProfessionTierEntry::deserialize)
+                    .toList();
+            return new LiveProfessionConfig(Profession.FISHING, displayName, tiers);
+        });
     }
 
     public static LiveProfessionConfig getCatchingConfig() {
-        if (PROFESSION_CACHE.containsKey(Profession.CATCHING)) {
-            return PROFESSION_CACHE.get(Profession.CATCHING);
-        }
-        String displayName = Professions.CATCHING_CONFIG.professionName.get();
-        List<ProfessionTierEntry> tiers = Professions.CATCHING_CONFIG.professionRewards.get()
-                .stream()
-                .map(ProfessionTierEntry::deserialize)
-                .toList();
-        LiveProfessionConfig config = new LiveProfessionConfig(Profession.CATCHING, displayName, tiers);
-        PROFESSION_CACHE.put(Profession.CATCHING, config);
-        return config;
+        return PROFESSION_CACHE.computeIfAbsent(Profession.CATCHING, p -> {
+            String displayName = Professions.CATCHING_CONFIG.professionName.get();
+            List<ProfessionTierEntry> tiers = Professions.CATCHING_CONFIG.professionRewards.get()
+                    .stream()
+                    .map(ProfessionTierEntry::deserialize)
+                    .toList();
+            return new LiveProfessionConfig(Profession.CATCHING, displayName, tiers);
+        });
     }
 
     public static LiveProfessionConfig getTrainingConfig() {
-        if (PROFESSION_CACHE.containsKey(Profession.TRAINING)) {
-            return PROFESSION_CACHE.get(Profession.TRAINING);
-        }
-        String displayName = Professions.TRAINING_CONFIG.professionName.get();
-        List<ProfessionTierEntry> tiers = Professions.TRAINING_CONFIG.professionRewards.get()
-                .stream()
-                .map(ProfessionTierEntry::deserialize)
-                .toList();
-        LiveProfessionConfig config = new LiveProfessionConfig(Profession.TRAINING, displayName, tiers);
-        PROFESSION_CACHE.put(Profession.TRAINING, config);
-        return config;
+        return PROFESSION_CACHE.computeIfAbsent(Profession.TRAINING, p -> {
+            String displayName = Professions.TRAINING_CONFIG.professionName.get();
+            List<ProfessionTierEntry> tiers = Professions.TRAINING_CONFIG.professionRewards.get()
+                    .stream()
+                    .map(ProfessionTierEntry::deserialize)
+                    .toList();
+            return new LiveProfessionConfig(Profession.TRAINING, displayName, tiers);
+        });
     }
 
     public static LiveProfessionConfig getBreedingConfig() {
-        if (PROFESSION_CACHE.containsKey(Profession.BREEDING)) {
-            return PROFESSION_CACHE.get(Profession.BREEDING);
-        }
-        String displayName = Professions.BREEDING_CONFIG.professionName.get();
-        List<ProfessionTierEntry> tiers = Professions.BREEDING_CONFIG.professionRewards.get()
-                .stream()
-                .map(ProfessionTierEntry::deserialize)
-                .toList();
-        LiveProfessionConfig config = new LiveProfessionConfig(Profession.BREEDING, displayName, tiers);
-        PROFESSION_CACHE.put(Profession.BREEDING, config);
-        return config;
+        return PROFESSION_CACHE.computeIfAbsent(Profession.BREEDING, p -> {
+            String displayName = Professions.BREEDING_CONFIG.professionName.get();
+            List<ProfessionTierEntry> tiers = Professions.BREEDING_CONFIG.professionRewards.get()
+                    .stream()
+                    .map(ProfessionTierEntry::deserialize)
+                    .toList();
+            return new LiveProfessionConfig(Profession.BREEDING, displayName, tiers);
+        });
     }
 }

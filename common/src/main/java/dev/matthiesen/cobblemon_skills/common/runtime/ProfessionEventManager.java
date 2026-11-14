@@ -1,6 +1,8 @@
 package dev.matthiesen.cobblemon_skills.common.runtime;
 
+import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
+import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent;
 import com.cobblemon.mod.common.api.events.berry.BerryHarvestEvent;
 import com.cobblemon.mod.common.api.events.farming.ApricornHarvestEvent;
@@ -13,10 +15,8 @@ import com.cobblemon.mod.common.entity.pokeball.EmptyPokeBallEntity;
 import com.cobblemon.mod.common.util.PlayerExtensionsKt;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
 import dev.matthiesen.cobblemon_skills.common.data.*;
-import dev.matthiesen.cobblemon_skills.common.runtime.data.ArcheologyStatics;
-import dev.matthiesen.cobblemon_skills.common.runtime.data.BotanyStatics;
-import dev.matthiesen.cobblemon_skills.common.runtime.data.CookingStatics;
-import dev.matthiesen.cobblemon_skills.common.runtime.data.FishingStatics;
+import dev.matthiesen.cobblemon_skills.common.runtime.data.*;
+import dev.matthiesen.matthiesen_core.common.api.events.PlatformEvents;
 import dev.matthiesen.matthiesen_core.common.api.events.server.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -33,6 +33,29 @@ public final class ProfessionEventManager {
     private static final Map<UUID, Integer> playerLastFishCaughtStats = new HashMap<>();
 
     private ProfessionEventManager() {}
+
+    public static void registerEventListeners() {
+        // Platform Events
+        PlatformEvents.SERVER_END_TICK.subscribe(ProfessionEventManager::onServerTick);
+        PlatformEvents.PLAYER_BLOCK_BREAK.subscribe(ProfessionEventManager::onBlockBreak);
+
+        // Cobblemon Events
+        CobblemonEvents.FOSSIL_REVIVED.subscribe(Priority.LOWEST, ProfessionEventManager::onFossilRevived);
+        CobblemonEvents.BOBBER_SPAWN_POKEMON_POST.subscribe(Priority.LOWEST, ProfessionEventManager::onFishingBobberSpawn);
+        CobblemonEvents.APRICORN_HARVESTED.subscribe(Priority.LOWEST, ProfessionEventManager::onApricornHarvest);
+        CobblemonEvents.BERRY_HARVEST.subscribe(Priority.LOWEST, ProfessionEventManager::onBerryHarvest);
+        CobblemonEvents.POKEMON_CATCH_RATE.subscribe(Priority.LOWEST, ProfessionEventManager::onPokemonCatchRateCalculation);
+        CobblemonEvents.POKEMON_CAPTURED.subscribe(Priority.LOWEST, ProfessionEventManager::onPokemonCaptured);
+        CobblemonEvents.COLLECT_EGG.subscribe(Priority.LOWEST, ProfessionEventManager::onCollectEgg);
+        CobblemonEvents.HATCH_EGG_PRE.subscribe(Priority.LOWEST, ProfessionEventManager::onHatchEggPre);
+        CobblemonEvents.HATCH_EGG_POST.subscribe(Priority.LOWEST, ProfessionEventManager::onHatchEggPost);
+        CobblemonEvents.EXPERIENCE_GAINED_EVENT_PRE.subscribe(Priority.LOWEST, ProfessionEventManager::onExperienceGainedPre);
+        CobblemonEvents.EXPERIENCE_GAINED_EVENT_POST.subscribe(Priority.LOWEST, ProfessionEventManager::onExperienceGainedPost);
+        CobblemonEvents.LEVEL_UP_EVENT.subscribe(Priority.LOWEST, ProfessionEventManager::onLevelUp);
+        CobblemonEvents.LEFTOVERS_CREATED.subscribe(Priority.LOWEST, ProfessionEventManager::onLeftoversCreated);
+        CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.LOWEST, ProfessionEventManager::onBattleVictory);
+        CobblemonEvents.SHINY_CHANCE_CALCULATION.subscribe(Priority.LOWEST, ProfessionEventManager::onShinyCalculation);
+    }
 
     public static void onServerTick(ServerEvent.EndTick event) {
         for (ServerPlayer player : event.server().getPlayerList().getPlayers()) {
