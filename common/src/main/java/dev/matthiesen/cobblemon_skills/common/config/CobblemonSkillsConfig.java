@@ -121,80 +121,42 @@ public final class CobblemonSkillsConfig {
         PROFESSION_CACHE.clear();
     }
 
-    public static LiveProfessionConfig getArcheologyConfig() {
-        return PROFESSION_CACHE.computeIfAbsent(Profession.ARCHEOLOGY, p -> {
-            String displayName = Professions.ARCHEOLOGY_CONFIG.professionName.get();
-            List<ProfessionTierEntry> tiers = Professions.ARCHEOLOGY_CONFIG.professionRewards.get()
+    private static LiveProfessionConfig getOrComputeProfession(Profession profession, AbstractProfession professionDef) {
+        return PROFESSION_CACHE.computeIfAbsent(profession, p -> {
+            String displayName = professionDef.professionName.get();
+            List<ProfessionTierEntry> tiers = professionDef.professionRewards.get()
                     .stream()
                     .map(ProfessionTierEntry::deserialize)
                     .toList();
-            return new LiveProfessionConfig(Profession.ARCHEOLOGY, displayName, tiers);
+            return new LiveProfessionConfig(profession, displayName, tiers);
         });
+    }
+
+    public static LiveProfessionConfig getArcheologyConfig() {
+        return getOrComputeProfession(Profession.ARCHEOLOGY, Professions.ARCHEOLOGY_CONFIG);
     }
 
     public static LiveProfessionConfig getBotanyConfig() {
-        return PROFESSION_CACHE.computeIfAbsent(Profession.BOTANY, p -> {
-            String displayName = Professions.BOTANY_CONFIG.professionName.get();
-            List<ProfessionTierEntry> tiers = Professions.BOTANY_CONFIG.professionRewards.get()
-                    .stream()
-                    .map(ProfessionTierEntry::deserialize)
-                    .toList();
-            return new LiveProfessionConfig(Profession.BOTANY, displayName, tiers);
-        });
+        return getOrComputeProfession(Profession.BOTANY, Professions.BOTANY_CONFIG);
     }
 
     public static LiveProfessionConfig getCookingConfig() {
-        return PROFESSION_CACHE.computeIfAbsent(Profession.COOKING, p -> {
-            String displayName = Professions.COOKING_CONFIG.professionName.get();
-            List<ProfessionTierEntry> tiers = Professions.COOKING_CONFIG.professionRewards.get()
-                    .stream()
-                    .map(ProfessionTierEntry::deserialize)
-                    .toList();
-            return new LiveProfessionConfig(Profession.COOKING, displayName, tiers);
-        });
+        return getOrComputeProfession(Profession.COOKING, Professions.COOKING_CONFIG);
     }
 
     public static LiveProfessionConfig getFishingConfig() {
-        return PROFESSION_CACHE.computeIfAbsent(Profession.FISHING, p -> {
-            String displayName = Professions.FISHING_CONFIG.professionName.get();
-            List<ProfessionTierEntry> tiers = Professions.FISHING_CONFIG.professionRewards.get()
-                    .stream()
-                    .map(ProfessionTierEntry::deserialize)
-                    .toList();
-            return new LiveProfessionConfig(Profession.FISHING, displayName, tiers);
-        });
+        return getOrComputeProfession(Profession.FISHING, Professions.FISHING_CONFIG);
     }
 
     public static LiveProfessionConfig getCatchingConfig() {
-        return PROFESSION_CACHE.computeIfAbsent(Profession.CATCHING, p -> {
-            String displayName = Professions.CATCHING_CONFIG.professionName.get();
-            List<ProfessionTierEntry> tiers = Professions.CATCHING_CONFIG.professionRewards.get()
-                    .stream()
-                    .map(ProfessionTierEntry::deserialize)
-                    .toList();
-            return new LiveProfessionConfig(Profession.CATCHING, displayName, tiers);
-        });
+        return getOrComputeProfession(Profession.CATCHING, Professions.CATCHING_CONFIG);
     }
 
     public static LiveProfessionConfig getTrainingConfig() {
-        return PROFESSION_CACHE.computeIfAbsent(Profession.TRAINING, p -> {
-            String displayName = Professions.TRAINING_CONFIG.professionName.get();
-            List<ProfessionTierEntry> tiers = Professions.TRAINING_CONFIG.professionRewards.get()
-                    .stream()
-                    .map(ProfessionTierEntry::deserialize)
-                    .toList();
-            return new LiveProfessionConfig(Profession.TRAINING, displayName, tiers);
-        });
+        return getOrComputeProfession(Profession.TRAINING, Professions.TRAINING_CONFIG);
     }
 
     public static LiveProfessionConfig getBreedingConfig() {
-        return PROFESSION_CACHE.computeIfAbsent(Profession.BREEDING, p -> {
-            String displayName = Professions.BREEDING_CONFIG.professionName.get();
-            List<ProfessionTierEntry> tiers = Professions.BREEDING_CONFIG.professionRewards.get()
-                    .stream()
-                    .map(ProfessionTierEntry::deserialize)
-                    .toList();
-            return new LiveProfessionConfig(Profession.BREEDING, displayName, tiers);
-        });
+        return getOrComputeProfession(Profession.BREEDING, Professions.BREEDING_CONFIG);
     }
 }
