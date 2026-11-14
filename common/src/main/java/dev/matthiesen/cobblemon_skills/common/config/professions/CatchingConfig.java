@@ -1,12 +1,12 @@
 package dev.matthiesen.cobblemon_skills.common.config.professions;
 
 import com.electronwill.nightconfig.core.Config;
-import dev.matthiesen.cobblemon_skills.common.config.def.PROF_DEFAULTS;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.List;
 
 public final class CatchingConfig extends AbstractProfession {
+    public static final String NAME = "Catching";
 
     // Experience
     public ModConfigSpec.DoubleValue experience_catchBaseXp;
@@ -22,11 +22,11 @@ public final class CatchingConfig extends AbstractProfession {
 
     @Override
     public List<Config> getDefaultProfessionRewards() {
-        return PROF_DEFAULTS.getDefaultCatchingTiers();
+        return getDefaultConfigTiers(NAME);
     }
 
     public CatchingConfig(ModConfigSpec.Builder builder) {
-        super(builder, "Catching");
+        super(builder, NAME);
 
         builder.comment("Catching Experience Settings").push("experience");
         experience_catchBaseXp = builder.comment("Base experience gained from catching a Pokémon")

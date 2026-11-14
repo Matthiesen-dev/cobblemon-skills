@@ -1,12 +1,12 @@
 package dev.matthiesen.cobblemon_skills.common.config.professions;
 
 import com.electronwill.nightconfig.core.Config;
-import dev.matthiesen.cobblemon_skills.common.config.def.PROF_DEFAULTS;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.List;
 
 public final class BotanyConfig extends AbstractProfession {
+    public static final String NAME = "Botany";
 
     // Experience
     public ModConfigSpec.DoubleValue experience_apricornHarvestXp;
@@ -23,11 +23,11 @@ public final class BotanyConfig extends AbstractProfession {
 
     @Override
     public List<Config> getDefaultProfessionRewards() {
-        return PROF_DEFAULTS.getDefaultBotanyTiers();
+        return getDefaultConfigTiers(NAME);
     }
 
     public BotanyConfig(ModConfigSpec.Builder builder) {
-        super(builder, "Botany");
+        super(builder, NAME);
         
         builder.comment("Botany Experience Settings").push("experience");
         experience_apricornHarvestXp = builder.comment("Experience gained from harvesting an Apricorn")

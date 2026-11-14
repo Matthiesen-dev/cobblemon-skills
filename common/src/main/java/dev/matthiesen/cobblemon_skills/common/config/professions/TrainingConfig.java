@@ -1,12 +1,12 @@
 package dev.matthiesen.cobblemon_skills.common.config.professions;
 
 import com.electronwill.nightconfig.core.Config;
-import dev.matthiesen.cobblemon_skills.common.config.def.PROF_DEFAULTS;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.List;
 
 public final class TrainingConfig extends AbstractProfession {
+    public static final String NAME = "Training";
 
     // Experience
     public ModConfigSpec.DoubleValue experience_baseXp;
@@ -21,11 +21,11 @@ public final class TrainingConfig extends AbstractProfession {
 
     @Override
     public List<Config> getDefaultProfessionRewards() {
-        return PROF_DEFAULTS.getDefaultTrainingTiers();
+        return getDefaultConfigTiers(NAME);
     }
 
     public TrainingConfig(ModConfigSpec.Builder builder) {
-        super(builder, "Training");
+        super(builder, NAME);
 
         builder.comment("Training Experience Settings").push("experience");
         experience_baseXp = builder.comment("Base experience gained from training a Pokémon")

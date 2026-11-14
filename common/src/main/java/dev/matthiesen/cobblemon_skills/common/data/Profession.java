@@ -2,29 +2,30 @@ package dev.matthiesen.cobblemon_skills.common.data;
 
 import dev.matthiesen.cobblemon_skills.common.CobblemonSkillsCommon;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
+import dev.matthiesen.cobblemon_skills.common.config.professions.*;
 import net.minecraft.server.level.ServerPlayer;
 
-import java.util.function.Supplier;
+import static dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig.Professions;
 
 public enum Profession {
-    ARCHEOLOGY("Archeology", CobblemonSkillsConfig::getArcheologyConfig),
-    BOTANY("Botany", CobblemonSkillsConfig::getBotanyConfig),
-    COOKING("Cooking", CobblemonSkillsConfig::getCookingConfig),
-    FISHING("Fishing", CobblemonSkillsConfig::getFishingConfig),
-    CATCHING("Catching", CobblemonSkillsConfig::getCatchingConfig),
-    TRAINING("Training", CobblemonSkillsConfig::getTrainingConfig),
-    BREEDING("Breeding", CobblemonSkillsConfig::getBreedingConfig);
+    ARCHEOLOGY(ArcheologyConfig.NAME, Professions.ARCHEOLOGY_CONFIG),
+    BOTANY(BotanyConfig.NAME, Professions.BOTANY_CONFIG),
+    COOKING(CookingConfig.NAME, Professions.COOKING_CONFIG),
+    FISHING(FishingConfig.NAME, Professions.FISHING_CONFIG),
+    CATCHING(CatchingConfig.NAME, Professions.CATCHING_CONFIG),
+    TRAINING(TrainingConfig.NAME, Professions.TRAINING_CONFIG),
+    BREEDING(BreedingConfig.NAME, Professions.BREEDING_CONFIG);
 
-    private final Supplier<LiveProfessionConfig> config;
+    private final AbstractProfession config;
     private final String NbtTag;
 
-    Profession(String NbtTag, Supplier<LiveProfessionConfig> configSupplier) {
+    Profession(String NbtTag, AbstractProfession config) {
         this.NbtTag = NbtTag;
-        this.config = configSupplier;
+        this.config = config;
     }
 
     public LiveProfessionConfig getConfig() {
-        return config.get();
+        return CobblemonSkillsConfig.getProfessionConfig(this, this.config);
     }
 
     public Integer awardExperience(ServerPlayer player, double experience) {

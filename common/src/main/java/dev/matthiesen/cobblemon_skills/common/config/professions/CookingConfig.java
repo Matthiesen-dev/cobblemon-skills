@@ -1,12 +1,12 @@
 package dev.matthiesen.cobblemon_skills.common.config.professions;
 
 import com.electronwill.nightconfig.core.Config;
-import dev.matthiesen.cobblemon_skills.common.config.def.PROF_DEFAULTS;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.List;
 
 public final class CookingConfig extends AbstractProfession {
+    public static final String NAME = "Cooking";
 
     // Experience
     public ModConfigSpec.IntValue experience_baseXp;
@@ -23,11 +23,11 @@ public final class CookingConfig extends AbstractProfession {
 
     @Override
     public List<Config> getDefaultProfessionRewards() {
-        return PROF_DEFAULTS.getDefaultCookingTiers();
+        return getDefaultConfigTiers(NAME);
     }
 
     public CookingConfig(ModConfigSpec.Builder builder) {
-        super(builder, "Cooking");
+        super(builder, NAME);
 
         builder.comment("Cooking Experience Settings").push("experience");
         experience_baseXp = builder.comment("Base experience gained from cooking")

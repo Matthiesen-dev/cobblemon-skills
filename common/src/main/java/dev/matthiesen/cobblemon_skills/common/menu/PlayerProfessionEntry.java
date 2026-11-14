@@ -161,7 +161,10 @@ public final class PlayerProfessionEntry {
         Map<String, String> placeholders = Map.of(
                 "%player%", ProfileUtils.getDisplayName(targetUuid),
                 "%profession%", config.displayName(),
-                "%level%", String.valueOf(progress.level())
+                "%level%", String.valueOf(progress.level()),
+                "%experience%", String.valueOf(progress.experience()),
+                "%totalExperience%", String.valueOf(progress.totalExperience()),
+                "%nextLevelExp%", String.valueOf(ProfessionProgress.experienceRequiredForNextLevel(progress.level()))
         );
 
         page.setTitle(TextUtils.parse(CobblemonSkillsConfig.TEXT_CONFIG.gui_professionEntry_title.get(), placeholders));
