@@ -1,12 +1,12 @@
 package dev.matthiesen.cobblemon_skills.common.config.professions;
 
 import com.electronwill.nightconfig.core.Config;
-import dev.matthiesen.cobblemon_skills.common.config.def.PROF_DEFAULTS;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.List;
 
 public final class FishingConfig extends AbstractProfession {
+    public static final String NAME = "Fishing";
 
     // Experience
     public ModConfigSpec.DoubleValue experience_statsXpMultiplier;
@@ -38,12 +38,12 @@ public final class FishingConfig extends AbstractProfession {
 
     @Override
     public List<Config> getDefaultProfessionRewards() {
-        return PROF_DEFAULTS.getDefaultFishingTiers();
+        return getDefaultConfigTiers(NAME);
     }
 
 
     public FishingConfig(ModConfigSpec.Builder builder) {
-        super(builder, "Fishing");
+        super(builder, NAME);
 
         builder.comment("Fishing Experience Settings").push("experience");
         experience_statsXpMultiplier = builder.comment("Multiplier for experience gained from fishing stats")

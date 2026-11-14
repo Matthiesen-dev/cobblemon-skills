@@ -2,19 +2,19 @@ package dev.matthiesen.cobblemon_skills.common.data;
 
 import dev.matthiesen.cobblemon_skills.common.CobblemonSkillsCommon;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
-import dev.matthiesen.cobblemon_skills.common.config.professions.AbstractProfession;
+import dev.matthiesen.cobblemon_skills.common.config.professions.*;
 import net.minecraft.server.level.ServerPlayer;
 
 import static dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig.Professions;
 
 public enum Profession {
-    ARCHEOLOGY("Archeology", Professions.ARCHEOLOGY_CONFIG),
-    BOTANY("Botany", Professions.BOTANY_CONFIG),
-    COOKING("Cooking", Professions.COOKING_CONFIG),
-    FISHING("Fishing", Professions.FISHING_CONFIG),
-    CATCHING("Catching", Professions.CATCHING_CONFIG),
-    TRAINING("Training", Professions.TRAINING_CONFIG),
-    BREEDING("Breeding", Professions.BREEDING_CONFIG);
+    ARCHEOLOGY(ArcheologyConfig.NAME, Professions.ARCHEOLOGY_CONFIG),
+    BOTANY(BotanyConfig.NAME, Professions.BOTANY_CONFIG),
+    COOKING(CookingConfig.NAME, Professions.COOKING_CONFIG),
+    FISHING(FishingConfig.NAME, Professions.FISHING_CONFIG),
+    CATCHING(CatchingConfig.NAME, Professions.CATCHING_CONFIG),
+    TRAINING(TrainingConfig.NAME, Professions.TRAINING_CONFIG),
+    BREEDING(BreedingConfig.NAME, Professions.BREEDING_CONFIG);
 
     private final AbstractProfession config;
     private final String NbtTag;

@@ -1,12 +1,12 @@
 package dev.matthiesen.cobblemon_skills.common.config.professions;
 
 import com.electronwill.nightconfig.core.Config;
-import dev.matthiesen.cobblemon_skills.common.config.def.PROF_DEFAULTS;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.List;
 
 public final class BreedingConfig extends AbstractProfession {
+    public static final String NAME = "Breeding";
 
     // Experience
     public ModConfigSpec.DoubleValue experience_eggCollectedBaseXp;
@@ -22,11 +22,11 @@ public final class BreedingConfig extends AbstractProfession {
 
     @Override
     public List<Config> getDefaultProfessionRewards() {
-        return PROF_DEFAULTS.getDefaultBreedingTiers();
+        return getDefaultConfigTiers(NAME);
     }
 
     public BreedingConfig(ModConfigSpec.Builder builder) {
-        super(builder, "Breeding");
+        super(builder, NAME);
 
         builder.comment("Breeding Experience Settings").push("experience");
         experience_eggCollectedBaseXp = builder.comment("Base experience gained from collecting an egg")

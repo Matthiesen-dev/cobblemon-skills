@@ -1,12 +1,12 @@
 package dev.matthiesen.cobblemon_skills.common.config.professions;
 
 import com.electronwill.nightconfig.core.Config;
-import dev.matthiesen.cobblemon_skills.common.config.def.PROF_DEFAULTS;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.List;
 
 public final class ArcheologyConfig extends AbstractProfession {
+    public static final String NAME = "Archeology";
 
     // Experience
     public ModConfigSpec.DoubleValue experience_fossilRevivalBaseXp;
@@ -32,11 +32,11 @@ public final class ArcheologyConfig extends AbstractProfession {
 
     @Override
     public List<Config> getDefaultProfessionRewards() {
-        return PROF_DEFAULTS.getDefaultArcheologyTiers();
+        return getDefaultConfigTiers(NAME);
     }
 
     public ArcheologyConfig(ModConfigSpec.Builder builder) {
-        super(builder, "Archeology");
+        super(builder, NAME);
 
         builder.comment("Archeology Experience Settings").push("experience");
         experience_fossilRevivalBaseXp = builder.comment("Base experience gained from reviving a fossil")
