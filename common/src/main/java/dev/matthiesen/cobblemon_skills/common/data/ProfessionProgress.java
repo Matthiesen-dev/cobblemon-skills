@@ -6,6 +6,11 @@ import net.minecraft.nbt.CompoundTag;
 public final class ProfessionProgress {
     private static final String NBT_LEVEL = "level";
     private static final String NBT_EXPERIENCE = "experience";
+    private static final int ZERO_INT = 0;
+    private static final double ZERO_DOUBLE = 0.0;
+    private static final double SCALE_FACTOR = 10.0;
+    private static final double BASE_EXP_FACTOR = 1.0;
+
     private int level;
     private double experience;
 
@@ -30,19 +35,19 @@ public final class ProfessionProgress {
     }
 
     public void setLevel(int level) {
-        this.level = Math.clamp(level, 0, getMaxLevel());
-        this.experience = 0.0;
+        this.level = Math.clamp(level, ZERO_INT, getMaxLevel());
+        this.experience = ZERO_DOUBLE;
     }
 
     public int addExperience(double amount) {
         if (level >= getMaxLevel()) {
             level = getMaxLevel();
-            experience = 0.0;
-            return 0;
+            experience = ZERO_DOUBLE;
+            return ZERO_INT;
         }
 
         experience += amount;
-        int levelsGained = 0;
+        int levelsGained = ZERO_INT;
 
         while (level < getMaxLevel() && experience >= experienceRequiredForNextLevel(level)) {
             experience -= experienceRequiredForNextLevel(level);
@@ -52,7 +57,7 @@ public final class ProfessionProgress {
 
         if (level >= getMaxLevel()) {
             level = getMaxLevel();
-            experience = 0.0;
+            experience = ZERO_DOUBLE;
         }
 
         return levelsGained;
@@ -60,13 +65,13 @@ public final class ProfessionProgress {
 
     public static int experienceRequiredForNextLevel(int level) {
         if (level >= getMaxLevel()) {
-            return 0;
+            return ZERO_INT;
         }
         return getExperiencePerLevel() + level * getLevelMultiplier();
     }
 
     public double totalExperience() {
-        return (10.0 * level * level) + (getExperiencePerLevel() * 1.0 * level) + experience;
+        return (SCALE_FACTOR * level * level) + (getExperiencePerLevel() * BASE_EXP_FACTOR * level) + experience;
     }
 
     public CompoundTag toCompoundTag() {
@@ -78,8 +83,8 @@ public final class ProfessionProgress {
 
     public static ProfessionProgress fromCompoundTag(CompoundTag tag) {
         ProfessionProgress progress = new ProfessionProgress();
-        progress.level = Math.clamp(tag.getInt(NBT_LEVEL), 0, getMaxLevel());
-        progress.experience = progress.level >= getMaxLevel() ? 0.0 : Math.max(0.0, tag.getDouble(NBT_EXPERIENCE));
+        progress.level = Math.clamp(tag.getInt(NBT_LEVEL), ZERO_INT, getMaxLevel());
+        progress.experience = progress.level >= getMaxLevel() ? ZERO_DOUBLE : Math.max(ZERO_DOUBLE, tag.getDouble(NBT_EXPERIENCE));
         return progress;
     }
 }
