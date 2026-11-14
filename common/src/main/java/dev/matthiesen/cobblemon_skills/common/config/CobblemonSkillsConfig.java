@@ -121,7 +121,7 @@ public final class CobblemonSkillsConfig {
         PROFESSION_CACHE.clear();
     }
 
-    private static LiveProfessionConfig getOrComputeProfession(Profession profession, AbstractProfession professionDef) {
+    public static LiveProfessionConfig getProfessionConfig(Profession profession, AbstractProfession professionDef) {
         return PROFESSION_CACHE.computeIfAbsent(profession, p -> {
             String displayName = professionDef.professionName.get();
             List<ProfessionTierEntry> tiers = professionDef.professionRewards.get()
@@ -130,33 +130,5 @@ public final class CobblemonSkillsConfig {
                     .toList();
             return new LiveProfessionConfig(profession, displayName, tiers);
         });
-    }
-
-    public static LiveProfessionConfig getArcheologyConfig() {
-        return getOrComputeProfession(Profession.ARCHEOLOGY, Professions.ARCHEOLOGY_CONFIG);
-    }
-
-    public static LiveProfessionConfig getBotanyConfig() {
-        return getOrComputeProfession(Profession.BOTANY, Professions.BOTANY_CONFIG);
-    }
-
-    public static LiveProfessionConfig getCookingConfig() {
-        return getOrComputeProfession(Profession.COOKING, Professions.COOKING_CONFIG);
-    }
-
-    public static LiveProfessionConfig getFishingConfig() {
-        return getOrComputeProfession(Profession.FISHING, Professions.FISHING_CONFIG);
-    }
-
-    public static LiveProfessionConfig getCatchingConfig() {
-        return getOrComputeProfession(Profession.CATCHING, Professions.CATCHING_CONFIG);
-    }
-
-    public static LiveProfessionConfig getTrainingConfig() {
-        return getOrComputeProfession(Profession.TRAINING, Professions.TRAINING_CONFIG);
-    }
-
-    public static LiveProfessionConfig getBreedingConfig() {
-        return getOrComputeProfession(Profession.BREEDING, Professions.BREEDING_CONFIG);
     }
 }

@@ -2,29 +2,30 @@ package dev.matthiesen.cobblemon_skills.common.data;
 
 import dev.matthiesen.cobblemon_skills.common.CobblemonSkillsCommon;
 import dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig;
+import dev.matthiesen.cobblemon_skills.common.config.professions.AbstractProfession;
 import net.minecraft.server.level.ServerPlayer;
 
-import java.util.function.Supplier;
+import static dev.matthiesen.cobblemon_skills.common.config.CobblemonSkillsConfig.Professions;
 
 public enum Profession {
-    ARCHEOLOGY("Archeology", CobblemonSkillsConfig::getArcheologyConfig),
-    BOTANY("Botany", CobblemonSkillsConfig::getBotanyConfig),
-    COOKING("Cooking", CobblemonSkillsConfig::getCookingConfig),
-    FISHING("Fishing", CobblemonSkillsConfig::getFishingConfig),
-    CATCHING("Catching", CobblemonSkillsConfig::getCatchingConfig),
-    TRAINING("Training", CobblemonSkillsConfig::getTrainingConfig),
-    BREEDING("Breeding", CobblemonSkillsConfig::getBreedingConfig);
+    ARCHEOLOGY("Archeology", Professions.ARCHEOLOGY_CONFIG),
+    BOTANY("Botany", Professions.BOTANY_CONFIG),
+    COOKING("Cooking", Professions.COOKING_CONFIG),
+    FISHING("Fishing", Professions.FISHING_CONFIG),
+    CATCHING("Catching", Professions.CATCHING_CONFIG),
+    TRAINING("Training", Professions.TRAINING_CONFIG),
+    BREEDING("Breeding", Professions.BREEDING_CONFIG);
 
-    private final Supplier<LiveProfessionConfig> config;
+    private final AbstractProfession config;
     private final String NbtTag;
 
-    Profession(String NbtTag, Supplier<LiveProfessionConfig> configSupplier) {
+    Profession(String NbtTag, AbstractProfession config) {
         this.NbtTag = NbtTag;
-        this.config = configSupplier;
+        this.config = config;
     }
 
     public LiveProfessionConfig getConfig() {
-        return config.get();
+        return CobblemonSkillsConfig.getProfessionConfig(this, this.config);
     }
 
     public Integer awardExperience(ServerPlayer player, double experience) {
